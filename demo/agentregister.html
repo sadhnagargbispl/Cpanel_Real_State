@@ -1,0 +1,1541 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Add Agent — Agent Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2B6B;
+            --nd: #0D1B4B;
+            --ocean: #1E6FBF;
+            --gold: #F5A623;
+            --gd: #E8920F;
+            --purple: #6B2D8B;
+            --green: #22C55E;
+            --red: #EF4444;
+            --orange: #F97316;
+            --sw: 264px;
+            --th: 66px;
+            --bg: #F0F4FB;
+            --white: #FFFFFF;
+            --border: #E2EAF4;
+            --text: #0F1E3C;
+            --mid: #4A5568;
+            --muted: #8A99B3;
+            --sh: 0 2px 16px rgba(27,43,107,.07);
+            --sh-md: 0 8px 32px rgba(27,43,107,.12);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            font-size: 15px
+        }
+
+        body {
+            font-family: 'DM Sans',sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        img {
+            display: block;
+            max-width: 100%
+        }
+
+        button, input, select, textarea {
+            font-family: 'DM Sans',sans-serif
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sw);
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 300;
+            background: linear-gradient(180deg,#09133A 0%,#111E52 45%,#162266 100%);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform .32s cubic-bezier(.4,0,.2,1);
+            box-shadow: 4px 0 24px rgba(9,19,58,.35)
+        }
+
+        .sb-top {
+            padding: 20px 18px 16px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            flex-shrink: 0
+        }
+
+        .sb-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg,var(--gold),var(--gd));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(245,166,35,.35)
+        }
+
+        .sb-brand {
+            font-family: 'Playfair Display',serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2
+        }
+
+        .sb-tagline {
+            font-size: 9px;
+            color: rgba(255,255,255,.38);
+            letter-spacing: .9px;
+            text-transform: uppercase;
+            margin-top: 1px
+        }
+
+        .sb-agent {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            flex-shrink: 0
+        }
+
+        .sb-av {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,var(--gold),var(--gd));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,.15)
+        }
+
+        .sb-aname {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2
+        }
+
+        .sb-arole {
+            font-size: 10px;
+            color: rgba(255,255,255,.4);
+            margin-top: 1px
+        }
+
+        .sb-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 9.5px;
+            color: #22C55E;
+            font-weight: 600
+        }
+
+        .sb-status-dot {
+            width: 6px;
+            height: 6px;
+            background: #22C55E;
+            border-radius: 50%;
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+            0%,100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .4
+            }
+        }
+
+        .sb-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+            scrollbar-width: none
+        }
+
+            .sb-nav::-webkit-scrollbar {
+                display: none
+            }
+
+        .nav-group-title {
+            padding: 10px 18px 3px;
+            font-size: 8.5px;
+            font-weight: 700;
+            color: rgba(255,255,255,.25);
+            text-transform: uppercase;
+            letter-spacing: 1.3px
+        }
+
+        .ni {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,.58);
+            cursor: pointer;
+            position: relative;
+            transition: all .18s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left
+        }
+
+        a.ni {
+            text-decoration: none
+        }
+
+        .ni:hover {
+            background: rgba(255,255,255,.06);
+            color: rgba(255,255,255,.9)
+        }
+
+        .ni.active {
+            background: rgba(245,166,35,.13);
+            color: #fff;
+            font-weight: 600
+        }
+
+            .ni.active::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 60%;
+                width: 3px;
+                background: var(--gold);
+                border-radius: 0 3px 3px 0
+            }
+
+        .ni-ic {
+            font-size: 17px;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .ni-badge {
+            margin-left: auto;
+            padding: 2px 7px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            background: var(--gold);
+            color: #fff
+        }
+
+            .ni-badge.red {
+                background: var(--red)
+            }
+
+        .ni-arrow {
+            margin-left: auto;
+            font-size: 10px;
+            transition: transform .2s;
+            color: rgba(255,255,255,.35)
+        }
+
+        .ni.sub-open .ni-arrow {
+            transform: rotate(90deg)
+        }
+
+        .sub-items {
+            display: none
+        }
+
+            .sub-items.open {
+                display: block
+            }
+
+        .sub-ni {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px 8px 50px;
+            font-size: 12px;
+            color: rgba(255,255,255,.42);
+            cursor: pointer;
+            transition: all .18s;
+            text-decoration: none
+        }
+
+            .sub-ni:hover {
+                color: #fff;
+                background: rgba(255,255,255,.04)
+            }
+
+            .sub-ni.active {
+                color: var(--gold)
+            }
+
+        .sb-bottom {
+            padding: 14px 18px;
+            border-top: 1px solid rgba(255,255,255,.07);
+            flex-shrink: 0
+        }
+
+            .sb-bottom a {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                padding: 8px 6px;
+                font-size: 12.5px;
+                color: rgba(255,255,255,.38);
+                transition: color .2s;
+                border-radius: 8px
+            }
+
+                .sb-bottom a:hover {
+                    color: #fff;
+                    background: rgba(255,255,255,.05)
+                }
+
+        /* ── MAIN ── */
+        .main {
+            margin-left: var(--sw);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin .32s cubic-bezier(.4,0,.2,1)
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            height: var(--th);
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 26px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--sh);
+            flex-shrink: 0
+        }
+
+        .tb-l {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 8px;
+            color: var(--mid);
+            font-size: 19px;
+            transition: background .2s
+        }
+
+            .menu-toggle:hover {
+                background: var(--bg)
+            }
+
+        .tb-r {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .tb-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 14px;
+            min-width: 210px
+        }
+
+            .tb-search input {
+                border: none;
+                background: none;
+                outline: none;
+                font-size: 13px;
+                color: var(--text);
+                width: 100%
+            }
+
+                .tb-search input::placeholder {
+                    color: var(--muted)
+                }
+
+        .tb-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            font-size: 16px;
+            color: var(--mid);
+            transition: all .2s;
+            flex-shrink: 0
+        }
+
+            .tb-icon-btn:hover {
+                background: var(--navy);
+                color: #fff;
+                border-color: var(--navy)
+            }
+
+        .badge-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 50%;
+            border: 2px solid var(--white)
+        }
+
+        .tb-user {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            transition: all .2s
+        }
+
+            .tb-user:hover {
+                border-color: var(--ocean);
+                box-shadow: 0 2px 12px rgba(30,111,191,.1)
+            }
+
+        .tb-uav {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,var(--navy),var(--ocean));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff
+        }
+
+        .tb-uname {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text)
+        }
+
+        .tb-urole {
+            font-size: 10.5px;
+            color: var(--muted)
+        }
+
+        /* ── PAGE CONTENT ── */
+        .pc {
+            padding: 24px;
+            flex: 1
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .ph-left .ph-title {
+            font-family: 'Playfair Display',serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.2
+        }
+
+        .ph-left .ph-sub {
+            font-size: 12.5px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        .ph-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all .2s;
+            white-space: nowrap
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,var(--gold),var(--gd));
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(245,166,35,.32)
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(245,166,35,.44)
+            }
+
+        .btn-navy {
+            background: var(--navy);
+            color: #fff
+        }
+
+            .btn-navy:hover {
+                background: var(--ocean)
+            }
+
+        .btn-outline {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            color: var(--mid)
+        }
+
+            .btn-outline:hover {
+                border-color: var(--ocean);
+                color: var(--ocean)
+            }
+
+        .btn-sm {
+            padding: 7px 13px;
+            font-size: 12px
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--sh);
+            margin-bottom: 20px;
+            overflow: hidden
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg,#f8faff,#fff)
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            flex-shrink: 0
+        }
+
+        .ci-gold {
+            background: rgba(245,166,35,.1)
+        }
+
+        .ci-blue {
+            background: rgba(30,111,191,.1)
+        }
+
+        .ci-green {
+            background: rgba(34,197,94,.1)
+        }
+
+        .ci-purple {
+            background: rgba(107,45,139,.1)
+        }
+
+        .card-title {
+            font-family: 'Playfair Display',serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy)
+        }
+
+        .card-subtitle {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .card-body {
+            padding: 22px
+        }
+
+        /* ── FORM ── */
+        .fg {
+            margin-bottom: 16px
+        }
+
+        .fl {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 6px
+        }
+
+        .req {
+            color: var(--red);
+            margin-left: 2px
+        }
+
+        .fi, .fs, .fta {
+            width: 100%;
+            padding: 10px 13px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 13.5px;
+            color: var(--text);
+            outline: none;
+            transition: border-color .2s,box-shadow .2s;
+            background: var(--white);
+            appearance: none
+        }
+
+            .fi:focus, .fs:focus, .fta:focus {
+                border-color: var(--ocean);
+                box-shadow: 0 0 0 3px rgba(30,111,191,.1)
+            }
+
+            .fi.err {
+                border-color: var(--red)
+            }
+
+        .fta {
+            resize: vertical;
+            min-height: 70px
+        }
+
+        .f-hint {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 5px
+        }
+
+        .f-err {
+            font-size: 11px;
+            color: var(--red);
+            margin-top: 4px;
+            display: none
+        }
+
+            .f-err.show {
+                display: block
+            }
+
+        .fi-icon {
+            position: relative
+        }
+
+            .fi-icon .fi {
+                padding-left: 38px
+            }
+
+            .fi-icon .ico {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 15px;
+                color: var(--muted);
+                pointer-events: none
+            }
+
+        .fs-wrap {
+            position: relative
+        }
+
+            .fs-wrap::after {
+                content: '▾';
+                position: absolute;
+                right: 13px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--muted);
+                font-size: 11px;
+                pointer-events: none
+            }
+
+            .fs-wrap .fs {
+                padding-right: 32px;
+                cursor: pointer
+            }
+
+        /* ── GRID ── */
+        .g2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .g3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px
+        }
+
+        .g4 {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 16px
+        }
+
+        /* ── RADIO ── */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .radio-opt {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all .2s;
+            font-size: 13px;
+            color: var(--mid);
+            background: var(--white);
+            user-select: none
+        }
+
+            .radio-opt:hover {
+                border-color: var(--ocean);
+                color: var(--navy)
+            }
+
+            .radio-opt.selected {
+                border-color: var(--gold);
+                background: rgba(245,166,35,.07);
+                color: var(--navy);
+                font-weight: 600
+            }
+
+        .radio-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            flex-shrink: 0
+        }
+
+        .radio-opt.selected .radio-dot {
+            border-color: var(--gold)
+        }
+
+            .radio-opt.selected .radio-dot::after {
+                content: '';
+                width: 7px;
+                height: 7px;
+                background: var(--gold);
+                border-radius: 50%
+            }
+
+        /* ── PHONE ── */
+        .phone-wrap {
+            display: flex;
+            gap: 8px
+        }
+
+        .phone-prefix {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+            flex-shrink: 0
+        }
+
+        .phone-wrap .fi {
+            flex: 1
+        }
+
+        /* ── PASSWORD ── */
+        .pw-wrap {
+            position: relative
+        }
+
+            .pw-wrap .fi {
+                padding-right: 40px
+            }
+
+        .pw-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--muted)
+        }
+
+        .pw-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 7px
+        }
+
+        .pw-fill {
+            height: 100%;
+            border-radius: 4px;
+            width: 0%;
+            transition: width .4s,background .4s
+        }
+
+        .pw-label {
+            font-size: 10.5px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        /* ── SECTION DIVIDER ── */
+        .sec-div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 4px 0 16px
+        }
+
+            .sec-div::before, .sec-div::after {
+                content: '';
+                flex: 1;
+                height: 1px;
+                background: var(--border)
+            }
+
+            .sec-div span {
+                font-size: 10px;
+                font-weight: 700;
+                color: var(--muted);
+                text-transform: uppercase;
+                letter-spacing: .8px;
+                white-space: nowrap
+            }
+
+        /* ── ACTION ROW ── */
+        .action-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            background: var(--navy);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(27,43,107,.25);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+            z-index: 999;
+            max-width: 320px
+        }
+
+            .toast.show {
+                transform: translateY(0);
+                opacity: 1
+            }
+
+            .toast.success {
+                background: #166534
+            }
+
+            .toast.error {
+                background: #991B1B
+            }
+
+        /* ── OVERLAY ── */
+        .sb-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            z-index: 290
+        }
+
+            .sb-overlay.show {
+                display: block
+            }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:900px) {
+            .sidebar {
+                transform: translateX(-100%)
+            }
+
+                .sidebar.open {
+                    transform: translateX(0)
+                }
+
+            .main {
+                margin-left: 0
+            }
+
+            .menu-toggle {
+                display: flex
+            }
+
+            .tb-search {
+                display: none
+            }
+
+            .g3 {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:640px) {
+            .g2, .g3, .g4 {
+                grid-template-columns: 1fr
+            }
+
+            .pc {
+                padding: 14px
+            }
+
+            .topbar {
+                padding: 0 14px
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start
+            }
+        }
+
+        @media(max-width:420px) {
+            .ph-left .ph-title {
+                font-size: 20px
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Overlay -->
+    <div class="sb-overlay" id="sbOv" onclick="cSB()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sb">
+        <div class="sb-top">
+            <div class="sb-logo">🏙️</div>
+            <div>
+                <div class="sb-brand">Sky Is Your Limit</div>
+                <div class="sb-tagline">Agent Portal</div>
+            </div>
+        </div>
+        <div class="sb-agent">
+            <div class="sb-av">RE</div>
+            <div>
+                <div class="sb-aname">Real Estate</div>
+                <div class="sb-arole">RE123456</div>
+            </div>
+            <div class="sb-status">
+                <span class="sb-status-dot"></span> Online
+            </div>
+        </div>
+        <nav class="sb-nav">
+            <div class="nav-group-title">Overview</div>
+            <a href="#" class="ni"><span class="ni-ic">📊</span>Dashboard</a>
+
+            <div class="nav-group-title">Properties</div>
+            <a href="#" class="ni"><span class="ni-ic">🏘️</span>My Projects<span class="ni-badge">0</span></a>
+            <div class="ni" onclick="tSub('plSub',this)">
+                <span class="ni-ic">📐</span>Plot Management<span class="ni-arrow">›</span>
+            </div>
+            <div class="sub-items" id="plSub">
+                <a href="#" class="sub-ni">• All Plots</a>
+                <a href="#" class="sub-ni">• Add Plot</a>
+                <a href="#" class="sub-ni">• Availability</a>
+            </div>
+            <a href="#" class="ni"><span class="ni-ic">🏠</span>Booked Properties</a>
+
+            <div class="nav-group-title">People</div>
+            <a href="#" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge">0</span></a>
+            <a href="#" class="ni active"><span class="ni-ic">🤝</span>My Agents<span class="ni-badge">0</span></a>
+
+            <div class="nav-group-title">Finance</div>
+            <a href="#" class="ni"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">0</span></a>
+            <a href="#" class="ni"><span class="ni-ic">💳</span>Payments</a>
+            <a href="#" class="ni"><span class="ni-ic">₹</span>My Commission</a>
+            <a href="#" class="ni"><span class="ni-ic">🧾</span>Receipts</a>
+
+            <div class="nav-group-title">Account</div>
+            <a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>
+            <a href="#" class="ni"><span class="ni-ic">👤</span>My Profile</a>
+        </nav>
+        <div class="sb-bottom">
+            <a href="#">🌐 View Website</a>
+            <a href="#">🚪 Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="tb-l">
+                <button class="menu-toggle" onclick="oSB()">☰</button>
+            </div>
+            <div class="tb-r">
+                <div class="tb-search">
+                    <span style="color:var(--muted)">🔍</span>
+                    <input placeholder="Search customers, plots…">
+                </div>
+                <div class="tb-icon-btn">🔔<div class="badge-dot"></div></div>
+                <div class="tb-icon-btn">📬</div>
+                <div class="tb-user">
+                    <div class="tb-uav">RE</div>
+                    <div>
+                        <div class="tb-uname">Real Estate</div>
+                        <div class="tb-urole">RE123456</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <div class="pc">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="ph-left">
+                    <div class="ph-title">Add Sub-Agent</div>
+                    <div class="ph-sub">Register a new agent under your team</div>
+                </div>
+                <div class="ph-actions">
+                    <a href="agent_myagents.aspx" class="btn btn-outline btn-sm">← Back to My Agents</a>
+                </div>
+            </div>
+
+            <!-- 1. Personal Details -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon ci-gold">📋</div>
+                    <div>
+                        <div class="card-title">Personal Details</div>
+                        <div class="card-subtitle">Basic identification information</div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="fg">
+                        <label class="fl">Registration Type <span class="req">*</span></label>
+                        <div class="radio-group" id="regTypeGroup">
+                            <div class="radio-opt selected" onclick="selectRadio(this,'regTypeGroup')"><div class="radio-dot"></div>Individual</div>
+                            <div class="radio-opt" onclick="selectRadio(this,'regTypeGroup')"><div class="radio-dot"></div>Company</div>
+                        </div>
+                    </div>
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl" for="fullName">Full Name <span class="req">*</span></label>
+                            <div class="fi-icon">
+                                <span class="ico">✏️</span>
+                                <input class="fi" id="fullName" type="text" placeholder="Enter full name">
+                            </div>
+                            <div class="f-err" id="fullNameErr">Full name is required</div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Father / Husband Name <span class="req">*</span></label>
+                            <div style="display:flex;gap:8px;">
+                                <div class="fs-wrap" style="width:82px;flex-shrink:0;">
+                                    <select class="fs" style="padding-left:8px;">
+                                        <option>S/O</option>
+                                        <option>D/O</option>
+                                        <option>W/O</option>
+                                        <option>H/O</option>
+                                        <option>C/O</option>
+                                    </select>
+                                </div>
+                                <input class="fi" type="text" placeholder="Father / Husband name" style="flex:1;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl">Date of Birth <span class="req">*</span></label>
+                            <div style="display:flex;gap:7px;">
+                                <div class="fs-wrap" style="flex:1;"><select class="fs" id="dobDay"><option value="">DD</option></select></div>
+                                <div class="fs-wrap" style="flex:1.6;">
+                                    <select class="fs">
+                                        <option value="">Month</option>
+                                        <option>January</option>
+                                        <option>February</option>
+                                        <option>March</option>
+                                        <option>April</option>
+                                        <option>May</option>
+                                        <option>June</option>
+                                        <option>July</option>
+                                        <option>August</option>
+                                        <option>September</option>
+                                        <option>October</option>
+                                        <option>November</option>
+                                        <option>December</option>
+                                    </select>
+                                </div>
+                                <div class="fs-wrap" style="flex:1.3;"><select class="fs" id="dobYear"><option value="">YYYY</option></select></div>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Marital Status</label>
+                            <div class="radio-group" id="maritalGroup">
+                                <div class="radio-opt selected" onclick="selectRadio(this,'maritalGroup')"><div class="radio-dot"></div>Married</div>
+                                <div class="radio-opt" onclick="selectRadio(this,'maritalGroup')"><div class="radio-dot"></div>Unmarried</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl" for="panNo">PAN Number</label>
+                            <div class="fi-icon">
+                                <span class="ico">🪪</span>
+                                <input class="fi" id="panNo" type="text" placeholder="ABCDE1234F" maxlength="10" oninput="this.value=this.value.toUpperCase()">
+                            </div>
+                            <div class="f-hint">Leave blank if unavailable (20% TDS applies)</div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Aadhaar Number</label>
+                            <div style="display:flex;gap:6px;align-items:center;">
+                                <input class="fi" id="ad1" type="text" maxlength="4" placeholder="XXXX" oninput="this.value=this.value.replace(/\D/g,'');if(this.value.length==4)document.getElementById('ad2').focus();" style="text-align:center;letter-spacing:2px;">
+                                <span style="color:var(--muted);font-weight:700;flex-shrink:0;">—</span>
+                                <input class="fi" id="ad2" type="text" maxlength="4" placeholder="XXXX" oninput="this.value=this.value.replace(/\D/g,'');if(this.value.length==4)document.getElementById('ad3').focus();" style="text-align:center;letter-spacing:2px;">
+                                <span style="color:var(--muted);font-weight:700;flex-shrink:0;">—</span>
+                                <input class="fi" id="ad3" type="text" maxlength="4" placeholder="XXXX" oninput="this.value=this.value.replace(/\D/g,'');" style="text-align:center;letter-spacing:2px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl" for="referralId">Referral ID <span class="req">*</span></label>
+                            <div class="fi-icon">
+                                <span class="ico">🔗</span>
+                                <input class="fi" id="referralId" type="text" placeholder="Enter referral agent ID">
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Agent Role <span class="req">*</span></label>
+                            <div class="fs-wrap">
+                                <select class="fs" id="agentRole">
+                                    <option value="">Select Role</option>
+                                    <option>Senior Agent</option>
+                                    <option>Agent</option>
+                                    <option>Junior Agent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 2. Contact Info -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon ci-blue">📞</div>
+                    <div>
+                        <div class="card-title">Contact Information</div>
+                        <div class="card-subtitle">Mobile, email and address details</div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl" for="mobileNo">Mobile Number <span class="req">*</span></label>
+                            <div class="phone-wrap">
+                                <div class="phone-prefix">🇮🇳 +91</div>
+                                <input class="fi" id="mobileNo" type="tel" maxlength="10" placeholder="9876543210" oninput="this.value=this.value.replace(/\D/g,'');">
+                            </div>
+                            <div class="f-err" id="mobileNoErr">Valid 10-digit number required</div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl" for="emailId">Email Address <span class="req">*</span></label>
+                            <div class="fi-icon">
+                                <span class="ico">✉️</span>
+                                <input class="fi" id="emailId" type="email" placeholder="agent@example.com">
+                            </div>
+                            <div class="f-err" id="emailIdErr">Valid email is required</div>
+                        </div>
+                    </div>
+
+                    <div class="sec-div"><span>Address</span></div>
+
+                    <div class="fg">
+                        <label class="fl">Street Address <span class="req">*</span></label>
+                        <textarea class="fta" placeholder="House No., Street, Colony / Mohalla..." rows="2"></textarea>
+                    </div>
+
+                    <div class="g3">
+                        <div class="fg">
+                            <label class="fl" for="pinCode">Pin Code <span class="req">*</span></label>
+                            <input class="fi" id="pinCode" type="text" maxlength="6" placeholder="110001"
+                                   oninput="this.value=this.value.replace(/\D/g,''); autoFill(this.value);">
+                            <div class="f-hint" id="pinHint"></div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl" for="stateName">State <span class="req">*</span></label>
+                            <div class="fs-wrap">
+                                <select class="fs" id="stateName">
+                                    <option value="">Select State</option>
+                                    <option>Andhra Pradesh</option>
+                                    <option>Arunachal Pradesh</option>
+                                    <option>Assam</option>
+                                    <option>Bihar</option>
+                                    <option>Chhattisgarh</option>
+                                    <option>Delhi</option>
+                                    <option>Goa</option>
+                                    <option>Gujarat</option>
+                                    <option>Haryana</option>
+                                    <option>Himachal Pradesh</option>
+                                    <option>Jharkhand</option>
+                                    <option>Karnataka</option>
+                                    <option>Kerala</option>
+                                    <option>Madhya Pradesh</option>
+                                    <option>Maharashtra</option>
+                                    <option>Manipur</option>
+                                    <option>Meghalaya</option>
+                                    <option>Mizoram</option>
+                                    <option>Nagaland</option>
+                                    <option>Odisha</option>
+                                    <option>Punjab</option>
+                                    <option>Rajasthan</option>
+                                    <option>Sikkim</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Telangana</option>
+                                    <option>Tripura</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>Uttarakhand</option>
+                                    <option>West Bengal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl" for="cityName">City <span class="req">*</span></label>
+                            <input class="fi" id="cityName" type="text" placeholder="City / District">
+                        </div>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">Area / Locality</label>
+                        <input class="fi" type="text" placeholder="Area, locality or village name">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 3. Account Setup -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon ci-purple">🔐</div>
+                    <div>
+                        <div class="card-title">Account Setup</div>
+                        <div class="card-subtitle">Login credentials for the agent</div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl" for="loginId">Username <span class="req">*</span></label>
+                            <div class="fi-icon">
+                                <span class="ico">👤</span>
+                                <input class="fi" id="loginId" type="text" placeholder="agent_username">
+                            </div>
+                            <div class="f-hint">Lowercase letters, numbers and underscores only</div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Commission Rate (%)</label>
+                            <div class="fi-icon">
+                                <span class="ico">₹</span>
+                                <input class="fi" type="number" step="0.1" min="0" max="20" placeholder="e.g. 1.5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl" for="password">Password <span class="req">*</span></label>
+                            <div class="pw-wrap">
+                                <input class="fi" id="password" type="password" placeholder="Min. 8 characters" oninput="pwStrength(this.value)">
+                                <span class="pw-toggle" onclick="togglePw('password',this)">👁</span>
+                            </div>
+                            <div class="pw-bar"><div class="pw-fill" id="pwFill"></div></div>
+                            <div class="pw-label" id="pwLabel"></div>
+                        </div>
+                        <div class="fg">
+                            <label class="fl" for="confirmPw">Confirm Password <span class="req">*</span></label>
+                            <div class="pw-wrap">
+                                <input class="fi" id="confirmPw" type="password" placeholder="Re-enter password">
+                                <span class="pw-toggle" onclick="togglePw('confirmPw',this)">👁</span>
+                            </div>
+                            <div class="f-err" id="confirmPwErr">Passwords do not match</div>
+                        </div>
+                    </div>
+
+                    <div class="fg" style="max-width:50%">
+                        <label class="fl">Transaction Password <span class="req">*</span></label>
+                        <div class="pw-wrap">
+                            <input class="fi" id="txnPw" type="password" placeholder="5–10 characters" maxlength="10">
+                            <span class="pw-toggle" onclick="togglePw('txnPw',this)">👁</span>
+                        </div>
+                        <div class="f-hint">Separate from login — used for payout transactions</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 4. Bank Details -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon ci-green">🏦</div>
+                    <div>
+                        <div class="card-title">Bank Details</div>
+                        <div class="card-subtitle">For commission payouts</div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl">Account Number <span class="req">*</span></label>
+                            <input class="fi" type="text" maxlength="18" placeholder="Enter account number" oninput="this.value=this.value.replace(/\D/g,'');">
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Account Type <span class="req">*</span></label>
+                            <div class="fs-wrap">
+                                <select class="fs">
+                                    <option value="">Select Account Type</option>
+                                    <option>Saving Account</option>
+                                    <option>Current Account</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="g2">
+                        <div class="fg">
+                            <label class="fl">IFSC Code <span class="req">*</span></label>
+                            <input class="fi" type="text" maxlength="11" placeholder="SBIN0001234" oninput="this.value=this.value.toUpperCase();">
+                        </div>
+                        <div class="fg">
+                            <label class="fl">Branch Name</label>
+                            <input class="fi" type="text" placeholder="Branch name">
+                        </div>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">Nominee Details</label>
+                        <div class="g2">
+                            <input class="fi" type="text" placeholder="Nominee full name">
+                            <input class="fi" type="text" placeholder="Relation (e.g. Spouse, Son)">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-row">
+                <button class="btn btn-outline" onclick="resetAll()">✕ Reset</button>
+                <button class="btn btn-navy" onclick="history.back()">← Cancel</button>
+                <button class="btn btn-primary" onclick="submitForm()">✓ Add Sub-Agent</button>
+            </div>
+
+        </div><!-- /pc -->
+    </div><!-- /main -->
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✓</span>
+        <span id="toastMsg">Done</span>
+    </div>
+
+    <script>
+// Sidebar
+function oSB(){document.getElementById('sb').classList.add('open');document.getElementById('sbOv').classList.add('show');document.body.style.overflow='hidden'}
+function cSB(){document.getElementById('sb').classList.remove('open');document.getElementById('sbOv').classList.remove('show');document.body.style.overflow=''}
+function tSub(id,el){document.getElementById(id).classList.toggle('open');if(el)el.classList.toggle('sub-open')}
+
+// DOB
+(function(){
+  const d=document.getElementById('dobDay'),y=document.getElementById('dobYear');
+  for(let i=1;i<=31;i++) d.innerHTML+=`<option>${i}</option>`;
+  const yr=new Date().getFullYear();
+  for(let i=yr-18;i>=yr-70;i--) y.innerHTML+=`<option>${i}</option>`;
+})();
+
+function selectRadio(el,gid){
+  document.getElementById(gid).querySelectorAll('.radio-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function togglePw(id,icon){
+  const el=document.getElementById(id);
+  el.type=el.type==='password'?'text':'password';
+  icon.textContent=el.type==='password'?'👁':'🙈';
+}
+
+function pwStrength(val){
+  const fill=document.getElementById('pwFill'),lbl=document.getElementById('pwLabel');
+  if(!val){fill.style.width='0%';lbl.textContent='';return}
+  let s=0;
+  if(val.length>=8)s++;if(/[A-Z]/.test(val))s++;if(/[0-9]/.test(val))s++;if(/[^A-Za-z0-9]/.test(val))s++;
+  const lvl=[{w:'25%',c:'#EF4444',t:'Weak'},{w:'50%',c:'#F97316',t:'Fair'},{w:'75%',c:'#EAB308',t:'Good'},{w:'100%',c:'#22C55E',t:'Strong 🔒'}][Math.max(s-1,0)];
+  fill.style.width=lvl.w;fill.style.background=lvl.c;lbl.textContent=lvl.t;lbl.style.color=lvl.c;
+}
+
+const pins={'110001':{state:'Delhi',city:'New Delhi'},'400001':{state:'Maharashtra',city:'Mumbai'},'560001':{state:'Karnataka',city:'Bangalore'},'302001':{state:'Rajasthan',city:'Jaipur'},'600001':{state:'Tamil Nadu',city:'Chennai'}};
+function autoFill(pin){
+  const hint=document.getElementById('pinHint');
+  if(pin.length===6&&pins[pin]){
+    document.getElementById('stateName').value=pins[pin].state;
+    document.getElementById('cityName').value=pins[pin].city;
+    hint.style.color='#22C55E';hint.textContent='✓ Location auto-filled';
+  }else if(pin.length===6){hint.style.color='var(--muted)';hint.textContent='Enter state & city manually';}
+  else{hint.textContent='';}
+}
+
+function resetAll(){
+  document.querySelectorAll('input,textarea').forEach(el=>{if(el.type!=='submit')el.value='';});
+  document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  document.querySelectorAll('.radio-group').forEach(g=>{g.querySelectorAll('.radio-opt').forEach((o,i)=>o.classList.toggle('selected',i===0));});
+  document.getElementById('pwFill').style.width='0%';
+  document.getElementById('pwLabel').textContent='';
+  showToast('Form has been reset','info');
+}
+
+function submitForm(){
+  const checks=[
+    {id:'fullName',msg:'Full Name is required'},
+    {id:'mobileNo',msg:'Mobile Number is required'},
+    {id:'emailId',msg:'Email is required'},
+    {id:'loginId',msg:'Username is required'},
+    {id:'password',msg:'Password is required'},
+  ];
+  for(const c of checks){
+    const el=document.getElementById(c.id);
+    if(!el.value.trim()){el.classList.add('err');el.focus();showToast(c.msg,'error');return;}
+    el.classList.remove('err');
+  }
+  const pw=document.getElementById('password').value,cpw=document.getElementById('confirmPw').value;
+  if(pw!==cpw){
+    document.getElementById('confirmPwErr').classList.add('show');
+    document.getElementById('confirmPw').focus();
+    showToast('Passwords do not match','error');return;
+  }
+  document.getElementById('confirmPwErr').classList.remove('show');
+  showToast('Sub-Agent added successfully! 🎉','success');
+}
+
+function showToast(msg,type='info'){
+  const t=document.getElementById('toast');
+  t.className='toast '+(type==='success'?'success':type==='error'?'error':'');
+  document.getElementById('toastIcon').textContent=type==='success'?'✓':type==='error'?'✕':'ℹ';
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Projects — The Sky Is Your Limit</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2B6B;--ocean:#1E6FBF;--gold:#F5A623;--gold-light:#FFD080;--purple:#6B2D8B;--white:#FFFFFF;--light-bg:#F4F7FC;--text-dark:#12203A;--text-mid:#4A5568;--text-light:#8A99B3;--border:#E2EAF4;--shadow:0 8px 40px rgba(27,43,107,0.10);--shadow-lg:0 20px 60px rgba(27,43,107,0.18);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--white);overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;box-shadow:0 2px 24px rgba(27,43,107,0.07);}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:48px;width:48px;border-radius:50%;object-fit:cover;}
+  .nav-logo-text{display:flex;flex-direction:column;line-height:1.1;}
+  .nav-logo-text span:first-child{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);}
+  .nav-logo-text span:last-child{font-size:10px;font-weight:500;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--text-mid);transition:color .2s;position:relative;}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);border-radius:2px;transition:width .3s;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+  .nav-links a.active{color:var(--navy);font-weight:600;}
+  .nav-cta{display:flex;align-items:center;gap:12px;}
+  .btn-outline{padding:9px 22px;border:2px solid var(--navy);border-radius:8px;font-size:14px;font-weight:600;color:var(--navy);text-decoration:none;transition:all .2s;}
+  .btn-outline:hover{background:var(--navy);color:var(--white);}
+  .btn-primary{padding:10px 24px;background:linear-gradient(135deg,var(--gold),#E8920F);border-radius:8px;font-size:14px;font-weight:600;color:var(--white);text-decoration:none;box-shadow:0 4px 14px rgba(245,166,35,0.4);transition:all .2s;}
+
+  /* HAMBURGER */
+  .hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;width:44px;height:44px;cursor:pointer;gap:6px;background:none;border:none;border-radius:10px;transition:background .2s;}
+  .hamburger:hover{background:var(--light-bg);}
+  .hamburger span{display:block;width:24px;height:2.5px;background:var(--navy);border-radius:2px;transition:all .35s ease;}
+  .hamburger.open span:nth-child(1){transform:translateY(8.5px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+  .hamburger.open span:nth-child(3){transform:translateY(-8.5px) rotate(-45deg);}
+
+  /* MOBILE MENU */
+  .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:998;opacity:0;transition:opacity .3s;}
+  .mob-overlay.show{opacity:1;}
+  .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;background:white;z-index:999;box-shadow:0 20px 60px rgba(27,43,107,0.2);border-bottom:3px solid var(--gold);padding-top:72px;transform:translateY(-20px);opacity:0;transition:all .35s ease;pointer-events:none;max-height:100vh;overflow-y:auto;}
+  .mobile-menu.show{transform:translateY(0);opacity:1;pointer-events:all;}
+  .mob-links{padding:8px 0 4px;}
+  .mob-links a{display:flex;align-items:center;gap:14px;padding:15px 24px;font-size:15px;font-weight:600;color:var(--text-dark);text-decoration:none;transition:all .2s;border-left:3px solid transparent;}
+  .mob-links a:hover,.mob-links a.active{background:var(--light-bg);color:var(--navy);border-left-color:var(--gold);}
+  .mob-icon{font-size:18px;width:26px;text-align:center;}
+  .mob-cta{padding:16px 20px 20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px;}
+  .mob-cta a{display:block;text-align:center;padding:13px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;}
+  .mob-btn-1{border:2px solid var(--navy);color:var(--navy);}
+  .mob-btn-1:hover{background:var(--navy);color:white;}
+  .mob-btn-2{background:linear-gradient(135deg,var(--gold),#E8920F);color:white;box-shadow:0 4px 14px rgba(245,166,35,0.4);}
+
+  /* PAGE HERO */
+  .page-hero{background:linear-gradient(160deg,#0D1B4B 0%,#1B2B6B 50%,#1E6FBF 100%);padding:120px 48px 60px;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:60px 60px;}
+  .page-hero-content{max-width:1280px;margin:0 auto;position:relative;z-index:1;}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:20px;flex-wrap:wrap;}
+  .breadcrumb a{color:rgba(255,255,255,0.55);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--gold);}
+  .breadcrumb span{color:var(--gold);}
+  .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,52px);font-weight:900;color:var(--white);margin-bottom:12px;}
+  .page-hero p{font-size:16px;color:rgba(255,255,255,0.65);}
+
+  /* SEARCH BAR */
+  .search-bar-wrap{background:var(--white);border-bottom:1px solid var(--border);padding:16px 48px;position:sticky;top:72px;z-index:900;box-shadow:0 4px 24px rgba(27,43,107,0.07);}
+  .search-bar-inner{max-width:1280px;margin:0 auto;display:flex;gap:12px;align-items:center;}
+  .search-input-wrap{flex:1;position:relative;}
+  .search-input-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-light);}
+  .search-main-input{width:100%;padding:11px 16px 11px 42px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text-dark);outline:none;transition:border-color .2s;}
+  .search-main-input:focus{border-color:var(--ocean);}
+  .search-sort{padding:10px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text-dark);outline:none;cursor:pointer;background:var(--white);}
+  .search-count{font-size:13px;color:var(--text-light);white-space:nowrap;}
+
+  /* FILTER TOGGLE BTN (mobile) */
+  .mob-filter-btn{display:none;width:100%;padding:13px;background:var(--navy);color:white;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:16px;align-items:center;justify-content:center;gap:8px;}
+
+  /* LAYOUT */
+  .shop-layout{max-width:1280px;margin:0 auto;padding:40px 48px 80px;display:grid;grid-template-columns:280px 1fr;gap:40px;}
+
+  /* FILTER SIDEBAR */
+  .filter-sidebar{position:sticky;top:145px;height:fit-content;}
+  .filter-box{background:var(--white);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
+  .filter-header{padding:20px 24px;background:var(--navy);display:flex;justify-content:space-between;align-items:center;}
+  .filter-header h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--white);font-weight:700;}
+  .filter-reset{font-size:12px;color:var(--gold);cursor:pointer;font-weight:600;background:none;border:none;}
+  .filter-section{padding:20px 24px;border-bottom:1px solid var(--border);}
+  .filter-section:last-child{border-bottom:none;}
+  .filter-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:14px;}
+  .filter-check-list{display:flex;flex-direction:column;gap:10px;}
+  .filter-check{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .filter-check input{display:none;}
+  .check-box{width:18px;height:18px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+  .filter-check input:checked~.check-box{background:var(--navy);border-color:var(--navy);}
+  .filter-check input:checked~.check-box::after{content:'✓';font-size:11px;color:white;font-weight:700;}
+  .check-label{font-size:14px;color:var(--text-dark);font-weight:500;}
+  .check-count{margin-left:auto;font-size:12px;background:var(--light-bg);color:var(--text-light);padding:1px 7px;border-radius:20px;font-weight:600;}
+  .range-values{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px;}
+  .range-slider{width:100%;accent-color:var(--gold);}
+  .range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-light);margin-top:6px;}
+  .filter-radio-list{display:flex;flex-direction:column;gap:10px;}
+  .filter-radio{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .filter-radio input{accent-color:var(--navy);width:16px;height:16px;cursor:pointer;}
+  .radio-label{font-size:14px;color:var(--text-dark);}
+  .filter-apply{margin:16px 24px 20px;width:calc(100% - 48px);padding:12px;background:linear-gradient(135deg,var(--gold),#E8920F);border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(245,166,35,0.4);transition:all .2s;}
+  .filter-apply:hover{transform:translateY(-1px);}
+
+  /* PROJECTS */
+  .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:10px;}
+  .results-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);}
+  .view-toggle{display:flex;gap:6px;}
+  .view-btn{width:36px;height:36px;border:1.5px solid var(--border);border-radius:8px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;}
+  .view-btn.active{background:var(--navy);border-color:var(--navy);color:white;}
+  .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .proj-card{background:var(--white);border-radius:20px;overflow:hidden;border:1.5px solid var(--border);box-shadow:var(--shadow);transition:all .3s;cursor:pointer;text-decoration:none;color:inherit;display:block;}
+  .proj-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+  .proj-card-img{height:200px;position:relative;overflow:hidden;}
+  .proj-card-img-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;}
+  .proj-card-img-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.55) 100%);}
+  .bg-1{background:linear-gradient(135deg,#1B2B6B,#2E4A9E);}.bg-2{background:linear-gradient(135deg,#1E6FBF,#0284C7);}.bg-3{background:linear-gradient(135deg,#6B2D8B,#9333EA);}.bg-4{background:linear-gradient(135deg,#0F766E,#0D9488);}.bg-5{background:linear-gradient(135deg,#7C2D12,#DC2626);}.bg-6{background:linear-gradient(135deg,#1B2B6B,#1E6FBF);}.bg-7{background:linear-gradient(135deg,#064E3B,#10B981);}.bg-8{background:linear-gradient(135deg,#4C1D95,#6D28D9);}
+  .proj-badge{position:absolute;top:14px;left:14px;z-index:2;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;}
+  .badge-active{background:#22C55E;color:white;}.badge-upcoming{background:var(--gold);color:white;}.badge-hot{background:#EF4444;color:white;}.badge-sold{background:#6B7280;color:white;}
+  .proj-wishlist{position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .2s;}
+  .proj-card-body{padding:18px;}
+  .proj-type{font-size:11px;font-weight:700;color:var(--ocean);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+  .proj-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:5px;line-height:1.3;}
+  .proj-loc{font-size:13px;color:var(--text-mid);display:flex;align-items:center;gap:4px;margin-bottom:12px;}
+  .proj-features{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .proj-feat{display:flex;flex-direction:column;gap:2px;}
+  .proj-feat-label{font-size:10px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;}
+  .proj-feat-val{font-size:13px;font-weight:700;color:var(--navy);}
+  .proj-card-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid var(--border);background:rgba(244,247,252,0.6);gap:8px;}
+  .proj-price-label{font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;}
+  .proj-price-val{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);}
+  .proj-cta{padding:8px 16px;background:var(--navy);color:var(--white);border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s;white-space:nowrap;}
+  .proj-cta:hover{background:var(--ocean);}
+  .pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:48px;flex-wrap:wrap;}
+  .page-btn{width:40px;height:40px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);font-size:14px;font-weight:600;color:var(--text-mid);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .page-btn:hover{border-color:var(--navy);color:var(--navy);}
+  .page-btn.active{background:var(--navy);border-color:var(--navy);color:white;}
+  .active-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .filter-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(27,43,107,0.07);border:1px solid rgba(27,43,107,0.15);border-radius:100px;font-size:12px;font-weight:600;color:var(--navy);}
+  .filter-pill button{background:none;border:none;cursor:pointer;color:var(--text-light);font-size:14px;line-height:1;padding:0;}
+  .filter-pill button:hover{color:#EF4444;}
+
+  /* FOOTER */
+  footer{background:#0D1B4B;padding:72px 48px 32px;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;}
+  .footer-brand{display:flex;flex-direction:column;gap:16px;}
+  .footer-logo{display:flex;align-items:center;gap:12px;}
+  .footer-logo img{height:52px;width:52px;border-radius:50%;}
+  .footer-logo-text{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white);line-height:1.2;}
+  .footer-desc{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:300px;}
+  .footer-socials{display:flex;gap:12px;}
+  .social-btn{width:38px;height:38px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;transition:all .2s;}
+  .social-btn:hover{background:var(--gold);color:white;}
+  .footer-col-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:20px;}
+  .footer-links{display:flex;flex-direction:column;gap:10px;}
+  .footer-links a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color .2s;}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-contact-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+  .footer-contact-icon{font-size:16px;flex-shrink:0;}
+  .footer-contact-text{font-size:13px;color:rgba(255,255,255,0.5);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .footer-copy{font-size:13px;color:rgba(255,255,255,0.35);}
+  .footer-bottom-links{display:flex;gap:24px;flex-wrap:wrap;}
+  .footer-bottom-links a{font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;}
+  .footer-bottom-links a:hover{color:var(--gold);}
+
+  /* ══ RESPONSIVE ══ */
+  @media(max-width:1100px){.shop-layout{padding:28px 24px 60px;gap:28px;}.search-bar-wrap{padding:14px 24px;}.page-hero{padding:110px 24px 48px;}}
+  @media(max-width:900px){
+    nav{padding:0 20px;height:64px;}
+    .nav-links,.nav-cta{display:none;}
+    .hamburger{display:flex;}
+    .mobile-menu,.mob-overlay{display:block;}
+    .mobile-menu{top:0;padding-top:64px;}
+    .search-bar-wrap{top:64px;}
+    /* Filter becomes full-screen drawer */
+    .shop-layout{grid-template-columns:1fr;padding:20px 16px 60px;}
+    .filter-sidebar{position:fixed;top:0;left:-320px;width:300px;height:100vh;z-index:997;background:white;overflow-y:auto;transition:left .35s cubic-bezier(.4,0,.2,1);box-shadow:none;padding-top:0;}
+    .filter-sidebar.open{left:0;box-shadow:8px 0 40px rgba(27,43,107,0.2);}
+    .filter-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:996;opacity:0;pointer-events:none;transition:opacity .35s;}
+    .filter-overlay.show{opacity:1;pointer-events:all;}
+    .mob-filter-btn{display:flex;}
+    .projects-grid{grid-template-columns:1fr 1fr;}
+    .search-count{display:none;}
+  }
+  @media(max-width:600px){
+    .page-hero{padding:90px 16px 32px;}
+    .search-bar-wrap{padding:12px 16px;}
+    .search-bar-inner{flex-direction:column;gap:8px;}
+    .search-sort{width:100%;}
+    .projects-grid{grid-template-columns:1fr;}
+    .proj-card-footer{flex-direction:column;align-items:flex-start;gap:8px;}
+    .proj-cta{width:100%;text-align:center;}
+  }
+  @media(max-width:480px){
+    footer{padding:40px 16px 24px;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .footer-bottom{flex-direction:column;text-align:center;}
+    .footer-bottom-links{justify-content:center;}
+  }
+  @media(max-width:360px){
+    .footer-grid{grid-template-columns:1fr;}
+    .projects-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="mob-overlay" id="mobOverlay" onclick="closeMenu()"></div>
+<div class="filter-overlay" id="filterOverlay" onclick="closeFilter()"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="The Sky Is Your Limit">
+    <div class="nav-logo-text"><span>The Sky Is Your Limit</span><span>Premium Real Estate</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="02_projects.html" class="active">Projects</a>
+    <a href="#">Plots</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-cta">
+    <a href="agent_login.html" class="btn-outline">Agent Login</a>
+    <a href="02_projects.html" class="btn-primary">View Projects →</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mob-links">
+    <a href="index.html"><span class="mob-icon">🏠</span> Home</a>
+    <a href="02_projects.html" class="active"><span class="mob-icon">🏘️</span> Projects</a>
+    <a href="#"><span class="mob-icon">📐</span> Plots</a>
+    <a href="#"><span class="mob-icon">ℹ️</span> About Us</a>
+    <a href="#"><span class="mob-icon">📞</span> Contact</a>
+  </div>
+  <div class="mob-cta">
+    <a href="agent_login.html" class="mob-btn-1">🔑 Agent Login</a>
+    <a href="02_projects.html" class="mob-btn-2">🏘️ View All Projects →</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero" style="margin-top:72px;">
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> › <span>All Projects</span></div>
+    <h1>🏘️ Explore All Projects</h1>
+    <p>Discover 500+ premium real estate projects across 18 cities in INDIA</p>
+  </div>
+</section>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap">
+  <div class="search-bar-inner">
+    <div class="search-input-wrap">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="search-main-input" placeholder="Search by project name, city, or location...">
+    </div>
+    <select class="search-sort"><option>Sort: Newest First</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Most Popular</option></select>
+    <span class="search-count">Showing <strong>48</strong> of 500+ projects</span>
+  </div>
+</div>
+
+<!-- SHOP LAYOUT -->
+<div style="background:var(--light-bg);">
+<div class="shop-layout">
+
+  <!-- FILTER SIDEBAR (Desktop sticky / Mobile drawer) -->
+  <aside class="filter-sidebar" id="filterSidebar">
+    <div class="filter-box">
+      <div class="filter-header">
+        <h3>🔽 Filters</h3>
+        <button class="filter-reset" onclick="clearFilters()">Clear All</button>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title">Project Status</div>
+        <div class="filter-check-list">
+          <label class="filter-check"><input type="checkbox" checked onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Active</span><span class="check-count">124</span></label>
+          <label class="filter-check"><input type="checkbox" checked onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Upcoming</span><span class="check-count">89</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Hot Deal 🔥</span><span class="check-count">23</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Sold Out</span><span class="check-count">264</span></label>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title">Property Type</div>
+        <div class="filter-check-list">
+          <label class="filter-check"><input type="checkbox" checked onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Residential Plot</span><span class="check-count">210</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Commercial Plot</span><span class="check-count">67</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Villa / House</span><span class="check-count">45</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Colony</span><span class="check-count">112</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Township</span><span class="check-count">29</span></label>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title">City</div>
+        <div class="filter-check-list">
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Delhi</span><span class="check-count">78</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Jaipur</span><span class="check-count">54</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Mumbai</span><span class="check-count">93</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Lucknow</span><span class="check-count">41</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Chandigarh</span><span class="check-count">36</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Hyderabad</span><span class="check-count">29</span></label>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title">Price Range</div>
+        <div class="range-values"><span>₹3L</span><span id="range-val">₹30L</span></div>
+        <input type="range" class="range-slider" min="3" max="100" value="30" id="priceRange" oninput="document.getElementById('range-val').textContent='₹'+this.value+'L'">
+        <div class="range-labels"><span>₹3L</span><span>₹1Cr+</span></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title">Plot Size</div>
+        <div class="filter-radio-list">
+          <label class="filter-radio"><input type="radio" name="size" value="any" checked><span class="radio-label">Any Size</span></label>
+          <label class="filter-radio"><input type="radio" name="size" value="5"><span class="radio-label">5 Marla (1,125 sq ft)</span></label>
+          <label class="filter-radio"><input type="radio" name="size" value="10"><span class="radio-label">10 Marla (2,250 sq ft)</span></label>
+          <label class="filter-radio"><input type="radio" name="size" value="1kanal"><span class="radio-label">1 Kanal (4,500 sq ft)</span></label>
+          <label class="filter-radio"><input type="radio" name="size" value="2kanal"><span class="radio-label">2 Kanal+</span></label>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title">Amenities</div>
+        <div class="filter-check-list">
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Gated Community</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Park / Green Area</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Mosque / Temple</span></label>
+          <label class="filter-check"><input type="checkbox" onchange="updateFilters()"><div class="check-box"></div><span class="check-label">Installment Plan</span></label>
+        </div>
+      </div>
+      <button class="filter-apply" onclick="applyFilters()">Apply Filters →</button>
+    </div>
+  </aside>
+
+  <!-- PROJECTS AREA -->
+  <main>
+    <button class="mob-filter-btn" onclick="openFilter()">🔽 &nbsp;Filter Projects</button>
+    <div class="results-header">
+      <div class="results-title">All Projects</div>
+      <div class="view-toggle">
+        <button class="view-btn active" title="Grid">⊞</button>
+        <button class="view-btn" title="List">☰</button>
+      </div>
+    </div>
+    <div class="active-filters" id="active-filters">
+      <div class="filter-pill">Active <button onclick="this.parentElement.remove()">×</button></div>
+      <div class="filter-pill">Upcoming <button onclick="this.parentElement.remove()">×</button></div>
+      <div class="filter-pill">Residential <button onclick="this.parentElement.remove()">×</button></div>
+    </div>
+
+    <div class="projects-grid">
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-1">🏘️</div><span class="proj-badge badge-hot">🔥 Hot Deal</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏠 Residential Plot</div><div class="proj-name">Sky Residencia — Phase I</div><div class="proj-loc">📍 Sector 7, New Delhi</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">850</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">230</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">5 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Dec 2026</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹45L</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-2">🏙️</div><span class="proj-badge badge-active">● Active</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏢 Commercial Plot</div><div class="proj-name">Blue Horizon Commercial Hub</div><div class="proj-loc">📍 MG Road, Jaipur</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">320</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">85</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">4 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Mar 2026</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹80L</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-3">🌆</div><span class="proj-badge badge-upcoming">⏳ Upcoming</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏘️ Colony</div><div class="proj-name">Royal Gardens Township</div><div class="proj-loc">📍 Vaishali Nagar, Jaipur</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">1200</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">600</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">10 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Jun 2027</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹1.2Cr</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-4">🌿</div><span class="proj-badge badge-active">● Active</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏡 Villa / House</div><div class="proj-name">Green Valley Villas</div><div class="proj-loc">📍 Sector 21, Chandigarh</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Units</div><div class="proj-feat-val">180</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">42</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">1 Kanal</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Ready</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹2.5Cr</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-5">🌇</div><span class="proj-badge badge-hot">🔥 Hot Deal</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏠 Residential Plot</div><div class="proj-name">Sunrise Heights — Phase II</div><div class="proj-loc">📍 Gomti Nagar, Lucknow</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">450</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">110</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">5 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Aug 2026</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹38L</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-6">🏗️</div><span class="proj-badge badge-upcoming">⏳ Upcoming</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏙️ Township</div><div class="proj-name">Pearl City Township</div><div class="proj-loc">📍 Outer Ring Road, Hyderabad</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">3500</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">3500</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">5 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">2028</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹55L</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-7">🌳</div><span class="proj-badge badge-active">● Active</span><div class="proj-wishlist">🤍</div></div><div class="proj-card-body"><div class="proj-type">🏘️ Colony</div><div class="proj-name">Emerald Enclave</div><div class="proj-loc">📍 Baner, Pune</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">680</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">200</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">7 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Oct 2026</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹72L</div></div><span class="proj-cta">View Details →</span></div></a>
+      <a href="03_project_detail.html" class="proj-card"><div class="proj-card-img"><div class="proj-card-img-bg bg-8">🌃</div><span class="proj-badge badge-hot">🔥 Hot Deal</span><div class="proj-wishlist">❤️</div></div><div class="proj-card-body"><div class="proj-type">🏢 Commercial Plot</div><div class="proj-name">Sky Business Park</div><div class="proj-loc">📍 Dwarka Expressway, Delhi</div><div class="proj-features"><div class="proj-feat"><div class="proj-feat-label">Total</div><div class="proj-feat-val">240</div></div><div class="proj-feat"><div class="proj-feat-label">Available</div><div class="proj-feat-val">55</div></div><div class="proj-feat"><div class="proj-feat-label">Min Size</div><div class="proj-feat-val">4 Marla</div></div><div class="proj-feat"><div class="proj-feat-label">Possession</div><div class="proj-feat-val">Ready</div></div></div></div><div class="proj-card-footer"><div class="proj-price"><div class="proj-price-label">Starting From</div><div class="proj-price-val">₹95L</div></div><span class="proj-cta">View Details →</span></div></a>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn" style="font-size:16px;">‹</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">4</button>
+      <span style="color:var(--text-light);font-size:14px;">...</span>
+      <button class="page-btn">24</button>
+      <button class="page-btn" style="font-size:16px;">›</button>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1280px;margin:0 auto;">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="footer-logo"><img src="images/logo.png" style="background:white;" alt="Logo"><div class="footer-logo-text">The Sky Is Your Limit<br><span style="font-size:12px;font-weight:400;color:rgba(255,255,255,0.5)">Premium Real Estate INDIA</span></div></div><p class="footer-desc">INDIA's most trusted real estate partner — connecting families with their dream properties since 2026.</p><div class="footer-socials"><a href="#" class="social-btn">f</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">✕</a><a href="#" class="social-btn">▶</a></div></div>
+      <div><div class="footer-col-title">Quick Links</div><div class="footer-links"><a href="index.html">Home</a><a href="02_projects.html">All Projects</a><a href="#">Available Plots</a><a href="#">About Us</a></div></div>
+      <div><div class="footer-col-title">Property Types</div><div class="footer-links"><a href="#">Residential Plots</a><a href="#">Commercial Plots</a><a href="#">Houses</a><a href="#">Colonies</a></div></div>
+      <div><div class="footer-col-title">Contact Us</div><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><span class="footer-contact-text">Main Boulevard, Delhi, INDIA</span></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><span class="footer-contact-text">+91 300 1234567</span></div><div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><span class="footer-contact-text">info@skyisyourlimit.in</span></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 The Sky Is Your Limit. All rights reserved.</div>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){const h=document.getElementById('hamburger'),m=document.getElementById('mobileMenu'),o=document.getElementById('mobOverlay');h.classList.toggle('open');m.classList.toggle('show');o.classList.toggle('show');document.body.style.overflow=m.classList.contains('show')?'hidden':'';}
+function closeMenu(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileMenu').classList.remove('show');document.getElementById('mobOverlay').classList.remove('show');document.body.style.overflow='';}
+function openFilter(){document.getElementById('filterSidebar').classList.add('open');document.getElementById('filterOverlay').classList.add('show');document.body.style.overflow='hidden';}
+function closeFilter(){document.getElementById('filterSidebar').classList.remove('open');document.getElementById('filterOverlay').classList.remove('show');document.body.style.overflow='';}
+document.querySelectorAll('.proj-wishlist').forEach(b=>{b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();b.textContent=b.textContent==='🤍'?'❤️':'🤍';});});
+document.querySelectorAll('.view-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.view-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');});});
+document.querySelectorAll('.page-btn').forEach(b=>{b.addEventListener('click',()=>{if(b.textContent==='‹'||b.textContent==='›')return;document.querySelectorAll('.page-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');});});
+function updateFilters(){}
+function clearFilters(){document.querySelectorAll('.filter-check input,.filter-radio input').forEach(i=>i.checked=false);document.getElementById('active-filters').innerHTML='';}
+function applyFilters(){const btn=document.querySelector('.filter-apply');btn.textContent='✓ Applied!';setTimeout(()=>btn.textContent='Apply Filters →',1500);closeFilter();}
+</script>
+</body>
+</html>

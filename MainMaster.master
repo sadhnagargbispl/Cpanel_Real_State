@@ -1,0 +1,203 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MainMaster.master.cs" Inherits="MainMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> <%=Session["Title"]%></title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="css/Index.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <%-- <nav>
+                <a href="#" class="nav-logo">
+                    <img src="images/logo.png" alt="The Sky Is Your Limit">
+                    <div class="nav-logo-text">
+                        <span>The Sky Is Your Limit</span>
+                        <span>Premium Real Estate</span>
+                    </div>
+                </a>
+                <div class="nav-links">
+                    <a href="#" class="active">Home</a>
+                    <a href="#">Projects</a>
+                    <a href="#">Plots</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="nav-cta">
+                    <a href="agent_login.aspx" class="btn-outline">Agent Login</a>
+                    <a href="#" class="btn-primary">View Projects →</a>
+                </div>
+            </nav>--%>
+            <nav>
+                <a href="#" class="nav-logo">
+                    <img src="images/logo.png" alt="The Sky Is Your Limit">
+                    <div class="nav-logo-text">
+                        <span><%=Session["CompName"]%></span>
+                        <span>Premium Real Estate</span>
+                    </div>
+                </a>
+
+                <div class="nav-links">
+                    <a href="#" class="active">Home</a>
+                    <a href="#">Projects</a>
+                    <a href="#">Plots</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                </div>
+                <style>
+                    .user-dropdown {
+                        position: relative;
+                        display: inline-block;
+                    }
+
+                    .dropdown-menu {
+                        display: none;
+                        position: absolute;
+                        right: 0;
+                        background: #fff;
+                        min-width: 150px;
+                        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                        border-radius: 6px;
+                        overflow: hidden;
+                        z-index: 999;
+                    }
+
+                        .dropdown-menu a {
+                            display: block;
+                            padding: 10px 15px;
+                            text-decoration: none;
+                            color: #333;
+                        }
+
+                            .dropdown-menu a:hover {
+                                background: #f2f2f2;
+                            }
+
+                    .user-dropdown:hover .dropdown-menu {
+                        display: block;
+                    }
+                </style>
+                <div class="nav-cta">
+
+    <!-- Login Button -->
+    <asp:HyperLink ID="lnkLogin" runat="server"
+        NavigateUrl="agent_login.aspx"
+        CssClass="btn-outline">
+        Agent Login
+    </asp:HyperLink>
+
+    <!-- User Dropdown -->
+    <asp:Panel ID="pnlUser" runat="server" Visible="false">
+        <div class="user-dropdown">
+            <button class="btn-outline">
+                <asp:Literal ID="litUserName" runat="server"></asp:Literal> ▼
+            </button>
+
+            <div class="dropdown-menu">
+                <a href="Dashboard.aspx">Main Account</a>
+                <a href="logout.aspx">Logout</a>
+            </div>
+        </div>
+    </asp:Panel>
+
+    <a href="#" class="btn-primary">View Projects →</a>
+
+</div>
+            </nav>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <!-- FOOTER -->
+            <footer>
+                <div class="container">
+                    <div class="footer-grid">
+                        <div class="footer-brand">
+                            <div class="footer-logo">
+                                <img src="images/logo.png" style="background-color: white;" alt="Logo">
+                                <div class="footer-logo-text">
+                                    The Sky Is Your Limit<br>
+                                    <span style="font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.5)">Premium Real Estate INDIA</span>
+                                </div>
+                            </div>
+                            <p class="footer-desc">INDIA's most trusted real estate partner — connecting families with their dream properties since 2026.</p>
+                            <div class="footer-socials">
+                                <a href="#" class="social-btn">f</a>
+                                <a href="#" class="social-btn">in</a>
+                                <a href="#" class="social-btn">✕</a>
+                                <a href="#" class="social-btn">▶</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="footer-col-title">Quick Links</div>
+                            <div class="footer-links">
+                                <a href="#">Home</a>
+                                <a href="#">All Projects</a>
+                                <a href="#">Available Plots</a>
+                                <a href="#">About Us</a>
+                                <a href="#">Careers</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="footer-col-title">Property Types</div>
+                            <div class="footer-links">
+                                <a href="#">Residential Plots</a>
+                                <a href="#">Commercial Plots</a>
+                                <a href="#">Houses</a>
+                                <a href="#">Colonies</a>
+                                <a href="#">Townships</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="footer-col-title">Contact Us</div>
+                            <div class="footer-contact-item">
+                                <span class="footer-contact-icon">📍</span>
+                                <span class="footer-contact-text">Main Boulevard, Delhi, INDIA</span>
+                            </div>
+                            <div class="footer-contact-item">
+                                <span class="footer-contact-icon">📞</span>
+                                <span class="footer-contact-text">+91 300 1234567</span>
+                            </div>
+                            <div class="footer-contact-item">
+                                <span class="footer-contact-icon">✉️</span>
+                                <span class="footer-contact-text">info@skyisyourlimit.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="footer-copy">© 2026 <%=Session["CompName"]%>. All rights reserved.</div>
+                        <div class="footer-bottom-links">
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Use</a>
+                            <a href="#">Sitemap</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </form>
+
+    <script>
+        function setTab(el) {
+            el.closest('.search-tabs').querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Scroll animation
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

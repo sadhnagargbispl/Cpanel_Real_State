@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed! — The Sky Is Your Limit</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2B6B;--ocean:#1E6FBF;--gold:#F5A623;--gold-light:#FFD080;--white:#FFFFFF;--light-bg:#F4F7FC;--text-dark:#12203A;--text-mid:#4A5568;--text-light:#8A99B3;--border:#E2EAF4;--shadow:0 8px 40px rgba(27,43,107,0.10);--shadow-lg:0 20px 60px rgba(27,43,107,0.18);--green:#22C55E;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--light-bg);min-height:100vh;overflow-x:hidden;}
+
+  /* NAV */
+  nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;box-shadow:0 2px 24px rgba(27,43,107,0.07);position:sticky;top:0;z-index:1000;}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:48px;width:48px;border-radius:50%;}
+  .nav-logo-text{display:flex;flex-direction:column;line-height:1.1;}
+  .nav-logo-text span:first-child{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);}
+  .nav-logo-text span:last-child{font-size:10px;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;}
+  .nav-cta{display:flex;align-items:center;gap:12px;}
+  .btn-outline{padding:9px 22px;border:2px solid var(--navy);border-radius:8px;font-size:14px;font-weight:600;color:var(--navy);text-decoration:none;transition:all .2s;}
+  .btn-outline:hover{background:var(--navy);color:white;}
+  .btn-primary{padding:10px 24px;background:linear-gradient(135deg,var(--gold),#E8920F);border-radius:8px;font-size:14px;font-weight:600;color:white;text-decoration:none;transition:all .2s;}
+
+  /* CONFETTI */
+  @keyframes confetti-fall{0%{transform:translateY(-100px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+  .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;}
+  .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confetti-fall linear forwards;}
+
+  /* SUCCESS HEADER */
+  .success-header{background:linear-gradient(160deg,#0D1B4B 0%,#1B2B6B 50%,#1E6FBF 100%);padding:56px 48px;position:relative;overflow:hidden;text-align:center;}
+  .success-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:60px 60px;}
+  .success-icon-wrap{width:90px;height:90px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:42px;box-shadow:0 0 0 12px rgba(34,197,94,0.2),0 0 0 24px rgba(34,197,94,0.08);animation:pop .5s cubic-bezier(.36,.07,.19,.97);position:relative;z-index:1;}
+  @keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
+  .success-title{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,44px);font-weight:900;color:white;margin-bottom:10px;position:relative;z-index:1;}
+  .success-title em{color:var(--gold);font-style:normal;}
+  .success-subtitle{font-size:15px;color:rgba(255,255,255,0.7);position:relative;z-index:1;}
+  .booking-ref{display:inline-block;margin-top:18px;background:rgba(245,166,35,0.2);border:1px solid rgba(245,166,35,0.4);padding:10px 24px;border-radius:100px;font-size:14px;font-weight:700;color:var(--gold);position:relative;z-index:1;letter-spacing:1px;}
+
+  /* NEXT STEPS BAR */
+  .next-steps-bar{background:white;border-bottom:1px solid var(--border);padding:0 48px;overflow-x:auto;}
+  .next-steps-inner{max-width:1000px;margin:0 auto;display:flex;min-width:500px;}
+  .next-step-item{flex:1;padding:16px 10px;text-align:center;border-bottom:3px solid transparent;}
+  .next-step-item.done{border-bottom-color:var(--green);}
+  .next-step-item.current{border-bottom-color:var(--gold);}
+  .next-step-icon{font-size:20px;margin-bottom:5px;}
+  .next-step-name{font-size:12px;font-weight:700;color:var(--navy);}
+  .next-step-status-text{font-size:11px;color:var(--text-light);}
+  .next-step-item.done .next-step-status-text{color:var(--green);}
+  .next-step-item.current .next-step-status-text{color:var(--gold);font-weight:600;}
+
+  /* MAIN LAYOUT */
+  .ty-layout{max-width:1100px;margin:0 auto;padding:36px 48px 80px;display:grid;grid-template-columns:1fr 360px;gap:32px;}
+
+  /* CARDS */
+  .detail-card{background:white;border-radius:20px;border:1.5px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;}
+  .detail-card-header{padding:18px 24px;background:var(--light-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+  .detail-card-header h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);}
+  .detail-card-body{padding:24px;}
+  .booking-detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--border);font-size:14px;gap:12px;}
+  .booking-detail-row:last-child{border-bottom:none;}
+  .booking-detail-label{color:var(--text-mid);flex-shrink:0;}
+  .booking-detail-val{font-weight:600;color:var(--navy);text-align:right;}
+  .booking-detail-val.green{color:var(--green);}
+  .booking-detail-val.gold{color:var(--gold);font-family:'Playfair Display',serif;font-size:17px;}
+
+  /* TABLE */
+  .schedule-table{width:100%;border-collapse:collapse;}
+  .schedule-table th{background:var(--navy);color:white;padding:10px 14px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;}
+  .schedule-table th:first-child{border-radius:10px 0 0 0;} .schedule-table th:last-child{border-radius:0 10px 0 0;}
+  .schedule-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);}
+  .schedule-table tr:last-child td{border-bottom:none;}
+  .schedule-table tr:nth-child(even) td{background:var(--light-bg);}
+  .schedule-table .paid-row td{background:rgba(34,197,94,0.06);}
+  .status-paid{color:var(--green);font-weight:700;font-size:12px;}
+  .status-upcoming{color:var(--text-light);font-size:12px;}
+  .status-due{color:var(--gold);font-weight:700;font-size:12px;}
+
+  /* WHAT'S NEXT */
+  .steps-list{display:flex;flex-direction:column;gap:14px;}
+  .next-step-card{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--light-bg);border-radius:14px;border:1px solid var(--border);}
+  .next-step-num{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--navy),var(--ocean));color:white;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;}
+  .next-step-content h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+  .next-step-content p{font-size:13px;color:var(--text-mid);line-height:1.5;}
+  .action-buttons{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+  .btn-download{flex:1;min-width:140px;padding:13px 16px;background:var(--navy);color:white;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;text-align:center;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:none;}
+  .btn-download:hover{background:var(--ocean);}
+  .btn-browse{flex:1;min-width:140px;padding:13px 16px;border:2px solid var(--navy);color:var(--navy);border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;text-align:center;transition:all .2s;background:transparent;}
+  .btn-browse:hover{background:var(--navy);color:white;}
+
+  /* SIDEBAR */
+  .sidebar-card{background:white;border:1.5px solid var(--border);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;}
+  .sidebar-card-header{padding:16px 20px;background:linear-gradient(135deg,var(--navy),var(--ocean));display:flex;align-items:center;gap:10px;}
+  .sidebar-card-header h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:white;}
+  .sidebar-card-body{padding:18px 20px;}
+  .agent-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .agent-av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--ocean));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;flex-shrink:0;}
+  .agent-name{font-size:15px;font-weight:700;color:var(--navy);}
+  .agent-role{font-size:12px;color:var(--text-light);}
+  .contact-btns{display:flex;gap:8px;}
+  .cta-call{flex:1;padding:10px;background:var(--navy);color:white;border-radius:8px;font-size:13px;font-weight:600;text-align:center;text-decoration:none;transition:all .2s;}
+  .cta-call:hover{background:var(--ocean);}
+  .cta-wa{flex:1;padding:10px;background:#25D366;color:white;border-radius:8px;font-size:13px;font-weight:600;text-align:center;text-decoration:none;}
+  .receipt-mini{background:var(--light-bg);border-radius:12px;padding:16px;border:1px solid var(--border);}
+  .receipt-mini h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;}
+  .receipt-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px;}
+  .receipt-row span:first-child{color:var(--text-mid);}
+  .receipt-row span:last-child{font-weight:600;color:var(--navy);}
+  .receipt-row.total{padding-top:9px;border-top:2px solid var(--navy);font-weight:700;font-size:14px;}
+  .receipt-row.total span:last-child{color:var(--gold);}
+  .share-btns{display:flex;gap:8px;margin-top:12px;}
+  .share-btn{flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:600;text-align:center;text-decoration:none;cursor:pointer;border:none;transition:all .2s;}
+  .share-fb{background:#1877F2;color:white;} .share-wa{background:#25D366;color:white;} .share-tw{background:#1DA1F2;color:white;}
+  .refer-card{background:linear-gradient(135deg,var(--gold),#E8920F);border-radius:20px;padding:22px;text-align:center;}
+  .refer-card p{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6;margin-bottom:14px;}
+  .refer-btn{display:block;padding:11px;background:white;border-radius:10px;font-size:14px;font-weight:700;color:var(--gold);text-decoration:none;}
+
+  /* FOOTER */
+  footer{background:#0D1B4B;padding:56px 48px 32px;}
+  .footer-links-row{display:flex;gap:28px;margin-bottom:28px;flex-wrap:wrap;justify-content:center;}
+  .footer-links-row a{font-size:14px;color:rgba(255,255,255,0.55);text-decoration:none;}
+  .footer-links-row a:hover{color:var(--gold);}
+  .footer-bottom-simple{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .footer-copy{font-size:13px;color:rgba(255,255,255,0.35);}
+  .footer-bottom-links{display:flex;gap:20px;flex-wrap:wrap;}
+  .footer-bottom-links a{font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;}
+
+  /* ══ RESPONSIVE ══ */
+  @media(max-width:1000px){.ty-layout{padding:24px 24px 60px;gap:24px;}.next-steps-bar{padding:0 24px;}.success-header{padding:48px 24px;}}
+  @media(max-width:820px){
+    nav{padding:0 20px;height:64px;}
+    .nav-cta .btn-outline{display:none;}
+    .ty-layout{grid-template-columns:1fr;padding:20px 16px 60px;}
+    .success-header{padding:40px 16px;}
+    .next-steps-bar{padding:0 16px;}
+  }
+  @media(max-width:600px){
+    nav{padding:0 16px;}
+    .nav-logo-text span:first-child{font-size:14px;}
+    .next-step-name{font-size:11px;}
+    .booking-detail-row{flex-direction:column;gap:4px;}
+    .booking-detail-val{text-align:left;}
+    .schedule-table{font-size:12px;} .schedule-table th,.schedule-table td{padding:8px 10px;}
+    .detail-card-body{padding:16px;}
+    footer{padding:36px 16px 24px;}
+    .footer-links-row{gap:16px;}
+    .footer-bottom-simple{flex-direction:column;text-align:center;}
+    .footer-bottom-links{justify-content:center;}
+  }
+  @media(max-width:420px){
+    .action-buttons{flex-direction:column;}
+    .btn-download,.btn-browse{width:100%;}
+    .share-btns{gap:6px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="confetti-container" id="confetti"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="Logo">
+    <div class="nav-logo-text"><span>The Sky Is Your Limit</span><span>Booking Confirmed</span></div>
+  </a>
+  <div class="nav-cta">
+    <a href="02_projects.html" class="btn-outline">Browse More</a>
+    <a href="index.html" class="btn-primary">Go to Home</a>
+  </div>
+</nav>
+
+<!-- SUCCESS HEADER -->
+<div class="success-header">
+  <div class="success-icon-wrap">✓</div>
+  <h1 class="success-title">Booking <em>Confirmed!</em></h1>
+  <p class="success-subtitle">Congratulations! Your plot has been successfully reserved. Welcome to the Sky family! 🎉</p>
+  <div class="booking-ref">📋 Booking Reference: SKYRS-2026-08741</div>
+</div>
+
+<!-- NEXT STEPS BAR -->
+<div class="next-steps-bar">
+  <div class="next-steps-inner">
+    <div class="next-step-item done"><div class="next-step-icon">✅</div><div class="next-step-name">Booking Done</div><div class="next-step-status-text">✓ Completed</div></div>
+    <div class="next-step-item current"><div class="next-step-icon">📧</div><div class="next-step-name">Email Sent</div><div class="next-step-status-text">Sending now...</div></div>
+    <div class="next-step-item"><div class="next-step-icon">📞</div><div class="next-step-name">Agent Call</div><div class="next-step-status-text">Within 24 hrs</div></div>
+    <div class="next-step-item"><div class="next-step-icon">📄</div><div class="next-step-name">Documents</div><div class="next-step-status-text">3–5 days</div></div>
+    <div class="next-step-item"><div class="next-step-icon">🏠</div><div class="next-step-name">Possession</div><div class="next-step-status-text">Dec 2026</div></div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="ty-layout">
+
+  <!-- LEFT -->
+  <div>
+    <!-- BOOKING DETAILS -->
+    <div class="detail-card">
+      <div class="detail-card-header"><span style="font-size:20px;">📋</span><h3>Booking Confirmation Details</h3></div>
+      <div class="detail-card-body">
+        <div class="booking-detail-row"><span class="booking-detail-label">Booking Reference</span><span class="booking-detail-val">SKYRS-2026-08741</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Booking Date & Time</span><span class="booking-detail-val">March 05, 2026 — 2:45 PM IST</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Project Name</span><span class="booking-detail-val">Sky Residencia — Phase I</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Location</span><span class="booking-detail-val">Sector 7, New Delhi, INDIA</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Plot Size</span><span class="booking-detail-val">5 Marla (1,125 sq ft)</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Total Plot Price</span><span class="booking-detail-val gold">₹45,00,000</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Amount Paid Today</span><span class="booking-detail-val green">₹9,25,000 ✓ Paid</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Payment Method</span><span class="booking-detail-val">Credit Card (**** 4512)</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Payment Status</span><span class="booking-detail-val green">✅ Confirmed & Cleared</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Possession Date</span><span class="booking-detail-val">December 2026</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Booking Type</span><span class="booking-detail-val">3-Year Installment Plan</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-label">Confirmation Sent To</span><span class="booking-detail-val">rahul@example.com</span></div>
+      </div>
+    </div>
+
+    <!-- INSTALLMENT SCHEDULE -->
+    <div class="detail-card">
+      <div class="detail-card-header"><span style="font-size:20px;">📅</span><h3>Your Installment Payment Schedule</h3></div>
+      <div style="overflow-x:auto;">
+        <table class="schedule-table">
+          <thead><tr><th>#</th><th>Installment</th><th>Due Date</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr class="paid-row"><td>01</td><td>Booking Amount (20%)</td><td>Mar 05, 2026</td><td>₹9,00,000</td><td><span class="status-paid">✓ PAID</span></td></tr>
+            <tr><td>02</td><td>1st Installment (10%)</td><td>Jun 05, 2026</td><td>₹4,50,000</td><td><span class="status-due">⏳ Upcoming</span></td></tr>
+            <tr><td>03</td><td>2nd Installment (10%)</td><td>Sep 05, 2026</td><td>₹4,50,000</td><td><span class="status-upcoming">— Pending</span></td></tr>
+            <tr><td>04</td><td>3rd Installment (10%)</td><td>Dec 05, 2026</td><td>₹4,50,000</td><td><span class="status-upcoming">— Pending</span></td></tr>
+            <tr><td>05</td><td>4th Installment (10%)</td><td>Mar 05, 2027</td><td>₹4,50,000</td><td><span class="status-upcoming">— Pending</span></td></tr>
+            <tr><td>06</td><td>5th Installment (10%)</td><td>Sep 05, 2027</td><td>₹4,50,000</td><td><span class="status-upcoming">— Pending</span></td></tr>
+            <tr><td>07</td><td>6th Installment (10%)</td><td>Mar 05, 2028</td><td>₹4,50,000</td><td><span class="status-upcoming">— Pending</span></td></tr>
+            <tr><td>08</td><td>Final Payment (20%)</td><td>Sep 05, 2028</td><td>₹9,00,000</td><td><span class="status-upcoming">— Pending</span></td></tr>
+            <tr style="background:var(--light-bg);"><td colspan="3"><strong>Total</strong></td><td><strong>₹45,00,000</strong></td><td><strong style="color:var(--green);">20% Paid ✓</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div class="detail-card">
+      <div class="detail-card-header"><span style="font-size:20px;">🚀</span><h3>What Happens Next?</h3></div>
+      <div class="detail-card-body">
+        <div class="steps-list">
+          <div class="next-step-card"><div class="next-step-num" style="background:var(--green);">✓</div><div class="next-step-content"><h4>Booking Confirmed ✅</h4><p>Your plot is reserved under your name. No one else can book this plot.</p></div></div>
+          <div class="next-step-card"><div class="next-step-num">1</div><div class="next-step-content"><h4>Email & SMS Confirmation</h4><p>Within 15 minutes, you will receive a detailed confirmation on your registered email and phone with receipts.</p></div></div>
+          <div class="next-step-card"><div class="next-step-num">2</div><div class="next-step-content"><h4>Agent Will Call You (Within 24 Hours)</h4><p>Your dedicated agent Rahul Sharma (+91 98765 43210) will contact you to walk you through next steps.</p></div></div>
+          <div class="next-step-card"><div class="next-step-num">3</div><div class="next-step-content"><h4>Original Documents Dispatch (3–5 Days)</h4><p>Your booking letter, payment receipt, and allotment documents will be couriered to your address.</p></div></div>
+          <div class="next-step-card"><div class="next-step-num">4</div><div class="next-step-content"><h4>Subsequent Installments</h4><p>Your next installment of ₹4,50,000 is due on June 05, 2026. You'll receive reminders 30 and 7 days before each due date.</p></div></div>
+          <div class="next-step-card"><div class="next-step-num">5</div><div class="next-step-content"><h4>Possession — December 2026 🏠</h4><p>After completing all installments, you will receive full possession with registry and fard documents by December 2026.</p></div></div>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-download" onclick="window.print()">📥 Download Receipt</button>
+          <a href="02_projects.html" class="btn-browse">🏘️ Browse More Projects</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <!-- AGENT -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header"><span style="font-size:18px;">👤</span><h3>Your Dedicated Agent</h3></div>
+      <div class="sidebar-card-body">
+        <div class="agent-wrap">
+          <div class="agent-av">R</div>
+          <div><div class="agent-name">Rahul Sharma</div><div class="agent-role">Senior Property Advisor</div><div style="font-size:11px;color:var(--green);margin-top:2px;">● Online Now</div></div>
+        </div>
+        <p style="font-size:13px;color:var(--text-mid);margin-bottom:12px;line-height:1.6;">Your agent will contact you within 24 hours. You can also reach out directly.</p>
+        <div class="contact-btns">
+          <a href="tel:+911234567890" class="cta-call">📞 Call Agent</a>
+          <a href="https://wa.me/911234567890" class="cta-wa">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECEIPT -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header"><span style="font-size:18px;">🧾</span><h3>Payment Receipt</h3></div>
+      <div class="sidebar-card-body">
+        <div class="receipt-mini">
+          <h4>SKYRS-2026-08741</h4>
+          <div class="receipt-row"><span>Date</span><span>Mar 05, 2026</span></div>
+          <div class="receipt-row"><span>Project</span><span>Sky Residencia I</span></div>
+          <div class="receipt-row"><span>Plot Size</span><span>5 Marla</span></div>
+          <div class="receipt-row"><span>Booking (20%)</span><span>₹9,00,000</span></div>
+          <div class="receipt-row"><span>Processing</span><span>₹25,000</span></div>
+          <div class="receipt-row total"><span>Total Paid</span><span>₹9,25,000</span></div>
+        </div>
+        <button class="btn-download" style="margin-top:12px;width:100%;padding:11px;" onclick="window.print()">📥 Download PDF Receipt</button>
+      </div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header"><span style="font-size:18px;">🎉</span><h3>Share the Good News!</h3></div>
+      <div class="sidebar-card-body">
+        <p style="font-size:13px;color:var(--text-mid);margin-bottom:12px;">Share your new property purchase with friends and family!</p>
+        <div class="share-btns">
+          <a href="#" class="share-btn share-fb">Facebook</a>
+          <a href="#" class="share-btn share-wa">WhatsApp</a>
+          <a href="#" class="share-btn share-tw">Twitter</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFER -->
+    <div class="refer-card">
+      <div style="font-size:34px;margin-bottom:10px;">🎁</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:white;margin-bottom:8px;">Refer & Earn ₹50,000!</h3>
+      <p>Refer a friend who books a plot and earn ₹50,000 as referral bonus. No limits!</p>
+      <a href="#" class="refer-btn">Get Your Referral Code →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1280px;margin:0 auto;">
+    <div class="footer-links-row">
+      <a href="index.html">Home</a>
+      <a href="02_projects.html">All Projects</a>
+      <a href="#">My Bookings</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+    <div class="footer-bottom-simple">
+      <div class="footer-copy">© 2026 The Sky Is Your Limit Pvt. Ltd. — All rights reserved.</div>
+      <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function createConfetti(){const c=document.getElementById('confetti');const colors=['#F5A623','#1B2B6B','#1E6FBF','#22C55E','#FFD080','#EF4444'];for(let i=0;i<80;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.cssText=`left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*10}px;height:${6+Math.random()*10}px;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*1.5}s;border-radius:${Math.random()>.5?'50%':'2px'};`;c.appendChild(p);}setTimeout(()=>c.innerHTML='',6000);}
+createConfetti();
+</script>
+</body>
+</html>

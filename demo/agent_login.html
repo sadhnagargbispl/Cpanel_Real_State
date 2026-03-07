@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Agent Login — The Sky Is Your Limit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
+:root{--navy:#1B2B6B;--nd:#0D1B4B;--ocean:#1E6FBF;--gold:#F5A623;--gd:#E8920F;--border:#E2EAF4;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+/* LEFT */
+.left{background:linear-gradient(155deg,#05102E 0%,var(--nd) 40%,#1B3A8F 80%,var(--ocean) 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:56px 52px;}
+.left::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:52px 52px;}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;}
+.o1{width:560px;height:560px;background:var(--ocean);opacity:.18;top:-160px;right:-100px;animation:flt 10s ease-in-out infinite;}
+.o2{width:380px;height:380px;background:#6B2D8B;opacity:.14;bottom:-60px;left:-60px;animation:flt 12s ease-in-out infinite reverse;}
+.o3{width:220px;height:220px;background:var(--gold);opacity:.1;top:40%;left:12%;animation:flt 8s ease-in-out infinite 2s;}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+.lc{position:relative;z-index:1;}
+.l-logo{display:flex;align-items:center;gap:12px;margin-bottom:48px;}
+.l-logo-icon{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gd));display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 6px 20px rgba(245,166,35,.4);}
+.l-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;line-height:1.2;}
+.l-sub{font-size:10px;color:rgba(255,255,255,.42);letter-spacing:1.1px;text-transform:uppercase;}
+.l-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.2vw,42px);font-weight:900;color:#fff;line-height:1.12;margin-bottom:16px;}
+.l-title em{font-style:italic;color:var(--gold);}
+.l-desc{font-size:14.5px;color:rgba(255,255,255,.58);line-height:1.78;margin-bottom:38px;max-width:420px;}
+.features{display:flex;flex-direction:column;gap:14px;}
+.fi-item{display:flex;align-items:center;gap:12px;}
+.fi-icon{width:38px;height:38px;border-radius:10px;background:rgba(245,166,35,.13);border:1px solid rgba(245,166,35,.25);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.fi-text{font-size:13px;color:rgba(255,255,255,.7);}
+/* RIGHT */
+.right{background:#f4f7fc;display:flex;align-items:center;justify-content:center;padding:48px 40px;}
+.form-box{background:#fff;border-radius:22px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(27,43,107,.12);}
+.fh{margin-bottom:28px;}
+.fh h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.fh p{font-size:13.5px;color:#64748B;line-height:1.6;}
+.fg{margin-bottom:16px;}
+.fl{display:block;font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.iw{position:relative;}
+.iic{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;}
+.inp{width:100%;padding:12px 14px 12px 40px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:#0F1E3C;outline:none;transition:border-color .2s,box-shadow .2s;font-family:'DM Sans',sans-serif;}
+.inp:focus{border-color:var(--ocean);box-shadow:0 0 0 3px rgba(30,111,191,.1);}
+.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;color:#94A3B8;}
+.row-btw{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.cb-lbl{display:flex;align-items:center;gap:7px;font-size:13px;color:#64748B;cursor:pointer;}
+.cb-lbl input{width:15px;height:15px;accent-color:var(--ocean);}
+.forgot{font-size:13px;color:var(--ocean);font-weight:600;text-decoration:none;}
+.forgot:hover{text-decoration:underline;}
+.btn-login{width:100%;padding:13px;background:linear-gradient(135deg,var(--navy),var(--ocean));border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 6px 22px rgba(27,43,107,.25);transition:all .25s;margin-bottom:16px;}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(27,43,107,.32);}
+.demo-card{background:#f4f7fc;border-radius:10px;padding:13px 15px;font-size:12.5px;color:#64748B;line-height:1.85;border:1px solid var(--border);}
+.demo-card strong{color:var(--navy);}
+.back-lnk{text-align:center;margin-top:18px;font-size:13px;color:#94A3B8;}
+.back-lnk a{color:var(--ocean);font-weight:600;text-decoration:none;}
+.err-msg{background:#FEF2F2;border:1px solid #FECACA;border-radius:9px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:14px;display:none;}
+.err-msg.show{display:block;}
+.suc-msg{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:9px;padding:10px 14px;font-size:13px;color:#166534;text-align:center;margin-bottom:14px;display:none;}
+.suc-msg.show{display:block;}
+@media(max-width:768px){body{grid-template-columns:1fr;}.left{display:none;}.right{padding:32px 20px;min-height:100vh;}.form-box{max-width:100%;}}
+</style>
+</head>
+<body>
+<div class="left">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="lc">
+    <div class="l-logo">
+      <div class="l-logo-icon">🏙️</div>
+      <div><div class="l-brand">The Sky Is Your Limit</div><div class="l-sub">Agent Portal v2.0</div></div>
+    </div>
+    <h2 class="l-title">Welcome to Your<br><em>Agent Dashboard</em></h2>
+    <p class="l-desc">Manage projects, plots, customers, bookings & commissions — all in one powerful platform built for top-performing agents.</p>
+    <div class="features">
+      <div class="fi-item"><div class="fi-icon">📊</div><div class="fi-text">Live sales & revenue analytics dashboard</div></div>
+      <div class="fi-item"><div class="fi-icon">🏠</div><div class="fi-text">Track all booked properties & availability</div></div>
+      <div class="fi-item"><div class="fi-icon">👥</div><div class="fi-text">Manage customers, agents & team performance</div></div>
+      <div class="fi-item"><div class="fi-icon">₹</div><div class="fi-text">Real-time commission tracker & payouts</div></div>
+      <div class="fi-item"><div class="fi-icon">🧾</div><div class="fi-text">Instant booking receipts & payment records</div></div>
+    </div>
+  </div>
+</div>
+<div class="right">
+  <div class="form-box">
+    <div class="fh">
+      <h2>Agent Sign In</h2>
+      <p>Enter your credentials to access your portal. Contact admin if you need access.</p>
+    </div>
+    <div class="err-msg" id="errMsg">❌ Invalid email or password. Please try again.</div>
+    <div class="suc-msg" id="sucMsg">✅ Login successful! Taking you to the dashboard…</div>
+    <form action="agent_dashboard.html"">
+      <div class="fg">
+        <label class="fl">Email Address</label>
+        <div class="iw"><span class="iic">✉️</span><input type="email" class="inp" id="em" placeholder="you@theskyisyourlimit.pk" required></div>
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <div class="iw"><span class="iic">🔒</span><input type="password" class="inp" id="pw" placeholder="Enter your password" required><button type="button" class="eye-btn" onclick="tp()">👁️</button></div>
+      </div>
+      <div class="row-btw">
+        <label class="cb-lbl"><input type="checkbox"> Remember me</label>
+        <a href="#" class="forgot">Forgot Password?</a>
+      </div>
+     <a href="agent_dashboard.html"> <button type="submit" class="btn-login" id="lbtn">🔑 Sign In to Dashboard</button> </a>
+    </form>
+    <div class="demo-card"><strong>Demo Login:</strong><br>Email: <code>agent@sky.pk</code><br>Password: <code>agent123</code></div>
+    <div class="back-lnk"><a href="01_homepage.html">← Back to main website</a></div>
+  </div>
+</div>
+<script>
+function tp(){const i=document.getElementById('pw');i.type=i.type==='password'?'text':'password';}
+function doLogin(e){
+  e.preventDefault();
+  const em=document.getElementById('em').value,pw=document.getElementById('pw').value;
+  document.getElementById('errMsg').classList.remove('show');
+  if(em==='agent@sky.pk'&&pw==='agent123'){
+    document.getElementById('sucMsg').classList.add('show');
+    document.getElementById('lbtn').textContent='Loading dashboard…';
+    document.getElementById('lbtn').disabled=true;
+    setTimeout(()=>location.href='agent_dashboard.html',1500);
+  } else {
+    document.getElementById('errMsg').classList.add('show');
+  }
+}
+</script>
+</body>
+</html>

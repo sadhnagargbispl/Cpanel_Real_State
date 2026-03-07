@@ -1,0 +1,141 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="SiteMaster.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title><%=Session["Title"]%></title>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="AjaxToolkit" %>
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="sb-overlay" id="sbOv" onclick="cSB()"></div>
+        <aside class="sidebar" id="sb">
+            <div class="sb-top">
+                <div class="sb-logo">🏙️</div>
+                <div>
+                    <div class="sb-brand"><%=Session["CompName"]%></div>
+                    <div class="sb-tagline">Agent Portal</div>
+                </div>
+            </div>
+            <div class="sb-agent">
+                <div class="sb-av">
+                    <asp:Label ID="LblMemberIDLOGO" runat="server" Text=""></asp:Label>
+                </div>
+                <div>
+                    <div class="sb-aname">
+                        <asp:Label ID="LblMemberName" runat="server" Text=""></asp:Label>
+                    </div>
+                    <div class="sb-arole">
+                        <asp:Label ID="LblMemberID" runat="server" Text=""></asp:Label>
+                    </div>
+                </div>
+                <div class="sb-status">
+                    <span class="sb-status-dot"></span>
+                    <asp:Label ID="Lblstatus" runat="server" Text=""></asp:Label>
+                </div>
+            </div>
+            <nav class="sb-nav">
+                <div class="nav-group-title">Overview</div>
+                <a href="Dashboard.aspx" class="ni active"><span class="ni-ic">📊</span>Dashboard</a>
+
+                <div class="nav-group-title">Properties</div>
+                <a href="#" class="ni"><span class="ni-ic">🏘️</span>My Projects<span class="ni-badge ">0</span></a>
+                <div class="ni" onclick="tSub('plSub',this)">
+                    <span class="ni-ic">📐</span>Plot Management<span class="ni-arrow">›</span>
+                </div>
+                <div class="sub-items" id="plSub">
+                    <a href="#" class="sub-ni">• All Plots</a>
+                    <a href="#" class="sub-ni">• Add Plot</a>
+                    <a href="#" class="sub-ni">• Availability</a>
+                </div>
+                <a href="#" class="ni"><span class="ni-ic">🏠</span>Booked Properties</a>
+
+                <div class="nav-group-title">People</div>
+                <a href="agent_customers.aspx" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge ">0</span></a>
+                <a href="agent_myagents.aspx" class="ni"><span class="ni-ic">🤝</span>My Agents<span class="ni-badge ">0</span></a>
+
+                <div class="nav-group-title">Finance</div>
+                <a href="#" class="ni"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">0</span></a>
+                <%-- <a href="#" class="ni"><span class="ni-ic">💳</span>Payments</a>--%>
+                <a href="#" class="ni"><span class="ni-ic">₹</span>My Commission</a>
+                <a href="#" class="ni"><span class="ni-ic">🧾</span>Receipts</a>
+
+                <div class="nav-group-title">Account</div>
+                <%--<a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>--%>
+                <a href="ProfilePage.aspx" class="ni"><span class="ni-ic">👤</span>My Profile</a>
+                <a href="Welcome.aspx" class="ni"><span class="ni-ic">👤</span>Welcome Letter</a>
+                <%--    <a href="Index.aspx" class="ni"><span class="ni-ic">🌐</span>Back To Main</a>
+                <a href="logout.aspx" class="ni"><span class="ni-ic">🚪</span>Sign Out</a>--%>
+            </nav>
+            <div class="sb-bottom">
+                <a href="Index.aspx">🌐 Back To Main</a>
+                <a href="logout.aspx">🚪 Sign Out</a>
+            </div>
+        </aside>
+        <div class="main">
+
+            <div class="topbar">
+                <div class="tb-l">
+                    <button type="button" class="menu-toggle" onclick="oSB()">☰</button>
+                    <div>
+                        <%--<div class="topbar-title">My Agents</div>--%>
+                    </div>
+                </div>
+                <div class="tb-r">
+                    <%-- <div class="tb-search"><span style="color: var(--muted)">🔍</span><input placeholder="Search customers, plots…"></div>
+                    <div class="tb-icon-btn">
+                        🔔<div class="badge-dot"></div>
+                    </div>
+                    <div class="tb-icon-btn">📬</div>--%>
+                    <div class="tb-user">
+                        <div class="tb-uav">
+                            <asp:Label ID="LblNameLogo" runat="server" Text=""></asp:Label>
+                        </div>
+                        <div>
+                            <div class="tb-uname">
+                                <asp:Label ID="Lblname" runat="server" Text=""></asp:Label>
+                            </div>
+                            <div class="tb-urole">
+                                <asp:Label ID="LblID" runat="server" Text=""></asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <script>
+        function oSB() { document.getElementById('sb').classList.add('open'); document.getElementById('sbOv').classList.add('show'); document.body.style.overflow = 'hidden'; }
+        function cSB() { document.getElementById('sb').classList.remove('open'); document.getElementById('sbOv').classList.remove('show'); document.body.style.overflow = ''; }
+        function tSub(id, el) {
+            const s = document.getElementById(id);
+            s.classList.toggle('open');
+            if (el) el.classList.toggle('sub-open');
+        }
+        //function openModal(id) { document.getElementById(id).classList.add('show'); }
+        //function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        //document.addEventListener('click', function (e) {
+        //    if (e.target.classList.contains('modal-bg')) e.target.classList.remove('show');
+        //});
+
+        const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'], bks = [3, 5, 4, 7, 6, 9], rev = [28, 45, 36, 62, 54, 82];
+        const bc = document.getElementById('barChart');
+        if (bc) {
+            months.forEach((m, i) => {
+                const mh = 170, bh = Math.round((bks[i] / 10) * mh * .75), rh = Math.round((rev[i] / 90) * mh);
+                bc.innerHTML += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="display:flex;gap:4px;align-items:flex-end;height:${mh}px;"><div style="width:14px;height:${bh}px;background:var(--navy);border-radius:4px 4px 0 0;"></div><div style="width:14px;height:${rh}px;background:var(--gold);border-radius:4px 4px 0 0;"></div></div><div style="font-size:9.5px;color:var(--muted)">${m}</div></div>`;
+            });
+        }
+    </script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"f4c7240510c342d2be33c8f80ef832f4","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

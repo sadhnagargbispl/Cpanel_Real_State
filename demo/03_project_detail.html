@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Residencia Phase I — The Sky Is Your Limit</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2B6B;--ocean:#1E6FBF;--gold:#F5A623;--gold-light:#FFD080;--purple:#6B2D8B;--white:#FFFFFF;--light-bg:#F4F7FC;--text-dark:#12203A;--text-mid:#4A5568;--text-light:#8A99B3;--border:#E2EAF4;--shadow:0 8px 40px rgba(27,43,107,0.10);--shadow-lg:0 20px 60px rgba(27,43,107,0.18);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--white);overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;box-shadow:0 2px 24px rgba(27,43,107,0.07);}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-logo img{height:48px;width:48px;border-radius:50%;object-fit:cover;}
+  .nav-logo-text{display:flex;flex-direction:column;line-height:1.1;}
+  .nav-logo-text span:first-child{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);}
+  .nav-logo-text span:last-child{font-size:10px;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--text-mid);transition:color .2s;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-cta{display:flex;align-items:center;gap:12px;}
+  .btn-outline{padding:9px 22px;border:2px solid var(--navy);border-radius:8px;font-size:14px;font-weight:600;color:var(--navy);text-decoration:none;transition:all .2s;}
+  .btn-outline:hover{background:var(--navy);color:white;}
+  .btn-primary{padding:10px 24px;background:linear-gradient(135deg,var(--gold),#E8920F);border-radius:8px;font-size:14px;font-weight:600;color:white;text-decoration:none;transition:all .2s;}
+  /* HAMBURGER */
+  .hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;width:44px;height:44px;cursor:pointer;gap:6px;background:none;border:none;border-radius:10px;transition:background .2s;}
+  .hamburger:hover{background:var(--light-bg);}
+  .hamburger span{display:block;width:24px;height:2.5px;background:var(--navy);border-radius:2px;transition:all .35s ease;}
+  .hamburger.open span:nth-child(1){transform:translateY(8.5px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+  .hamburger.open span:nth-child(3){transform:translateY(-8.5px) rotate(-45deg);}
+  .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:998;opacity:0;transition:opacity .3s;}
+  .mob-overlay.show{opacity:1;}
+  .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;background:white;z-index:999;box-shadow:0 20px 60px rgba(27,43,107,0.2);border-bottom:3px solid var(--gold);padding-top:72px;transform:translateY(-20px);opacity:0;transition:all .35s ease;pointer-events:none;max-height:100vh;overflow-y:auto;}
+  .mobile-menu.show{transform:translateY(0);opacity:1;pointer-events:all;}
+  .mob-links a{display:flex;align-items:center;gap:14px;padding:15px 24px;font-size:15px;font-weight:600;color:var(--text-dark);text-decoration:none;transition:all .2s;border-left:3px solid transparent;}
+  .mob-links a:hover,.mob-links a.active{background:var(--light-bg);color:var(--navy);border-left-color:var(--gold);}
+  .mob-icon{font-size:18px;width:26px;text-align:center;}
+  .mob-cta{padding:16px 20px 20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px;}
+  .mob-cta a{display:block;text-align:center;padding:13px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;}
+  .mob-btn-1{border:2px solid var(--navy);color:var(--navy);}
+  .mob-btn-2{background:linear-gradient(135deg,var(--gold),#E8920F);color:white;}
+
+  /* HERO */
+  .detail-hero{margin-top:72px;height:420px;background:linear-gradient(135deg,#1B2B6B 0%,#1E6FBF 60%,#2a9fd6 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  .detail-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:60px 60px;}
+  .detail-hero-icon{font-size:100px;opacity:.22;position:relative;z-index:0;}
+  .detail-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,0.65) 100%);}
+  .detail-hero-bottom{position:absolute;bottom:28px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:flex-end;z-index:2;flex-wrap:wrap;gap:12px;}
+  .detail-badge{padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;background:#EF4444;color:white;margin-bottom:10px;display:inline-block;}
+  .detail-hero-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,40px);font-weight:900;color:white;margin-bottom:8px;}
+  .detail-hero-loc{font-size:15px;color:rgba(255,255,255,0.8);}
+  .detail-hero-right{text-align:right;}
+  .detail-price-label{font-size:12px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px;}
+  .detail-price-val{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);}
+  .detail-price-sub{font-size:13px;color:rgba(255,255,255,0.6);}
+
+  /* GALLERY */
+  .gallery-strip{background:#0D1B4B;padding:14px 48px;display:flex;gap:10px;overflow-x:auto;}
+  .gallery-strip::-webkit-scrollbar{height:4px;} .gallery-strip::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+  .gallery-thumb{width:90px;height:64px;border-radius:8px;flex-shrink:0;cursor:pointer;opacity:.6;transition:opacity .2s;display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid transparent;}
+  .gallery-thumb:first-child{opacity:1;border-color:var(--gold);}
+  .gallery-thumb:hover{opacity:1;}
+  .t1{background:linear-gradient(135deg,#1B2B6B,#2E4A9E);}.t2{background:linear-gradient(135deg,#1E6FBF,#0284C7);}.t3{background:linear-gradient(135deg,#0F766E,#0D9488);}.t4{background:linear-gradient(135deg,#6B2D8B,#9333EA);}.t5{background:linear-gradient(135deg,#92400E,#D97706);}
+
+  /* DETAIL LAYOUT */
+  .detail-layout{max-width:1280px;margin:0 auto;padding:44px 48px 80px;display:grid;grid-template-columns:1fr 360px;gap:44px;}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light);margin-bottom:28px;flex-wrap:wrap;}
+  .breadcrumb a{color:var(--text-light);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--navy);}
+  .breadcrumb span{color:var(--gold);}
+
+  /* TABS */
+  .detail-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:32px;overflow-x:auto;}
+  .detail-tabs::-webkit-scrollbar{height:0;}
+  .detail-tab{padding:12px 20px;font-size:14px;font-weight:600;color:var(--text-mid);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;}
+  .detail-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+  .tab-content{display:none;}
+  .tab-content.active{display:block;}
+
+  /* OVERVIEW */
+  .overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+  .overview-stat{background:var(--light-bg);border-radius:14px;padding:16px;border:1px solid var(--border);}
+  .overview-stat-icon{font-size:22px;margin-bottom:7px;}
+  .overview-stat-val{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);}
+  .overview-stat-label{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;}
+  .detail-section{margin-bottom:32px;}
+  .detail-section-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .detail-desc{font-size:15px;color:var(--text-mid);line-height:1.8;}
+  .amenities-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .amenity-item{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--light-bg);border-radius:10px;border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--text-dark);}
+  .amenity-item span:first-child{font-size:18px;}
+
+  /* PLOT SIZES */
+  .plot-sizes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .plot-size-card{border:2px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;}
+  .plot-size-card:hover,.plot-size-card.selected{border-color:var(--navy);background:rgba(27,43,107,0.04);}
+  .plot-size-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+  .plot-size-sqft{font-size:11px;color:var(--text-light);margin-bottom:7px;}
+  .plot-size-price{font-size:15px;font-weight:700;color:var(--ocean);}
+  .plot-size-avail{font-size:11px;color:#22C55E;font-weight:600;}
+
+  /* INSTALLMENT TABLE */
+  .installment-table{width:100%;border-collapse:collapse;}
+  .installment-table th{background:var(--navy);color:white;padding:11px 14px;text-align:left;font-size:12px;font-weight:600;}
+  .installment-table th:first-child{border-radius:10px 0 0 0;} .installment-table th:last-child{border-radius:0 10px 0 0;}
+  .installment-table td{padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);}
+  .installment-table tr:last-child td{border-bottom:none;}
+  .installment-table tr:nth-child(even) td{background:var(--light-bg);}
+
+  /* MAP */
+  .map-placeholder{height:260px;background:linear-gradient(135deg,#e8f4fd,#d0e8f8);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--border);color:var(--text-light);gap:12px;}
+  .map-placeholder .map-icon{font-size:44px;}
+
+  /* BOOKING CARD */
+  .booking-card{position:sticky;top:88px;height:fit-content;background:var(--white);border:2px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);}
+  .booking-card-header{background:linear-gradient(135deg,var(--navy),var(--ocean));padding:22px;text-align:center;}
+  .booking-price-label{font-size:11px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px;}
+  .booking-price{font-family:'Playfair Display',serif;font-size:34px;font-weight:900;color:var(--gold);}
+  .booking-price-sub{font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px;}
+  .booking-badge-row{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .booking-badge{padding:4px 12px;background:rgba(245,166,35,0.2);border:1px solid rgba(245,166,35,0.4);border-radius:100px;font-size:11px;color:var(--gold);font-weight:600;}
+  .booking-body{padding:20px;}
+  .booking-label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-light);margin-bottom:6px;}
+  .booking-select,.booking-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text-dark);outline:none;transition:border-color .2s;background:var(--white);margin-bottom:14px;}
+  .booking-select:focus,.booking-input:focus{border-color:var(--ocean);}
+  .booking-divider{border:none;border-top:1px solid var(--border);margin:16px 0;}
+  .booking-sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-mid);margin-bottom:8px;}
+  .booking-sum-row.total{font-weight:700;color:var(--navy);font-size:15px;padding-top:8px;border-top:1px solid var(--border);}
+  .btn-book{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),#E8920F);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(245,166,35,0.4);transition:all .2s;text-decoration:none;display:block;text-align:center;margin-bottom:10px;}
+  .btn-book:hover{transform:translateY(-2px);}
+  .btn-enquire{width:100%;padding:12px;border:2px solid var(--navy);border-radius:12px;color:var(--navy);font-size:14px;font-weight:600;background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;display:block;text-align:center;}
+  .btn-enquire:hover{background:var(--navy);color:white;}
+  .booking-trust{display:flex;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap;}
+  .trust-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-light);}
+  .agent-card{margin-top:16px;background:var(--light-bg);border-radius:14px;padding:18px;border:1px solid var(--border);}
+  .agent-card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:12px;}
+  .agent-info{display:flex;align-items:center;gap:12px;}
+  .agent-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--ocean));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;flex-shrink:0;}
+  .agent-name{font-size:15px;font-weight:700;color:var(--navy);}
+  .agent-role{font-size:12px;color:var(--text-light);}
+  .agent-btns{display:flex;gap:8px;margin-top:12px;}
+  .agent-btn{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;text-decoration:none;cursor:pointer;border:none;transition:all .2s;}
+  .agent-btn-call{background:var(--navy);color:white;}
+  .agent-btn-call:hover{background:var(--ocean);}
+  .agent-btn-wa{background:#25D366;color:white;}
+
+  /* FOOTER */
+  footer{background:#0D1B4B;padding:72px 48px 32px;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;}
+  .footer-logo{display:flex;align-items:center;gap:12px;}
+  .footer-logo img{height:52px;width:52px;border-radius:50%;}
+  .footer-logo-text{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;}
+  .footer-desc{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:300px;margin-top:12px;}
+  .footer-socials{display:flex;gap:12px;margin-top:16px;}
+  .social-btn{width:38px;height:38px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;transition:all .2s;}
+  .social-btn:hover{background:var(--gold);color:white;}
+  .footer-col-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:white;margin-bottom:20px;}
+  .footer-links{display:flex;flex-direction:column;gap:10px;}
+  .footer-links a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-contact-item{display:flex;gap:10px;margin-bottom:12px;}
+  .footer-contact-icon{font-size:16px;}
+  .footer-contact-text{font-size:13px;color:rgba(255,255,255,0.5);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .footer-copy{font-size:13px;color:rgba(255,255,255,0.35);}
+  .footer-bottom-links{display:flex;gap:24px;flex-wrap:wrap;}
+  .footer-bottom-links a{font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;}
+
+  /* ══ RESPONSIVE ══ */
+  @media(max-width:1100px){.detail-layout{padding:32px 24px 60px;gap:28px;}.detail-layout{grid-template-columns:1fr 320px;}.gallery-strip{padding:12px 24px;}}
+  @media(max-width:900px){
+    nav{padding:0 20px;height:64px;}.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}.mobile-menu,.mob-overlay{display:block;}.mobile-menu{padding-top:64px;}
+    .detail-hero{margin-top:64px;height:340px;}
+    .detail-hero-bottom{left:20px;right:20px;bottom:20px;}
+    .detail-hero-title{font-size:24px;}
+    .detail-price-val{font-size:28px;}
+    .gallery-strip{padding:10px 16px;}
+    .detail-layout{grid-template-columns:1fr;padding:20px 16px 60px;}
+    .booking-card{position:static;}
+    .overview-grid{grid-template-columns:repeat(2,1fr);}
+    .amenities-grid{grid-template-columns:repeat(2,1fr);}
+    .plot-sizes-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:600px){
+    .detail-hero{height:280px;}
+    .detail-hero-bottom{flex-direction:column;align-items:flex-start;gap:8px;}
+    .detail-hero-right{text-align:left;}
+    .overview-grid{grid-template-columns:repeat(2,1fr);}
+    .amenities-grid{grid-template-columns:1fr 1fr;}
+    .plot-sizes-grid{grid-template-columns:1fr 1fr;}
+    .installment-table{font-size:12px;} .installment-table th,.installment-table td{padding:9px 10px;}
+    footer{padding:40px 16px 24px;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .footer-bottom{flex-direction:column;text-align:center;}
+    .footer-bottom-links{justify-content:center;}
+  }
+  @media(max-width:400px){
+    .amenities-grid{grid-template-columns:1fr;}
+    .plot-sizes-grid{grid-template-columns:1fr;}
+    .overview-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="mob-overlay" id="mobOverlay" onclick="closeMenu()"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="The Sky Is Your Limit">
+    <div class="nav-logo-text"><span>The Sky Is Your Limit</span><span>Premium Real Estate</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="02_projects.html">Projects</a>
+    <a href="#">Plots</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-cta">
+    <a href="#" class="btn-outline">Agent Login</a>
+    <a href="04_checkout.html" class="btn-primary">Book Now →</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mob-links">
+    <a href="index.html"><span class="mob-icon">🏠</span> Home</a>
+    <a href="02_projects.html"><span class="mob-icon">🏘️</span> Projects</a>
+    <a href="#"><span class="mob-icon">📐</span> Plots</a>
+    <a href="#"><span class="mob-icon">ℹ️</span> About Us</a>
+    <a href="#"><span class="mob-icon">📞</span> Contact</a>
+  </div>
+  <div class="mob-cta">
+    <a href="#" class="mob-btn-1">🔑 Agent Login</a>
+    <a href="04_checkout.html" class="mob-btn-2">🏠 Book This Plot →</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="detail-hero">
+  <div class="detail-hero-icon">🏘️</div>
+  <div class="detail-hero-overlay"></div>
+  <div class="detail-hero-bottom">
+    <div>
+      <div class="detail-badge">🔥 Hot Deal — Limited Plots</div>
+      <div class="detail-hero-title">Sky Residencia — Phase I</div>
+      <div class="detail-hero-loc">📍 Sector 7, New Delhi, INDIA</div>
+    </div>
+    <div class="detail-hero-right">
+      <div class="detail-price-label">Starting From</div>
+      <div class="detail-price-val">₹45L</div>
+      <div class="detail-price-sub">230 plots still available</div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-strip">
+  <div class="gallery-thumb t1">🏘️</div>
+  <div class="gallery-thumb t2">🏠</div>
+  <div class="gallery-thumb t3">🌿</div>
+  <div class="gallery-thumb t4">🗺️</div>
+  <div class="gallery-thumb t5">🌅</div>
+  <div class="gallery-thumb t1">🏗️</div>
+</div>
+
+<!-- DETAIL LAYOUT -->
+<div class="detail-layout">
+  <div>
+    <div class="breadcrumb"><a href="index.html">Home</a> › <a href="02_projects.html">Projects</a> › <span>Sky Residencia Phase I</span></div>
+    <div class="detail-tabs">
+      <div class="detail-tab active" onclick="showTab('overview',this)">Overview</div>
+      <div class="detail-tab" onclick="showTab('plots',this)">Plot Sizes</div>
+      <div class="detail-tab" onclick="showTab('amenities',this)">Amenities</div>
+      <div class="detail-tab" onclick="showTab('payment',this)">Payment Plan</div>
+      <div class="detail-tab" onclick="showTab('location',this)">Location</div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="overview-grid">
+        <div class="overview-stat"><div class="overview-stat-icon">🏘️</div><div class="overview-stat-val">850</div><div class="overview-stat-label">Total Plots</div></div>
+        <div class="overview-stat"><div class="overview-stat-icon">✅</div><div class="overview-stat-val">230</div><div class="overview-stat-label">Available</div></div>
+        <div class="overview-stat"><div class="overview-stat-icon">📐</div><div class="overview-stat-val">5–2 Kanal</div><div class="overview-stat-label">Plot Sizes</div></div>
+        <div class="overview-stat"><div class="overview-stat-icon">📅</div><div class="overview-stat-val">Dec 2026</div><div class="overview-stat-label">Possession</div></div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">About This Project</div>
+        <p class="detail-desc">Sky Residencia Phase I is a premium residential plotting scheme located in the heart of Sector 7, New Delhi. Designed with modern urban living in mind, this gated community offers plots ranging from 5 Marla to 2 Kanal with all state-of-the-art amenities.<br><br>The project is NOC-approved and LDA-registered, ensuring complete legal security for buyers. With wide carpeted roads, underground utilities, and a stunning park at the center, Sky Residencia offers the ideal setting for your dream home.</p>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Key Features</div>
+        <div class="amenities-grid">
+          <div class="amenity-item"><span>🔒</span> Gated Community</div>
+          <div class="amenity-item"><span>🛣️</span> 40ft Wide Roads</div>
+          <div class="amenity-item"><span>🌿</span> Central Park</div>
+          <div class="amenity-item"><span>💡</span> 24/7 Electricity</div>
+          <div class="amenity-item"><span>💧</span> Underground Utilities</div>
+          <div class="amenity-item"><span>🏫</span> School Zone</div>
+          <div class="amenity-item"><span>🕌</span> Masjid / Temple</div>
+          <div class="amenity-item"><span>🏥</span> Medical Facility</div>
+          <div class="amenity-item"><span>🛒</span> Commercial Area</div>
+          <div class="amenity-item"><span>📷</span> CCTV Security</div>
+          <div class="amenity-item"><span>🚿</span> Water Supply</div>
+          <div class="amenity-item"><span>📋</span> NOC Approved</div>
+        </div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Project Details</div>
+        <table class="installment-table">
+          <tr><td><strong>Developer</strong></td><td>Sky Is Your Limit Builders Ltd.</td></tr>
+          <tr><td><strong>Launch Date</strong></td><td>January 2025</td></tr>
+          <tr><td><strong>Total Area</strong></td><td>500 Kanals</td></tr>
+          <tr><td><strong>Approved By</strong></td><td>LDA, HUDA, NOC Certified</td></tr>
+          <tr><td><strong>Registry</strong></td><td>Fard / Registry Available</td></tr>
+          <tr><td><strong>Nearest Hospital</strong></td><td>Max Hospital (2.5 km)</td></tr>
+          <tr><td><strong>Nearest School</strong></td><td>Delhi Public School (1.2 km)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PLOTS -->
+    <div class="tab-content" id="tab-plots">
+      <div class="detail-section">
+        <div class="detail-section-title">Available Plot Sizes</div>
+        <div class="plot-sizes-grid">
+          <div class="plot-size-card selected" onclick="selectPlot(this)"><div class="plot-size-name">5 Marla</div><div class="plot-size-sqft">1,125 sq ft</div><div class="plot-size-price">₹45L</div><div class="plot-size-avail">● 85 Available</div></div>
+          <div class="plot-size-card" onclick="selectPlot(this)"><div class="plot-size-name">7 Marla</div><div class="plot-size-sqft">1,575 sq ft</div><div class="plot-size-price">₹63L</div><div class="plot-size-avail">● 42 Available</div></div>
+          <div class="plot-size-card" onclick="selectPlot(this)"><div class="plot-size-name">10 Marla</div><div class="plot-size-sqft">2,250 sq ft</div><div class="plot-size-price">₹90L</div><div class="plot-size-avail">● 38 Available</div></div>
+          <div class="plot-size-card" onclick="selectPlot(this)"><div class="plot-size-name">1 Kanal</div><div class="plot-size-sqft">4,500 sq ft</div><div class="plot-size-price">₹1.8Cr</div><div class="plot-size-avail">● 22 Available</div></div>
+          <div class="plot-size-card" onclick="selectPlot(this)"><div class="plot-size-name">2 Kanal</div><div class="plot-size-sqft">9,000 sq ft</div><div class="plot-size-price">₹3.5Cr</div><div class="plot-size-avail">● 8 Available</div></div>
+          <div class="plot-size-card" style="opacity:.5;cursor:not-allowed;"><div class="plot-size-name">4 Kanal</div><div class="plot-size-sqft">18,000 sq ft</div><div class="plot-size-price">₹7Cr</div><div style="font-size:11px;color:#EF4444;font-weight:600;">● Sold Out</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AMENITIES -->
+    <div class="tab-content" id="tab-amenities">
+      <div class="detail-section">
+        <div class="detail-section-title">World-Class Amenities</div>
+        <div class="amenities-grid">
+          <div class="amenity-item"><span>🏊</span> Swimming Pool</div>
+          <div class="amenity-item"><span>🏋️</span> Gymnasium</div>
+          <div class="amenity-item"><span>🌿</span> Central Park (10 ac)</div>
+          <div class="amenity-item"><span>⚽</span> Sports Complex</div>
+          <div class="amenity-item"><span>🎮</span> Kids Play Area</div>
+          <div class="amenity-item"><span>🏫</span> School Affiliation</div>
+          <div class="amenity-item"><span>🏥</span> Medical Centre</div>
+          <div class="amenity-item"><span>🕌</span> Masjid & Temple</div>
+          <div class="amenity-item"><span>🛒</span> Shopping Mall</div>
+          <div class="amenity-item"><span>📷</span> CCTV Surveillance</div>
+          <div class="amenity-item"><span>🔒</span> Security Guards</div>
+          <div class="amenity-item"><span>🌳</span> Plantation Drive</div>
+          <div class="amenity-item"><span>🛣️</span> 40ft Wide Roads</div>
+          <div class="amenity-item"><span>💡</span> Underground Wiring</div>
+          <div class="amenity-item"><span>💧</span> Water Treatment</div>
+          <div class="amenity-item"><span>🗑️</span> Waste Management</div>
+          <div class="amenity-item"><span>🏛️</span> Community Centre</div>
+          <div class="amenity-item"><span>🚗</span> Dedicated Parking</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="tab-content" id="tab-payment">
+      <div class="detail-section">
+        <div class="detail-section-title">3-Year Installment Plan (5 Marla)</div>
+        <div style="overflow-x:auto;">
+        <table class="installment-table">
+          <thead><tr><th>#</th><th>Installment</th><th>Due Date</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>01</td><td>Booking Amount (20%)</td><td>At Booking</td><td>₹9,00,000</td><td><span style="color:#22C55E;font-weight:600;">On Booking</span></td></tr>
+            <tr><td>02</td><td>1st Installment (10%)</td><td>3 Months</td><td>₹4,50,000</td><td>—</td></tr>
+            <tr><td>03</td><td>2nd Installment (10%)</td><td>6 Months</td><td>₹4,50,000</td><td>—</td></tr>
+            <tr><td>04</td><td>3rd Installment (10%)</td><td>9 Months</td><td>₹4,50,000</td><td>—</td></tr>
+            <tr><td>05</td><td>4th Installment (10%)</td><td>12 Months</td><td>₹4,50,000</td><td>—</td></tr>
+            <tr><td>06</td><td>Final Payment (20%)</td><td>36 Months</td><td>₹9,00,000</td><td>—</td></tr>
+            <tr><td colspan="3"><strong>Total</strong></td><td><strong>₹45,00,000</strong></td><td></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOCATION -->
+    <div class="tab-content" id="tab-location">
+      <div class="detail-section">
+        <div class="detail-section-title">Project Location</div>
+        <div class="map-placeholder"><div class="map-icon">📍</div><p><strong>Sky Residencia Phase I</strong><br>Sector 7, New Delhi, INDIA</p></div>
+        <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="amenity-item"><span>🏫</span> DPS School — 1.2 km</div>
+          <div class="amenity-item"><span>🏥</span> Max Hospital — 2.5 km</div>
+          <div class="amenity-item"><span>🛒</span> Mall — 4 km</div>
+          <div class="amenity-item"><span>✈️</span> IGI Airport — 18 km</div>
+          <div class="amenity-item"><span>🚇</span> Metro — 800m</div>
+          <div class="amenity-item"><span>🛣️</span> Ring Road — 1 km</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING CARD -->
+  <aside>
+    <div class="booking-card">
+      <div class="booking-card-header">
+        <div class="booking-price-label">Starting From</div>
+        <div class="booking-price">₹45L</div>
+        <div class="booking-price-sub">Per plot (5 Marla onwards)</div>
+        <div class="booking-badge-row"><span class="booking-badge">NOC Approved</span><span class="booking-badge">3yr Installments</span></div>
+      </div>
+      <div class="booking-body">
+        <label class="booking-label">Select Plot Size</label>
+        <select class="booking-select" onchange="updatePrice(this)">
+          <option value="45">5 Marla — ₹45L</option>
+          <option value="63">7 Marla — ₹63L</option>
+          <option value="90">10 Marla — ₹90L</option>
+          <option value="180">1 Kanal — ₹1.8Cr</option>
+          <option value="350">2 Kanal — ₹3.5Cr</option>
+        </select>
+        <label class="booking-label">Payment Type</label>
+        <select class="booking-select">
+          <option>Full Payment (5% discount)</option>
+          <option>3-Year Installment Plan</option>
+        </select>
+        <hr class="booking-divider">
+        <div class="booking-sum-row"><span>Plot Price</span><span id="sum-price">₹45,00,000</span></div>
+        <div class="booking-sum-row"><span>Booking Amount (20%)</span><span id="sum-booking">₹9,00,000</span></div>
+        <div class="booking-sum-row"><span>Processing Fee</span><span>₹25,000</span></div>
+        <div class="booking-sum-row total"><span>Due Today</span><span id="sum-total">₹9,25,000</span></div>
+        <hr class="booking-divider">
+        <a href="04_checkout.html" class="btn-book">🏠 Book This Plot Now →</a>
+        <a href="#" class="btn-enquire">📞 Request Callback</a>
+        <div class="booking-trust"><div class="trust-item">🔒 Secure</div><div class="trust-item">✅ Verified</div><div class="trust-item">📋 Legal</div></div>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-card-title">Your Dedicated Agent</div>
+      <div class="agent-info">
+        <div class="agent-avatar">R</div>
+        <div><div class="agent-name">Rahul Sharma</div><div class="agent-role">Senior Property Advisor</div><div style="font-size:11px;color:#22C55E;margin-top:2px;">● Online Now</div></div>
+      </div>
+      <div class="agent-btns">
+        <a href="tel:+911234567890" class="agent-btn agent-btn-call">📞 Call Now</a>
+        <a href="https://wa.me/911234567890" class="agent-btn agent-btn-wa">💬 WhatsApp</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1280px;margin:0 auto;">
+    <div class="footer-grid">
+      <div><div class="footer-logo"><img src="images/logo.png" style="background:white;" alt="Logo"><div class="footer-logo-text">The Sky Is Your Limit</div></div><p class="footer-desc">INDIA's most trusted real estate partner — connecting families with their dream properties since 2026.</p><div class="footer-socials"><a href="#" class="social-btn">f</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">✕</a><a href="#" class="social-btn">▶</a></div></div>
+      <div><div class="footer-col-title">Quick Links</div><div class="footer-links"><a href="index.html">Home</a><a href="02_projects.html">All Projects</a><a href="#">Plots</a><a href="#">About Us</a></div></div>
+      <div><div class="footer-col-title">Property Types</div><div class="footer-links"><a href="#">Residential Plots</a><a href="#">Commercial Plots</a><a href="#">Villas</a><a href="#">Townships</a></div></div>
+      <div><div class="footer-col-title">Contact</div><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><span class="footer-contact-text">Main Boulevard, Delhi</span></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><span class="footer-contact-text">+91 300 1234567</span></div><div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><span class="footer-contact-text">info@skyisyourlimit.in</span></div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 The Sky Is Your Limit. All rights reserved.</div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div></div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){const h=document.getElementById('hamburger'),m=document.getElementById('mobileMenu'),o=document.getElementById('mobOverlay');h.classList.toggle('open');m.classList.toggle('show');o.classList.toggle('show');document.body.style.overflow=m.classList.contains('show')?'hidden':'';}
+function closeMenu(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileMenu').classList.remove('show');document.getElementById('mobOverlay').classList.remove('show');document.body.style.overflow='';}
+function showTab(id,el){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.detail-tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');el.classList.add('active');}
+function selectPlot(el){document.querySelectorAll('.plot-size-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');}
+const prices={'45':['₹45,00,000','₹9,00,000','₹9,25,000'],'63':['₹63,00,000','₹12,60,000','₹12,85,000'],'90':['₹90,00,000','₹18,00,000','₹18,25,000'],'180':['₹1,80,00,000','₹36,00,000','₹36,25,000'],'350':['₹3,50,00,000','₹70,00,000','₹70,25,000']};
+function updatePrice(sel){const p=prices[sel.value];document.getElementById('sum-price').textContent=p[0];document.getElementById('sum-booking').textContent=p[1];document.getElementById('sum-total').textContent=p[2];}
+</script>
+</body>
+</html>
