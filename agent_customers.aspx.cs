@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,6 +9,10 @@ using System.Web.UI.WebControls;
 
 public partial class agent_customers : System.Web.UI.Page
 {
+    DataTable Dt = new DataTable();
+    DAL ObjDal = new DAL();
+    string query;
+    string constr1 = ConfigurationManager.ConnectionStrings["constr1"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
         this.BtnCustomer.Attributes.Add("onclick", DisableTheButton(this.Page, this.BtnCustomer));
@@ -14,6 +20,8 @@ public partial class agent_customers : System.Web.UI.Page
         {
             if (Session["Status"] != null && Session["Status"].ToString() == "OK")
             {
+                BindCustomers();
+                GetTotalCustomers();
             }
             else
             {
@@ -36,5 +44,43 @@ public partial class agent_customers : System.Web.UI.Page
     protected void BtnCustomer_Click(object sender, EventArgs e)
     {
         Response.Redirect("CustomerRegistration.aspx", false);
+    }
+    private void GetTotalCustomers()
+    {
+        DataSet ds = new DataSet();
+
+        string str = ObjDal.Isostart + "Exec sp_TotalCustomers '" + Session["Formno"] + "' " + ObjDal.IsoEnd;
+
+        ds = SqlHelper.ExecuteDataset(constr1, CommandType.Text, str);
+
+        if (ds.Tables.Count > 0)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                lblTotalCustomers.Text = ds.Tables[0].Rows[0]["TotalCustomers"].ToString();
+            }
+
+            
+        }
+    }
+
+    private void BindCustomers()
+    {
+        try
+        {
+            query = ObjDal.Isostart + "exec sp_getcustomers '" + Session["Formno"] + "'" + ObjDal.IsoEnd;
+
+            Dt = SqlHelper.ExecuteDataset(constr1, CommandType.Text, query).Tables[0];
+
+            if (Dt.Rows.Count > 0)
+            {
+                rptCustomers.DataSource = Dt;
+                rptCustomers.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }

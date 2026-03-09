@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 public partial class agent_myagents : System.Web.UI.Page
 {
     //DAL objDal = new DAL();
@@ -49,13 +50,22 @@ public partial class agent_myagents : System.Web.UI.Page
     DataTable Dt = new DataTable();
     string IsoStart;
     string IsoEnd;
+
+    DAL ObjDal = new DAL();
+    string query;
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
+       
         this.BtnAgent.Attributes.Add("onclick", DisableTheButton(this.Page, this.BtnAgent));
         if (!Page.IsPostBack)
         {
             if (Session["Status"] != null && Session["Status"].ToString() == "OK")
             {
+
+                BindAgent();
+                GetTotalAgent();
             }
             else
             {
@@ -78,5 +88,42 @@ public partial class agent_myagents : System.Web.UI.Page
     protected void BtnAgent_Click(object sender, EventArgs e)
     {
         Response.Redirect("AgentRegistration.aspx", false);
+    }
+    private void GetTotalAgent()
+    {
+        DataSet ds = new DataSet();
+
+        string str = ObjDal.Isostart + "Exec sp_TotalAgent '" + Session["Formno"] + "' " + ObjDal.IsoEnd;
+
+        ds = SqlHelper.ExecuteDataset(constr1, CommandType.Text, str);
+
+        if (ds.Tables.Count > 0)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                lblTotalAgent.Text = ds.Tables[0].Rows[0]["TotalAgent"].ToString();
+            }
+
+
+        }
+    }
+    private void BindAgent()
+    {
+        try
+        {
+            query = ObjDal.Isostart + "exec sp_getagent '" + Session["Formno"] + "'" + ObjDal.IsoEnd;
+
+            Dt = SqlHelper.ExecuteDataset(constr1, CommandType.Text, query).Tables[0];
+
+            if (Dt.Rows.Count > 0)
+            {
+                rptCustomers.DataSource = Dt;
+                rptCustomers.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }

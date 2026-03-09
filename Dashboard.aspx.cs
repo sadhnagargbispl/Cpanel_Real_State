@@ -22,6 +22,8 @@ public partial class Dashboard : System.Web.UI.Page
             if (Session["Status"] != null && Session["Status"].ToString() == "OK")
             {
                 LoadProfile();
+
+                LoadCustomerCounts();
             }
             else
             {
@@ -42,6 +44,27 @@ public partial class Dashboard : System.Web.UI.Page
             {
                 Session.Abandon();
                 Response.Redirect("agent_login.aspx", false);
+            }
+        }
+    }
+    private void LoadCustomerCounts()
+    {
+        DataSet ds = new DataSet();
+
+        string str = objDal.Isostart + "Exec sp_GetCustomerSubAgentCount '" + Session["Formno"] + "' " + objDal.IsoEnd;
+
+        ds = SqlHelper.ExecuteDataset(constr1, CommandType.Text, str);
+
+        if (ds.Tables.Count > 0)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                lblCustomers.Text = ds.Tables[0].Rows[0]["MyCustomers"].ToString();
+            }
+
+            if (ds.Tables[1].Rows.Count > 0)
+            {
+                lblSubAgents.Text = ds.Tables[1].Rows[0]["MySubAgents"].ToString();
             }
         }
     }

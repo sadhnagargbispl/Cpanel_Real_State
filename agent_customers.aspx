@@ -28,12 +28,24 @@
         <!-- CUSTOMER STATS -->
         <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 22px;">
             <div class="kpi">
+    <div class="kpi-top">
+        <div class="kpi-icon ki-blue">👥</div>
+        <span class="kpi-trend trend-up">↑ 0 this month</span>
+    </div>
+
+    <div class="kpi-val">
+        <asp:Label ID="lblTotalCustomers" runat="server" Text="0"></asp:Label>
+    </div>
+
+    <div class="kpi-label">Total Customers</div>
+</div>
+            <%--<div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-blue">👥</div>
                     <span class="kpi-trend trend-up">↑ 0 this month</span></div>
                 <div class="kpi-val">0</div>
                 <div class="kpi-label">Total Customers</div>
-            </div>
+            </div>--%>
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-green">✅</div>
@@ -65,6 +77,64 @@
                 </div>
             </div>
             <div class="tbl-wrap">
+    <table class="tbl">
+        <thead>
+            <tr>
+                <th>#</th>
+                 <th>Id No</th>
+                <th>Customer Name</th>
+               
+                <th>Phone No</th>
+                <th>City</th>
+
+                <th>Status</th>
+          <%--   <th>Actions</th>--%>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <asp:Repeater ID="rptCustomers" runat="server">
+                <ItemTemplate>
+                    <tr>
+                        <td><%# Container.ItemIndex + 1 %></td>
+                            <td><%# Eval("idno") %></td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:9px;">
+                                <div class="avatar av-sm" style="background:linear-gradient(135deg,#0D1B4B,#1E6FBF);"></div>
+                                <div>
+                                    <div style="font-weight:600;color:var(--navy)">
+                                        <%# Eval("memfirstname") %>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </td>
+
+                    
+
+                        <td><%# Eval("mobl") %></td>
+                        <td><%# Eval("city") %></td>
+                         <td> <span class='pill <%# Eval("Status").ToString() == "Active" ? "pill-green" : "pill-red" %>'>
+        <%# Eval("Status") %>
+    </span></td>
+                       
+
+                       <%-- <td>
+                            <div style="display:flex;gap:5px;">
+                                <button class="btn btn-navy btn-xs">View</button>
+                                <button class="btn btn-outline btn-xs">Book</button>
+                            </div>
+                        </td>--%>
+
+                    </tr>
+                </ItemTemplate>
+            </asp:Repeater>
+
+        </tbody>
+    </table>
+</div>
+          <%--  <div class="tbl-wrap">
                 <table class="tbl">
                     <thead>
                         <tr>
@@ -106,7 +176,7 @@
                        
                     </tbody>
                 </table>
-            </div>
+            </div>--%>
         </div>
 
     </div>

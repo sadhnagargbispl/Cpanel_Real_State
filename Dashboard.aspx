@@ -36,13 +36,24 @@
             <div class="kpi-label">Total Sales Value</div>
         </div>
         <div class="kpi">
+    <div class="kpi-top">
+        <div class="kpi-icon ki-green">👥</div>
+        <span class="kpi-trend trend-up">↑</span>
+    </div>
+    <div class="kpi-val">
+        <asp:Label ID="lblCustomers" runat="server" Text="0"></asp:Label>
+    </div>
+    <div class="kpi-label">My Customers</div>
+</div>
+
+       <%-- <div class="kpi">
             <div class="kpi-top">
                 <div class="kpi-icon ki-green">👥</div>
                 <span class="kpi-trend trend-up">↑ 0</span>
             </div>
             <div class="kpi-val">0</div>
             <div class="kpi-label">My Customers</div>
-        </div>
+        </div>--%>
         <div class="kpi">
             <div class="kpi-top">
                 <div class="kpi-icon ki-purple">💎</div>
@@ -70,13 +81,23 @@
             <div class="kpi-label">Available Plots</div>
         </div>
         <div class="kpi">
+    <div class="kpi-top">
+        <div class="kpi-icon ki-ocean">🤝</div>
+        <span class="kpi-trend trend-up">↑</span>
+    </div>
+    <div class="kpi-val">
+        <asp:Label ID="lblSubAgents" runat="server" Text="0"></asp:Label>
+    </div>
+    <div class="kpi-label">My Sub-Agents</div>
+</div>
+       <%-- <div class="kpi">
             <div class="kpi-top">
                 <div class="kpi-icon ki-ocean">🤝</div>
                 <span class="kpi-trend trend-up">↑ 0</span>
             </div>
             <div class="kpi-val">0</div>
             <div class="kpi-label">My Sub-Agents</div>
-        </div>
+        </div>--%>
         <div class="kpi">
             <div class="kpi-top">
                 <div class="kpi-icon ki-red">⚠️</div>
