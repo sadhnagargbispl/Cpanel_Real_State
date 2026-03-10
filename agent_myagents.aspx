@@ -301,9 +301,7 @@
                
                 <th>Phone No</th>
                 <th>City</th>
-
                 <th>Status</th>
-          <%--   <th>Actions</th>--%>
             </tr>
         </thead>
 
@@ -335,12 +333,6 @@
     </span></td>
                        
 
-                        <%--<td>
-                            <div style="display:flex;gap:5px;">
-                                <button class="btn btn-navy btn-xs">View</button>
-                                <button class="btn btn-outline btn-xs">Book</button>
-                            </div>
-                        </td>--%>
 
                     </tr>
                 </ItemTemplate>

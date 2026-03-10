@@ -61,6 +61,11 @@
                 <a href="agent_customers.aspx" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge ">0</span></a>
                 <a href="agent_myagents.aspx" class="ni"><span class="ni-ic">🤝</span>My Agents<span class="ni-badge ">0</span></a>
 
+                   <div class="nav-group-title">Our Portal</div>
+   <a href="ShoppingRedirect.aspx" class="ni"><span class="ni-ic">👥</span>Our Shopping Portal<span class="ni-badge ">0</span></a>
+
+
+
                 <div class="nav-group-title">Finance</div>
                 <a href="#" class="ni"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">0</span></a>
                 <%-- <a href="#" class="ni"><span class="ni-ic">💳</span>Payments</a>--%>
