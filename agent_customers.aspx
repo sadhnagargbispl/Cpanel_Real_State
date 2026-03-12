@@ -126,26 +126,6 @@
 
         </tbody>
     </table>
-</div><div class="card">
-    <div class="card-header">
-        <div>
-            <div class="card-title">Customer Directory</div>
-            <div class="card-subtitle">All registered customers</div>
-        </div>
-    </div>
-
-    <div class="tbl-wrap">
-
-        <asp:GridView ID="gv" runat="server"
-            CssClass="tbl"
-            CellPadding="2"
-            HorizontalAlign="Center"
-            AutoGenerateColumns="true"
-            Width="100%"
-            EmptyDataText="No Data Display">
-        </asp:GridView>
-
-    </div>
 </div>
           <%--  <div class="tbl-wrap">
                 <table class="tbl">
