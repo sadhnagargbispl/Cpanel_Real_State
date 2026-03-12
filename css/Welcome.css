@@ -61,17 +61,16 @@ button, input, select, textarea {
 /* ── SIDEBAR ── */
 .sidebar {
     width: var(--sw);
-    min-height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+    min-height: 100%;
+    position: relative;
     z-index: 300;
     background: linear-gradient(180deg,#09133A 0%,#111E52 45%,#162266 100%);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     transition: transform .32s cubic-bezier(.4,0,.2,1);
-    box-shadow: 4px 0 24px rgba(9,19,58,.35)
+    box-shadow: 4px 0 24px rgba(9,19,58,.35);
+    flex-shrink: 0;
+    align-self: stretch;
 }
 
 .sb-top {
