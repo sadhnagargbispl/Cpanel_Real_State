@@ -41,8 +41,11 @@
                     <asp:Label ID="Lblstatus" runat="server" Text=""></asp:Label>
                 </div>
             </div>
+            <% if (Session["Status"] != null && Session["Status"].ToString() == "OK")
+                { %>
             <nav class="sb-nav">
                 <div class="nav-group-title">Overview</div>
+
                 <a href="Dashboard.aspx" class="ni active"><span class="ni-ic">📊</span>Dashboard</a>
 
                 <div class="nav-group-title">Properties</div>
@@ -77,13 +80,30 @@
                 <%--<a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>--%>
                 <a href="ProfilePage.aspx" class="ni"><span class="ni-ic">👤</span>My Profile</a>
                 <a href="Welcome.aspx" class="ni"><span class="ni-ic">👤</span>Welcome Letter</a>
-                <%--    <a href="Index.aspx" class="ni"><span class="ni-ic">🌐</span>Back To Main</a>
-                <a href="logout.aspx" class="ni"><span class="ni-ic">🚪</span>Sign Out</a>--%>
+                <div class="nav-group-title">Wallet</div>
+                <%--<a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>--%>
+                <a href="WalletRequest.aspx" class="ni"><span class="ni-ic">👤</span>Wallet Request</a>
+                <a href="WalletRequestReport.aspx" class="ni"><span class="ni-ic">👤</span>Wallet Request Detail</a>
             </nav>
             <div class="sb-bottom">
                 <a href="Index.aspx">🌐 Back To Main</a>
                 <a href="logout.aspx">🚪 Sign Out</a>
             </div>
+            <% }
+            else
+            {  %>
+             <nav class="sb-nav">
+     <div class="nav-group-title">Overview</div>    
+     <a href="agent_login.aspx" class="ni active"><span class="ni-ic">📊</span>Login</a>
+     <div class="nav-group-title">People</div>
+     <a href="agent_customers.aspx" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge ">0</span></a>
+     <a href="agent_myagents.aspx" class="ni"><span class="ni-ic">🤝</span>My Agents<span class="ni-badge ">0</span></a>
+ </nav>
+ <div class="sb-bottom">
+     <a href="Index.aspx">🌐 Back To Main</a>
+<%--     <a href="logout.aspx">🚪 Sign Out</a>--%>
+ </div>
+            <% } %>
         </aside>
         <div class="main">
 
