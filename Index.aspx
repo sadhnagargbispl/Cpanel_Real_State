@@ -1,6 +1,179 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainMaster.master" AutoEventWireup="true" CodeFile="Index.aspx.cs" Inherits="Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    <style>
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+            gap: 30px;
+        }
+
+        /* Glass Card */
+        .type-card {
+            position: relative;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            transition: 0.4s ease;
+            overflow: hidden;
+        }
+
+            /* Gradient Glow */
+            .type-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 20px;
+                padding: 1px;
+                background: linear-gradient(120deg,#38bdf8,#22c55e,#6366f1);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                opacity: 0;
+                transition: 0.4s;
+            }
+
+            .type-card:hover::before {
+                opacity: 1;
+            }
+
+            /* Hover Lift */
+            .type-card:hover {
+                transform: translateY(-12px) scale(1.02);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            }
+
+        /* Icon */
+        .icon {
+            font-size: 42px;
+            margin-bottom: 16px;
+        }
+
+        /* Title */
+        .type-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Text */
+        .type-card p {
+            font-size: 14px;
+            opacity: 0.75;
+            margin-bottom: 18px;
+        }
+
+        /* Button */
+        .type-card a {
+            display: inline-block;
+            font-size: 14px;
+            color: #f7f8f8;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+            .type-card a:hover {
+                color: #f7f8f8;
+                transform: translateX(5px);
+            }
+        /* Grid */
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Desktop: 4 columns */
+            gap: 24px;
+        }
+
+        /* Glass Card */
+        .type-card {
+            position: relative;
+            padding: 28px 24px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            overflow: hidden;
+        }
+
+        /* ... baaki .type-card::before, hover styles same rahenge ... */
+
+        /* ── RESPONSIVE BREAKPOINTS ── */
+
+        /* Tablet landscape (≤1100px): 3 columns */
+        @media (max-width: 1100px) {
+            .types-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Tablet portrait (≤768px): 2 columns */
+        @media (max-width: 768px) {
+            .services-section {
+                padding: 60px 24px;
+            }
+
+            .types-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .type-card {
+                padding: 22px 18px;
+            }
+
+            .icon {
+                font-size: 32px;
+            }
+
+            .type-card h3 {
+                font-size: 15px;
+            }
+        }
+
+        /* Mobile (≤480px): 2 compact columns */
+        @media (max-width: 480px) {
+            .types-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .type-card {
+                padding: 18px 14px;
+                border-radius: 14px;
+            }
+
+            .icon {
+                font-size: 28px;
+            }
+
+            .type-card h3 {
+                font-size: 13px;
+            }
+
+            .type-card p {
+                font-size: 11px;
+            }
+
+            .type-card a {
+                font-size: 11px;
+            }
+        }
+
+        /* Very small phones (≤360px): single column */
+        @media (max-width: 360px) {
+            .types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <!-- HERO -->
@@ -110,6 +283,83 @@
         </div>
     </div>
 
+
+    <section style="padding: 100px 48px; background: #0f172a;">
+        <div class="container">
+
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-label" style="color: #38bdf8;">Our Services</div>
+                    <h2 class="section-title" style="color: #fff;">Explore Our Smart Solutions</h2>
+                </div>
+            </div>
+
+            <div class="types-grid">
+
+                <!-- Card -->
+                <div class="type-card">
+                    <div class="icon">🌿</div>
+                    <h3>Ayurvedic Portal</h3>
+                    <p>Natural healthcare products & herbal remedies</p>
+                    <a href="#">Explore →</a>
+                </div>
+
+                <div class="type-card">
+                    <a href="https://shopping.skyisyourlimit.com/" target="_blank">
+                        <div class="icon">🛒</div>
+                        <h3>E-Commerce Portal</h3>
+                        <p>Sell & purchase products with ease</p>
+                        <a href="https://shopping.skyisyourlimit.com/" target="_blank">Shop Now →</a>
+                    </a>
+                </div>
+
+                <div class="type-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Insurance Portal</h3>
+                    <p>Secure your future with smart policies</p>
+                    <a href="#">Get Covered →</a>
+                </div>
+
+                <div class="type-card">
+                    <div class="icon">⚡</div>
+                    <h3>EV Bike</h3>
+                    <p>Electric mobility for a greener tomorrow</p>
+                    <a href="#">Explore →</a>
+                </div>
+
+                <div class="type-card">
+                    <div class="icon">☀️</div>
+                    <h3>Solar Panel</h3>
+                    <p>Clean energy solutions for your home</p>
+                    <a href="#">Get Started →</a>
+                </div>
+
+                <div class="type-card">
+                    <div class="icon">✈️</div>
+                    <h3>Tour Packages</h3>
+                    <p>Affordable & customized travel experiences</p>
+                    <a href="#">Book Now →</a>
+                </div>
+
+                <div class="type-card">
+                    <div class="icon">🏢</div>
+                    <h3>Real Estate</h3>
+                    <p>Find the best property deals & investments</p>
+                    <a href="#">View →</a>
+                </div>
+
+                <div class="type-card">
+                    <div class="icon">👤</div>
+                    <h3>Individual Real Estate</h3>
+                    <p>Direct deals with property owners</p>
+                    <a href="#">Explore →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <hr>
     <!-- FEATURED PROJECTS -->
     <section class="projects-section" id="projects">
         <div class="container">
@@ -303,29 +553,41 @@
                 <h2 class="section-title" style="margin-top: 16px">Everything You Need, Right at Your Doorstep</h2>
             </div>
             <div class="amenities-grid">
-                <div class="amenity-card fade-in"><span class="amenity-icon">🔒</span><div class="amenity-name">Gated Security</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🔒</span><div class="amenity-name">Gated Security</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🌳</span><div class="amenity-name">Parks & Gardens</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🌳</span><div class="amenity-name">Parks & Gardens</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🕌</span><div class="amenity-name">Mosques</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🕌</span><div class="amenity-name">Mosques</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🏫</span><div class="amenity-name">Schools</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🏫</span><div class="amenity-name">Schools</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🏥</span><div class="amenity-name">Hospitals</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🏥</span><div class="amenity-name">Hospitals</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🛒</span><div class="amenity-name">Shopping Mall</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🛒</span><div class="amenity-name">Shopping Mall</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">💡</span><div class="amenity-name">Underground Electric</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">💡</span><div class="amenity-name">Underground Electric</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">💧</span><div class="amenity-name">Water Supply</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">💧</span><div class="amenity-name">Water Supply</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🏊</span><div class="amenity-name">Swimming Pool</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🏊</span><div class="amenity-name">Swimming Pool</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🏃</span><div class="amenity-name">Jogging Track</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🏃</span><div class="amenity-name">Jogging Track</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">⛽</span><div class="amenity-name">Natural Gas</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">⛽</span><div class="amenity-name">Natural Gas</div>
                 </div>
-                <div class="amenity-card fade-in"><span class="amenity-icon">🚗</span><div class="amenity-name">Wide Roads</div>
+                <div class="amenity-card fade-in">
+                    <span class="amenity-icon">🚗</span><div class="amenity-name">Wide Roads</div>
                 </div>
             </div>
         </div>
