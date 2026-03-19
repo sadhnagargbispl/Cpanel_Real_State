@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,53 +12,24 @@ using System.Web.UI.WebControls;
 
 public partial class agent_myagents : System.Web.UI.Page
 {
-    //DAL objDal = new DAL();
-    //DataTable dt = new DataTable();
-    //SqlConnection DbConnect;
-    //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-    //string constr1 = ConfigurationManager.ConnectionStrings["constr1"].ConnectionString;
-    private double _dblAvailLeg = 0;
-    private cls_DataAccess dbConnect;
-    private DAL objDal = new DAL();
-    private SqlCommand cmd = new SqlCommand();
-    private SqlDataReader dRead;
-    public string DsnName, UserName, Passw;
-    private string strQuery, strCaptcha;
-    private DataTable tmpTable = new DataTable();
-    private int minSpnsrNoLen, minScrtchLen;
-    private double Upln, dblSpons, dblState, dblBank, dblIdNo;
-    private string dblDistrict, dblTehsil, IfSC;
-    private string dblPlan;
-    private DateTime CurrDt;
-    private string scrname;
-    private string LastInsertID = "";
-    private string Email = "";
-    private string InVoiceNo;
-    private int SupplierId;
-    private string BillNo;
-    private string TaxType;
-    private string BillDate;
-    private int SBillNo;
-    private string SoldBy = "WR";
-    private string FType;
-    private string Password = "";
-    private string membername = "";
-    private string clsGeneral = "";
     private clsGeneral dbGeneral = new clsGeneral();
     private string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
     private string constr1 = ConfigurationManager.ConnectionStrings["constr1"].ConnectionString;
-    private SqlConnection cnn;
     DataTable Dt = new DataTable();
-    string IsoStart;
-    string IsoEnd;
-
     DAL ObjDal = new DAL();
     string query;
 
+    // ── Pagination ──
+    private int PageSize = 10;
+    private int CurrentPage
+    {
+        get { return ViewState["CurrentPage"] != null ? (int)ViewState["CurrentPage"] : 1; }
+        set { ViewState["CurrentPage"] = value; }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
         this.BtnAgent.Attributes.Add("onclick", DisableTheButton(this.Page, this.BtnAgent));
         if (!Page.IsPostBack)
         {
@@ -65,7 +37,7 @@ public partial class agent_myagents : System.Web.UI.Page
             {
 
                 BindAgent();
-                GetTotalAgent();
+                //GetTotalAgent();
             }
             else
             {
@@ -89,24 +61,24 @@ public partial class agent_myagents : System.Web.UI.Page
     {
         Response.Redirect("AgentRegistration.aspx", false);
     }
-    private void GetTotalAgent()
-    {
-        DataSet ds = new DataSet();
+    //private void GetTotalAgent()
+    //{
+    //    DataSet ds = new DataSet();
 
-        string str = ObjDal.Isostart + "Exec sp_TotalAgent '" + Session["Formno"] + "' " + ObjDal.IsoEnd;
+    //    string str = ObjDal.Isostart + "Exec sp_TotalAgent '" + Session["Formno"] + "' " + ObjDal.IsoEnd;
 
-        ds = SqlHelper.ExecuteDataset(constr1, CommandType.Text, str);
+    //    ds = SqlHelper.ExecuteDataset(constr1, CommandType.Text, str);
 
-        if (ds.Tables.Count > 0)
-        {
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                lblTotalAgent.Text = ds.Tables[0].Rows[0]["TotalAgent"].ToString();
-            }
+    //    if (ds.Tables.Count > 0)
+    //    {
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            lblTotalAgent.Text = ds.Tables[0].Rows[0]["TotalAgent"].ToString();
+    //        }
 
 
-        }
-    }
+    //    }
+    //}
     private void BindAgent()
     {
         try
@@ -115,15 +87,76 @@ public partial class agent_myagents : System.Web.UI.Page
 
             Dt = SqlHelper.ExecuteDataset(constr1, CommandType.Text, query).Tables[0];
 
-            if (Dt.Rows.Count > 0)
-            {
-                rptCustomers.DataSource = Dt;
-                rptCustomers.DataBind();
-            }
+            int totalRecords = Dt.Rows.Count;
+            int totalPages = (int)Math.Ceiling((double)totalRecords / PageSize);
+
+            // ── Slice rows for current page ──
+            DataTable paged = Dt.Clone();
+            int start = (CurrentPage - 1) * PageSize;
+            int end = Math.Min(start + PageSize, totalRecords);
+            for (int i = start; i < end; i++)
+                paged.ImportRow(Dt.Rows[i]);
+
+            // ── Bind repeater ──
+            rptCustomers.DataSource = paged;
+            rptCustomers.DataBind();
+
+            // ── KPI: total customers ──
+            lblTotalAgent.Text = totalRecords.ToString();
+
+            // ── Pagination labels ──
+            lblRecordSummary.Text = "Total Record : " + totalRecords + "";
+            lblPageInfo.Text = "Page " + CurrentPage + " of " + totalPages + "";
+
+            // ── Button states ──
+            btnPrev.Enabled = CurrentPage > 1;
+            btnNext.Enabled = CurrentPage < totalPages;
+
+            // ── Hidden fields ──
+            hdnTotalPages.Value = totalPages.ToString();
+            hdnCurrentPage.Value = CurrentPage.ToString();
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
     }
+
+    protected void BtnPrev_Click(object sender, EventArgs e)
+    {
+        if (CurrentPage > 1)
+        {
+            CurrentPage--;
+            BindAgent();
+        }
+    }
+
+    protected void BtnNext_Click(object sender, EventArgs e)
+    {
+        int totalPages = int.Parse(hdnTotalPages.Value);
+        if (CurrentPage < totalPages)
+        {
+            CurrentPage++;
+            BindAgent();
+        }
+    }
+    //private void BindAgent()
+    //{
+    //    try
+    //    {
+    //        query = ObjDal.Isostart + "exec sp_getagent '" + Session["Formno"] + "'" + ObjDal.IsoEnd;
+
+    //        Dt = SqlHelper.ExecuteDataset(constr1, CommandType.Text, query).Tables[0];
+
+    //        if (Dt.Rows.Count > 0)
+    //        {
+    //            rptCustomers.DataSource = Dt;
+    //            rptCustomers.DataBind();
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw new Exception(ex.Message);
+    //    }
+    //}
 }

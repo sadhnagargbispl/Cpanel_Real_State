@@ -10,7 +10,27 @@
             return true;
         }
     </script>
+    <style>
+        .pagination-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            border-top: 1px solid #e8eaf0;
+        }
 
+        .pg-summary {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .pg-info {
+            font-size: 13px;
+            color: #374151;
+            min-width: 90px;
+            text-align: center;
+        }
+    </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -29,20 +49,20 @@
         </div>
         <!-- TEAM KPIs -->
         <div class="kpi-grid" style="margin-bottom: 22px;">
-                        <div class="kpi">
-    <div class="kpi-top">
-        <div class="kpi-icon ki-blue">🤝</div>
- <span class="kpi-trend trend-up">↑ 0</span>
-    </div>
+            <div class="kpi">
+                <div class="kpi-top">
+                    <div class="kpi-icon ki-blue">🤝</div>
+                    <span class="kpi-trend trend-up">↑ 0</span>
+                </div>
 
-    <div class="kpi-val">
-        <asp:Label ID="lblTotalAgent" runat="server" Text="0"></asp:Label>
-    </div>
+                <div class="kpi-val">
+                    <asp:Label ID="lblTotalAgent" runat="server" Text="0"></asp:Label>
+                </div>
 
-    <div class="kpi-label">Total Customers</div>
-</div>
+                <div class="kpi-label">Total Customers</div>
+            </div>
 
-           <%-- <div class="kpi">
+            <%-- <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-blue">🤝</div>
                     <span class="kpi-trend trend-up">↑ 0</span>
@@ -76,273 +96,87 @@
             </div>
         </div>
 
-        <!-- AGENT CARDS -->
-        <%--<div style="display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 20px; margin-bottom: 24px;">
-
-            <div class="card" style="padding: 0; overflow: hidden; transition: transform .25s,box-shadow .25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                <div style="height: 7px; background: linear-gradient(135deg,#0D1B4B,#1E6FBF)"></div>
-                <div style="padding: 20px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div class="avatar av-md" style="background: linear-gradient(135deg,#0D1B4B,#1E6FBF)">T</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 14.5px; color: var(--navy)">test</div>
-                            <div style="font-size: 11.5px; color: var(--muted)">Senior Agent</div>
-                        </div>
-                        <span class="pill pill-green" style="margin-left: auto">Active</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">12</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Bookings</div>
-                        </div>
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">18</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Customers</div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 14px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px;"><span style="color: var(--mid)">Monthly Target</span><span style="font-weight: 700; color: var(--navy)">82%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 82%; background: linear-gradient(135deg,#0D1B4B,#1E6FBF)"></div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 10px; color: var(--muted)">Commission Earned</div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--navy)">INR 28,000</div>
-                        </div>
-                        <div style="display: flex; gap: 6px;">
-                            <button class="btn btn-outline btn-xs">View</button>
-                            <button class="btn btn-navy btn-xs">Report</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="padding: 0; overflow: hidden; transition: transform .25s,box-shadow .25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                <div style="height: 7px; background: linear-gradient(135deg,#6B2D8B,#9333EA)"></div>
-                <div style="padding: 20px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div class="avatar av-md" style="background: linear-gradient(135deg,#6B2D8B,#9333EA)">A</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 14.5px; color: var(--navy)">Amna Butt</div>
-                            <div style="font-size: 11.5px; color: var(--muted)">Agent</div>
-                        </div>
-                        <span class="pill pill-green" style="margin-left: auto">Active</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">8</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Bookings</div>
-                        </div>
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">14</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Customers</div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 14px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px;"><span style="color: var(--mid)">Monthly Target</span><span style="font-weight: 700; color: var(--navy)">65%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 65%; background: linear-gradient(135deg,#6B2D8B,#9333EA)"></div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 10px; color: var(--muted)">Commission Earned</div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--navy)">INR 18,400</div>
-                        </div>
-                        <div style="display: flex; gap: 6px;">
-                            <button class="btn btn-outline btn-xs">View</button>
-                            <button class="btn btn-navy btn-xs">Report</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="padding: 0; overflow: hidden; transition: transform .25s,box-shadow .25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                <div style="height: 7px; background: linear-gradient(135deg,#0F766E,#14B8A6)"></div>
-                <div style="padding: 20px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div class="avatar av-md" style="background: linear-gradient(135deg,#0F766E,#14B8A6)">Z</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 14.5px; color: var(--navy)">Zubair Ali</div>
-                            <div style="font-size: 11.5px; color: var(--muted)">Agent</div>
-                        </div>
-                        <span class="pill pill-green" style="margin-left: auto">Active</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">6</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Bookings</div>
-                        </div>
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">10</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Customers</div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 14px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px;"><span style="color: var(--mid)">Monthly Target</span><span style="font-weight: 700; color: var(--navy)">50%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 50%; background: linear-gradient(135deg,#0F766E,#14B8A6)"></div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 10px; color: var(--muted)">Commission Earned</div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--navy)">INR 13,600</div>
-                        </div>
-                        <div style="display: flex; gap: 6px;">
-                            <button class="btn btn-outline btn-xs">View</button>
-                            <button class="btn btn-navy btn-xs">Report</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="padding: 0; overflow: hidden; transition: transform .25s,box-shadow .25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                <div style="height: 7px; background: linear-gradient(135deg,#92400E,#D97706)"></div>
-                <div style="padding: 20px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div class="avatar av-md" style="background: linear-gradient(135deg,#92400E,#D97706)">H</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 14.5px; color: var(--navy)">Hina Qureshi</div>
-                            <div style="font-size: 11.5px; color: var(--muted)">Junior Agent</div>
-                        </div>
-                        <span class="pill pill-yellow" style="margin-left: auto">On Leave</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">7</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Bookings</div>
-                        </div>
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">11</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Customers</div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 14px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px;"><span style="color: var(--mid)">Monthly Target</span><span style="font-weight: 700; color: var(--navy)">70%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 70%; background: linear-gradient(135deg,#92400E,#D97706)"></div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 10px; color: var(--muted)">Commission Earned</div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--navy)">INR 15,900</div>
-                        </div>
-                        <div style="display: flex; gap: 6px;">
-                            <button class="btn btn-outline btn-xs">View</button>
-                            <button class="btn btn-navy btn-xs">Report</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="padding: 0; overflow: hidden; transition: transform .25s,box-shadow .25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                <div style="height: 7px; background: linear-gradient(135deg,#1B4332,#16A34A)"></div>
-                <div style="padding: 20px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                        <div class="avatar av-md" style="background: linear-gradient(135deg,#1B4332,#16A34A)">R</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 14.5px; color: var(--navy)">Asim Raza</div>
-                            <div style="font-size: 11.5px; color: var(--muted)">Junior Agent</div>
-                        </div>
-                        <span class="pill pill-green" style="margin-left: auto">Active</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">5</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Bookings</div>
-                        </div>
-                        <div style="background: var(--bg); border-radius: 9px; padding: 10px; text-align: center;">
-                            <div style="font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--navy)">9</div>
-                            <div style="font-size: 10px; color: var(--muted); margin-top: 2px">Customers</div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 14px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px;"><span style="color: var(--mid)">Monthly Target</span><span style="font-weight: 700; color: var(--navy)">45%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 45%; background: linear-gradient(135deg,#1B4332,#16A34A)"></div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 10px; color: var(--muted)">Commission Earned</div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--navy)">INR 11,400</div>
-                        </div>
-                        <div style="display: flex; gap: 6px;">
-                            <button class="btn btn-outline btn-xs">View</button>
-                            <button class="btn btn-navy btn-xs">Report</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>--%>
-
         <!-- TEAM PERFORMANCE TABLE -->
         <div class="card">
             <div class="card-header">
                 <div>
                     <div class="card-title">Team Performance Summary</div>
-                    <div class="card-subtitle">This month's breakdown</div>
+                    <div class="card-subtitle">   <asp:Label ID="lblRecordSummary" runat="server"
+       CssClass="pg-summary" Text="" /></div>
                 </div>
                 <button class="btn btn-outline btn-sm">⬇ Export</button>
             </div>
 
-                                <div class="tbl-wrap">
-    <table class="tbl">
-        <thead>
-            <tr>
-                <th>#</th>
-                 <th>Id No</th>
-                <th>Customer Name</th>
-               
-                <th>Phone No</th>
-                <th>City</th>
-                <th>Status</th>
-            </tr>
-        </thead>
+            <div class="tbl-wrap">
+                <table class="tbl">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Level</th>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Sponsor ID</th>
+                            <th>Sponsor Name</th>
+                            <th>Phone No</th>
+                            <th>City</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
 
-        <tbody>
+                    <tbody>
 
-            <asp:Repeater ID="rptCustomers" runat="server">
-                <ItemTemplate>
-                    <tr>
-                        <td><%# Container.ItemIndex + 1 %></td>
-                            <td><%# Eval("idno") %></td>
-                        <td>
-                            <div style="display:flex; align-items:center; gap:9px;">
-                                <div class="avatar av-sm" style="background:linear-gradient(135deg,#0D1B4B,#1E6FBF);"></div>
-                                <div>
-                                    <div style="font-weight:600;color:var(--navy)">
-                                        <%# Eval("memfirstname") %>
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                        </td>
+                        <asp:Repeater ID="rptCustomers" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><%# Container.ItemIndex + 1 %></td>
+                                    <td><%# Eval("Level") %></td>
+                                    <td><%# Eval("idno") %></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 9px;">
+                                            <div class="avatar av-sm" style="background: linear-gradient(135deg,#0D1B4B,#1E6FBF);"><%# Eval("memfirstname").ToString().Substring(0, 1).ToUpper() %></div>
+                                            <div>
+                                                <div style="font-weight: 600; color: var(--navy)">
+                                                    <%# Eval("memfirstname") %>
+                                                </div>
 
-                    
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><%# Eval("Sponsorid") %></td>
+                                    <td><%# Eval("MemberName") %></td>
+                                    <td><%# Eval("mobl") %></td>
+                                    <td><%# Eval("city") %></td>
+                                    <td><span class='pill <%# Eval("Status").ToString() == "Active" ? "pill-green" : "pill-red" %>'>
+                                        <%# Eval("Status") %>
+                                    </span></td>
 
-                        <td><%# Eval("mobl") %></td>
-                        <td><%# Eval("city") %></td>
-                         <td> <span class='pill <%# Eval("Status").ToString() == "Active" ? "pill-green" : "pill-red" %>'>
-        <%# Eval("Status") %>
-    </span></td>
-                       
 
 
-                    </tr>
-                </ItemTemplate>
-            </asp:Repeater>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
 
-        </tbody>
-    </table>
-</div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-bar">
+                <asp:HiddenField ID="hdnTotalPages" runat="server" Value="1" />
+                <asp:HiddenField ID="hdnCurrentPage" runat="server" Value="1" />
 
-         <%--   <div class="tbl-wrap">
+             
+
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <asp:Button ID="btnPrev" runat="server" Text="← Prev"
+                        OnClick="BtnPrev_Click" CssClass="btn btn-outline btn-sm" />
+
+                    <asp:Label ID="lblPageInfo" runat="server"
+                        Text="Page 1 of 1" CssClass="pg-info" />
+
+                    <asp:Button ID="btnNext" runat="server" Text="Next →"
+                        OnClick="BtnNext_Click" CssClass="btn btn-outline btn-sm" />
+                </div>
+            </div>
+            <%--   <div class="tbl-wrap">
                 <table class="tbl">
                     <thead>
                         <tr>

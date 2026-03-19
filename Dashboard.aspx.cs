@@ -21,14 +21,36 @@ public partial class Dashboard : System.Web.UI.Page
         {
             if (Session["Status"] != null && Session["Status"].ToString() == "OK")
             {
-                LoadProfile();
+                if (!Page.IsPostBack)
+                {
+                    LoadProfile();
+                    lblCUSTOMERLeftLink.Text = "https://" + HttpContext.Current.Request.Url.Host + "/CustomerRegistration.aspx?ref=" + Crypto.Encrypt(Session["MID"] + "/1");
+                    //aRfLinkk.HRef = lblLink.Text;
+                    lblAGENTRightLink.Text = "https://" + HttpContext.Current.Request.Url.Host + "/AgentRegistration.aspx?ref=" + Crypto.Encrypt(Session["MID"] + "/2");
+                    //WhatsappHref2.HRef = "https://wa.me/?text=" + lblLink1.Text + "";
+                    //aRfLink1.HRef = lblLink1.Text;
+                    LoadCustomerCounts();
+                }
 
-                LoadCustomerCounts();
             }
             else
             {
-                Response.Redirect("agent_login.aspx", false);
+                Response.Redirect("logout.aspx");
             }
+            //if (Session["Status"] != null && Session["Status"].ToString() == "OK")
+            //{
+            //    LoadProfile();
+            //    lblCUSTOMERLeftLink.Text = "https://" + HttpContext.Current.Request.Url.Host + "/CustomerRegistration.aspx?ref=" + Crypto.Encrypt(Session["MID"] + "/1");
+            //    //aRfLinkk.HRef = lblLink.Text;
+            //    lblAGENTRightLink.Text = "https://" + HttpContext.Current.Request.Url.Host + "/AgentRegistration.aspx?ref=" + Crypto.Encrypt(Session["MID"] + "/2");
+            //    //WhatsappHref2.HRef = "https://wa.me/?text=" + lblLink1.Text + "";
+            //    //aRfLink1.HRef = lblLink1.Text;
+            //    LoadCustomerCounts();
+            //}
+            //else
+            //{
+            //    Response.Redirect("agent_login.aspx", false);
+            //}
         }
     }
     private void LoadProfile()
@@ -60,11 +82,9 @@ public partial class Dashboard : System.Web.UI.Page
             if (ds.Tables[0].Rows.Count > 0)
             {
                 lblCustomers.Text = ds.Tables[0].Rows[0]["MyCustomers"].ToString();
-            }
-
-            if (ds.Tables[1].Rows.Count > 0)
-            {
-                lblSubAgents.Text = ds.Tables[1].Rows[0]["MySubAgents"].ToString();
+                lblSubAgents.Text = ds.Tables[0].Rows[0]["MySubAgents"].ToString();
+                Lbltotalagentbusiness.Text = ds.Tables[0].Rows[0]["AgtTotal"].ToString();
+                LblAgentsBusiness.Text = ds.Tables[0].Rows[0]["custTotal"].ToString();
             }
         }
     }

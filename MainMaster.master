@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> <%=Session["Title"]%></title>
+    <title><%=Session["Title"]%></title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="css/Index.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -15,26 +15,6 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <%-- <nav>
-                <a href="#" class="nav-logo">
-                    <img src="images/logo.png" alt="The Sky Is Your Limit">
-                    <div class="nav-logo-text">
-                        <span>The Sky Is Your Limit</span>
-                        <span>Premium Real Estate</span>
-                    </div>
-                </a>
-                <div class="nav-links">
-                    <a href="#" class="active">Home</a>
-                    <a href="#">Projects</a>
-                    <a href="#">Plots</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Contact</a>
-                </div>
-                <div class="nav-cta">
-                    <a href="agent_login.aspx" class="btn-outline">Agent Login</a>
-                    <a href="#" class="btn-primary">View Projects →</a>
-                </div>
-            </nav>--%>
             <nav>
                 <a href="#" class="nav-logo">
                     <img src="images/logo.png" alt="The Sky Is Your Limit">
@@ -44,75 +24,47 @@
                     </div>
                 </a>
 
-                <div class="nav-links">
+                <div class="nav-links" id="navLinks">
                     <a href="#" class="active">Home</a>
                     <a href="#">Projects</a>
                     <a href="#">Plots</a>
                     <a href="#">About Us</a>
                     <a href="#">Contact</a>
                 </div>
-                <style>
-                    .user-dropdown {
-                        position: relative;
-                        display: inline-block;
-                    }
 
-                    .dropdown-menu {
-                        display: none;
-                        position: absolute;
-                        right: 0;
-                        background: #fff;
-                        min-width: 150px;
-                        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                        border-radius: 6px;
-                        overflow: hidden;
-                        z-index: 999;
-                    }
+                <div class="nav-cta" id="navCta">
+                    <asp:HyperLink ID="lnkLogin" runat="server"
+                        NavigateUrl="agent_login.aspx"
+                        CssClass="btn-outline">
+                        Agent Login
+                    </asp:HyperLink>
 
-                        .dropdown-menu a {
-                            display: block;
-                            padding: 10px 15px;
-                            text-decoration: none;
-                            color: #333;
-                        }
+                    <asp:Panel ID="pnlUser" runat="server" Visible="false">
+                        <div class="user-dropdown">
+                            <button class="btn-outline" type="button">
+                                <asp:Literal ID="litUserName" runat="server"></asp:Literal> ▼
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="Dashboard.aspx">Main Account</a>
+                                <a href="logout.aspx">Logout</a>
+                            </div>
+                        </div>
+                    </asp:Panel>
 
-                            .dropdown-menu a:hover {
-                                background: #f2f2f2;
-                            }
+                    <a href="#" class="btn-primary">View Projects →</a>
+                </div>
 
-                    .user-dropdown:hover .dropdown-menu {
-                        display: block;
-                    }
-                </style>
-                <div class="nav-cta">
-
-    <!-- Login Button -->
-    <asp:HyperLink ID="lnkLogin" runat="server"
-        NavigateUrl="agent_login.aspx"
-        CssClass="btn-outline">
-        Agent Login
-    </asp:HyperLink>
-
-    <!-- User Dropdown -->
-    <asp:Panel ID="pnlUser" runat="server" Visible="false">
-        <div class="user-dropdown">
-            <button class="btn-outline">
-                <asp:Literal ID="litUserName" runat="server"></asp:Literal> ▼
-            </button>
-
-            <div class="dropdown-menu">
-                <a href="Dashboard.aspx">Main Account</a>
-                <a href="logout.aspx">Logout</a>
-            </div>
-        </div>
-    </asp:Panel>
-
-    <a href="#" class="btn-primary">View Projects →</a>
-
-</div>
+                <!-- Hamburger Button -->
+                <button class="nav-hamburger" id="navHamburger" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
+
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
+
             <!-- FOOTER -->
             <footer>
                 <div class="container">
@@ -179,17 +131,17 @@
                     </div>
                 </div>
             </footer>
-
         </div>
     </form>
 
     <script>
+        // ── SEARCH TABS ──
         function setTab(el) {
             el.closest('.search-tabs').querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
         }
 
-        // Scroll animation
+        // ── SCROLL ANIMATIONS ──
         const observer = new IntersectionObserver(entries => {
             entries.forEach((e, i) => {
                 if (e.isIntersecting) {
@@ -198,6 +150,55 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ── HAMBURGER MENU ──
+        const hamburger = document.getElementById('navHamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navCta = document.getElementById('navCta');
+
+        hamburger.addEventListener('click', function () {
+            const isOpen = navLinks.classList.contains('mobile-open');
+
+            if (isOpen) {
+                // Close
+                navLinks.classList.remove('mobile-open');
+                navCta.classList.remove('mobile-open');
+                hamburger.classList.remove('open');
+                document.body.style.overflow = '';
+            } else {
+                // Open
+                navLinks.classList.add('mobile-open');
+                hamburger.classList.add('open');
+                document.body.style.overflow = 'hidden';
+
+                // Position CTA just below nav-links
+                setTimeout(function () {
+                    var linksBottom = navLinks.getBoundingClientRect().bottom;
+                    navCta.style.top = linksBottom + 'px';
+                    navCta.classList.add('mobile-open');
+                }, 10);
+            }
+        });
+
+        // Close menu when any nav link is clicked
+        navLinks.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                navLinks.classList.remove('mobile-open');
+                navCta.classList.remove('mobile-open');
+                hamburger.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close menu on outside click
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('mobile-open');
+                navCta.classList.remove('mobile-open');
+                hamburger.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
     </script>
 </body>
 </html>

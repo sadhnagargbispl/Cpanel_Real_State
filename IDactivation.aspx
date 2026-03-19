@@ -31,18 +31,26 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="g12" style="margin-bottom: 16px;">
-                                                            <h4>Available Balance : <span style="color: Red; font-weight: bold" id="AvailableBal"
-    runat="server"></span>
-</h4>
-                            </div> 
-                            
-                            <div class="g2" >
+                                <h4>Available Balance : <span style="color: Red; font-weight: bold" id="AvailableBal"
+                                    runat="server"></span>
+                                </h4>
+                            </div>
+
+                            <div class="g2">
                                 <div class="fg" id="DiMemberId" runat="server">
                                     <label class="fl">
                                         Member Id <span style="color: Red; font-weight: bold; font-size: 1.4em">*</span></label>
                                     <asp:TextBox ID="txtMemberId" runat="server" CssClass="fi validate[required]" OnTextChanged="txtMemberId_TextChanged"
-                                        AutoPostBack="true"></asp:TextBox>
+                                        AutoPostBack="true" onkeypress="return blockSpace(event)"></asp:TextBox>
                                     <asp:Label ID="lblFormno" runat="server" Visible="false"></asp:Label>
+                                    <script>
+                                        function blockSpace(e) {
+                                            if (e.keyCode == 32) {
+                                                return false; // space block
+                                            }
+                                            return true;
+                                        }
+</script>
                                     <asp:HiddenField ID="HdnCheckTrnns" runat="server" />
                                 </div>
                                 <div class="fg" id="DivMemberName" runat="server">
@@ -57,7 +65,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                                  <asp:Label ID="LblError" runat="server" Visible="false"></asp:Label>
+                            <asp:Label ID="LblError" runat="server" Visible="false"></asp:Label>
                             <div class="g2">
                                 <div class="fg" id="DivUplinerId" runat="server" visible="false">
                                     <label for="inputdefault">

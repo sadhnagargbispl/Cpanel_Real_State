@@ -30,6 +30,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
             }
             if (!Page.IsPostBack)
             {
+               
                 DataTable Dt = new DataTable();
                 string str = "";
                 if (Session["Status"] != null && Session["Status"].ToString() == "OK")
@@ -43,6 +44,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
             ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", "alert('" + ex.Message + "')", true);
         }
     }
+
     private void LoadProfile()
     {
         DataTable Dt = new DataTable();
@@ -58,11 +60,12 @@ public partial class SiteMaster : System.Web.UI.MasterPage
             LblMemberName.Text = name;
             LblMemberID.Text = Dt.Rows[0]["IDNo"].ToString();
             Lblstatus.Text = Dt.Rows[0]["status"].ToString();
-            LblMemberIDLOGO.Text = GetInitials(name);
+            LblMemberIDLOGO.Text = Dt.Rows[0]["MemFirstName"].ToString().Substring(0, 1).ToUpper();
+                //<%= Session["idno"].ToString().Substring(0, 1).ToUpper() %>
             Lblname.Text = name;
 
             LblID.Text = Dt.Rows[0]["IDNo"].ToString();
-            LblNameLogo.Text = GetInitials(name);
+            LblNameLogo.Text = Dt.Rows[0]["MemFirstName"].ToString().Substring(0, 1).ToUpper();
             if (Dt.Rows[0]["isblock"].ToString() == "Y")
             {
                 Session.Abandon();

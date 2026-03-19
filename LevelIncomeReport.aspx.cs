@@ -13,7 +13,7 @@ using System.Net;
 using System.Collections;
 using DataTable = System.Data.DataTable;
 using System.Web.UI.HtmlControls;
-public partial class IdActivationReport : System.Web.UI.Page
+public partial class LevelIncomeReport : System.Web.UI.Page
 {
     string scrName;
     DAL ObjDAL = new DAL();
@@ -34,7 +34,7 @@ public partial class IdActivationReport : System.Web.UI.Page
                 {
                     FillDetail();
                 }
-               
+
             }
             else
             {
@@ -55,15 +55,14 @@ public partial class IdActivationReport : System.Web.UI.Page
         try
         {
             Dt = new DataTable();
+            DataSet DS = new DataSet();
             //string query = ObjDal.Isostart + "select Sno,Investmentdate as [Investment date],Amount As [Investment Amount],Kitname as [Kit name],Status from V#InvestmentDetail where IdNo='" + Session["Idno"] + "'Order by InvestMentDate Desc " + ObjDal.IsoEnd;
-            string query = "Exec Sp_GetIDInvestmentDetail '" + Session["formno"] + "'";
-            Dt = SqlHelper.ExecuteDataset(constr1, CommandType.Text, query).Tables[0];
-            Session["ShopFund"] = Dt;
-            if (Dt.Rows.Count > 0)
-            {
-                RptDirects.DataSource = Dt;
-                RptDirects.DataBind();
-            }
+            string query = "Exec sp_GetLevelIncome '" + Session["formno"] + "'";
+            DS = SqlHelper.ExecuteDataset(constr1, CommandType.Text, query);
+            Session["ShopFund"] = DS.Tables[0];
+            RptDirects.DataSource = DS.Tables[0];
+            RptDirects.DataBind();
+            lblTotalBonus.Text = DS.Tables[1].Rows[0]["TotalIncome"].ToString();
         }
         catch (Exception ex)
         {

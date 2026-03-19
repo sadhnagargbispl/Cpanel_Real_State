@@ -495,7 +495,6 @@ public partial class IDactivation : System.Web.UI.Page
                 LblError.Text = "Session expired. Please login again.";
                 return false;
             }
-
             string Sql = ObjDAL.Isostart +
                 "SELECT a.Formno,a.Idno," +
                 "a.MemFirstName + ' ' + a.MemLastName AS MemName," +
@@ -513,24 +512,22 @@ public partial class IDactivation : System.Web.UI.Page
                 "AND a.IsBlock='N' " +
                 "AND a.IDNo='" + txtMemberId.Text.Trim() + "'" +
                 ObjDAL.IsoEnd;
-
             DataTable Dt_ = SqlHelper.ExecuteDataset(constr1, CommandType.Text, Sql).Tables[0];
-
             // ❌ Member not found
             if (Dt_.Rows.Count == 0)
             {
                 ClearControls();
+                scrName = "<script language='javascript'>alert('Invalid ID Does Not Exist');</script>";
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "Login Error", scrName, false);
+                txtMemberId.Text = "";
                 return false;
             }
-
             // ✅ Member found
             DataRow mRow = Dt_.Rows[0];
-
             kitid.Text = mRow["KitId"].ToString();
             TxtMemberName.Text = mRow["MemName"].ToString();
             lblFormno.Text = mRow["Formno"].ToString();
             LblError.Text = "";
-
             // 🔥 ACTIVE MEMBER LOGIC
             if (mRow["ActiveStatus"].ToString() == "Y")
             {

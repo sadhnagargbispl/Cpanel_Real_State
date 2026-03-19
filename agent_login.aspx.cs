@@ -139,7 +139,9 @@ public partial class agent_login : System.Web.UI.Page
                 {
                     scrname = "<script language='javascript'>alert('Please Enter valid UserName or Password.');</script>";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Login Error", scrname, false);
+                    return;
                 }
+               
                 else
                 {
                     Session["Run"] = 0;
@@ -269,6 +271,13 @@ public partial class agent_login : System.Web.UI.Page
                 {
                     scrname = "<script language='javascript'>alert('Please Enter valid UserName or Password.');</script>";
                     ScriptManager.RegisterClientScriptBlock(this.Page, this.GetType(), "Login Error", scrname, false);
+                    return;
+                }
+                else if (dt.Rows[0]["Fld4"].ToString() == "C")
+                {
+                    scrname = "<script language='javascript'>alert('Access Denied. Only Agents are allowed to login.');</script>";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "Login Error", scrname, false);
+                    return;
                 }
                 else
                 {

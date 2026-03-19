@@ -4,3 +4,18 @@ Object reference not set to an instance of an object.
 http://localhost:62069/ProfilePage.aspx:  07-Mar-2026 03:48:53:081
 Object reference not set to an instance of an object.
 --------------------------------------------------------
+http://localhost:54761/WalletRequestReport.aspx:  13-Mar-2026 05:18:34:819 
+Thread was being aborted.
+--------------------------------------------------------
+http://localhost:54761/WalletRequestReport.aspx:  13-Mar-2026 05:38:40:974 
+Thread was being aborted.
+--------------------------------------------------------
+http://localhost:54761/IDactivation.aspx:  17-Mar-2026 01:37:52:154 
+Thread was being aborted.
+--------------------------------------------------------
+http://localhost:54761/IDactivation.aspx:  19-Mar-2026 01:02:21:566 
+Thread was being aborted.
+--------------------------------------------------------
+http://localhost:54761/LevelIncomeReport.aspx:  19-Mar-2026 01:36:24:404 
+Thread was being aborted.
+--------------------------------------------------------
