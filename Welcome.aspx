@@ -119,7 +119,7 @@ TabIndex="54" OnClick="Button1_Click" />
                         <!-- FOOTER -->
                         <div class="wl-footer">
                             <div class="wl-footer-msg">
-                                Thank you for joining the <strong>ConnectDots</strong> family.<br>
+                                Thank you for joining the <strong><%=Session["CompName"]%></strong> family.<br>
                                 We wish you great success in your journey with us.
                             </div>
                             <div class="wl-footer-sig">

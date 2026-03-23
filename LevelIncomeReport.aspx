@@ -62,16 +62,13 @@
                 <div class="table-responsive">
                     <asp:GridView ID="RptDirects" runat="server" AutoGenerateColumns="true" CssClass="tbl"
                         AllowPaging="true" PageSize="10"
-                        ShowFooter="true"
+                        ShowFooter="false"
                         OnPageIndexChanging="RptDirects_PageIndexChanging">
                         <Columns>
                             <asp:TemplateField HeaderText="SNo.">
                                 <ItemTemplate>
                                     <%# Container.DataItemIndex + 1 %>
                                 </ItemTemplate>
-                                <FooterTemplate>
-                                    <strong>Total</strong>
-                                </FooterTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>

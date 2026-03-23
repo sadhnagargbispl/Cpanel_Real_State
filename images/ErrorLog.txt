@@ -19,3 +19,12 @@ Thread was being aborted.
 http://localhost:54761/LevelIncomeReport.aspx:  19-Mar-2026 01:36:24:404 
 Thread was being aborted.
 --------------------------------------------------------
+http://localhost:54761/LevelIncomeReport.aspx:  23-Mar-2026 03:34:53:614 
+Invalid column name 'Roi'.
+--------------------------------------------------------
+http://localhost:54761/LevelIncomeReport.aspx:  23-Mar-2026 03:35:17:813 
+Invalid column name 'Roi'.
+--------------------------------------------------------
+http://localhost:54761/LevelIncomeReport.aspx:  23-Mar-2026 03:40:19:010 
+Thread was being aborted.
+--------------------------------------------------------
