@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sky Residencia Delhi – Property Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:   #0B1638;
+    --deep:   #101E4A;
+    --ocean:  #1756A9;
+    --sky:    #3B90F5;
+    --gold:   #E8A020;
+    --gold-lt:#F5C96A;
+    --cream:  #FDF8F0;
+    --white:  #FFFFFF;
+    --mist:   #F1F5FB;
+    --slate:  #64748B;
+    --border: #E2EAF5;
+    --green:  #22C55E;
+    --red:    #EF4444;
+    --shadow: 0 4px 32px rgba(11,22,56,.09);
+    --shadow-lg: 0 14px 60px rgba(11,22,56,.17);
+    --r: 14px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: 68px; background: rgba(255,255,255,.97); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; box-shadow: 0 2px 20px rgba(11,22,56,.06);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--ocean));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--gold);
+  }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo-text strong { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .nav-logo-text span { font-size: 10px; color: var(--slate); letter-spacing: 1.2px; text-transform: uppercase; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { font-size: 13.5px; font-weight: 500; color: var(--slate); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta { display: flex; align-items: center; gap: 10px; }
+  .btn-ghost { padding: 8px 20px; border: 1.5px solid var(--navy); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--navy); text-decoration: none; transition: all .2s; }
+  .btn-ghost:hover { background: var(--navy); color: #fff; }
+  .btn-gold { padding: 9px 22px; background: linear-gradient(135deg,var(--gold),#C97A10); border-radius: 8px; font-size: 13px; font-weight: 600; color: #fff; text-decoration: none; box-shadow: 0 3px 14px rgba(232,160,32,.35); transition: all .2s; }
+  .btn-gold:hover { transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 1100; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all .3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb-wrap {
+    margin-top: 68px; background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 48px;
+  }
+  .breadcrumb { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--slate); flex-wrap: wrap; }
+  .breadcrumb a { color: var(--slate); text-decoration: none; transition: color .2s; }
+  .breadcrumb a:hover { color: var(--ocean); }
+  .breadcrumb-sep { color: var(--border); }
+  .breadcrumb-current { color: var(--navy); font-weight: 600; }
+
+  /* ── HERO GALLERY ── */
+  .gallery-section { background: var(--white); }
+  .gallery-inner { max-width: 1280px; margin: 0 auto; padding: 32px 48px 0; }
+  .prop-title-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 16px;
+  }
+  .prop-title-left {}
+  .prop-badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .pbadge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .4px;
+  }
+  .pbadge-hot { background: #FEF2F2; color: var(--red); border: 1px solid #FECACA; }
+  .pbadge-active { background: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
+  .pbadge-type { background: var(--mist); color: var(--ocean); border: 1px solid var(--border); }
+  .prop-main-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px,4vw,46px); font-weight: 700; color: var(--navy); line-height: 1.1; margin-bottom: 8px; }
+  .prop-location { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--slate); }
+  .prop-title-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .prop-price-big { text-align: right; }
+  .prop-price-lbl { font-size: 11px; color: var(--slate); text-transform: uppercase; letter-spacing: .8px; }
+  .prop-price-val { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; color: var(--navy); line-height: 1; }
+  .prop-price-note { font-size: 12px; color: var(--green); font-weight: 600; }
+  .prop-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-inquire {
+    padding: 12px 28px; background: linear-gradient(135deg,var(--gold),#C97A10);
+    border-radius: 10px; font-size: 14px; font-weight: 700; color: #fff; text-decoration: none;
+    box-shadow: 0 4px 16px rgba(232,160,32,.4); transition: all .2s; display: flex; align-items: center; gap: 7px;
+  }
+  .btn-inquire:hover { transform: translateY(-1px); box-shadow: 0 7px 22px rgba(232,160,32,.5); }
+  .btn-share {
+    padding: 11px 18px; border: 1.5px solid var(--border); border-radius: 10px;
+    background: #fff; font-size: 13px; font-weight: 600; color: var(--navy);
+    cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 6px; font-family: 'Outfit', sans-serif;
+  }
+  .btn-share:hover { border-color: var(--navy); }
+  .btn-wish {
+    padding: 11px 18px; border: 1.5px solid var(--border); border-radius: 10px;
+    background: #fff; font-size: 14px; cursor: pointer; transition: all .2s; font-family: 'Outfit', sans-serif;
+  }
+  .btn-wish:hover { border-color: var(--red); }
+  .btn-wish.active { background: #FEF2F2; border-color: var(--red); }
+
+  /* Gallery Grid */
+  .gallery-grid {
+    display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 280px 180px;
+    gap: 8px; border-radius: var(--r); overflow: hidden; margin-bottom: 0;
+  }
+  .gallery-main { grid-row: span 2; position: relative; overflow: hidden; cursor: pointer; }
+  .gallery-thumb { position: relative; overflow: hidden; cursor: pointer; }
+  .gallery-img {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px; transition: transform .4s;
+  }
+  .gallery-main .gallery-img { font-size: 96px; }
+  .gallery-main:hover .gallery-img, .gallery-thumb:hover .gallery-img { transform: scale(1.06); }
+  .gallery-overlay {
+    position: absolute; inset: 0; background: linear-gradient(180deg,transparent 50%,rgba(0,0,0,.45));
+    opacity: 0; transition: opacity .3s;
+  }
+  .gallery-main:hover .gallery-overlay, .gallery-thumb:hover .gallery-overlay { opacity: 1; }
+  .gallery-count {
+    position: absolute; bottom: 16px; right: 16px;
+    background: rgba(0,0,0,.65); color: #fff; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 100px; backdrop-filter: blur(4px);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .detail-body { max-width: 1280px; margin: 0 auto; padding: 44px 48px 80px; }
+  .detail-layout { display: grid; grid-template-columns: 1fr 360px; gap: 36px; align-items: start; }
+
+  /* LEFT COLUMN */
+  .detail-left {}
+
+  /* Quick Stats Strip */
+  .qs-strip {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 32px;
+  }
+  .qs-item {
+    padding: 20px; text-align: center; border-right: 1px solid var(--border); position: relative;
+  }
+  .qs-item:last-child { border-right: none; }
+  .qs-icon { font-size: 22px; margin-bottom: 6px; }
+  .qs-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--navy); }
+  .qs-lbl { font-size: 11px; color: var(--slate); text-transform: uppercase; letter-spacing: .7px; margin-top: 3px; }
+
+  /* Sections */
+  .detail-section { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 30px; box-shadow: var(--shadow); margin-bottom: 24px; }
+  .ds-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700;
+    color: var(--navy); margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ds-title-icon { font-size: 20px; }
+
+  /* Overview */
+  .overview-text { font-size: 14.5px; color: var(--slate); line-height: 1.85; }
+  .overview-text p { margin-bottom: 12px; }
+  .overview-text p:last-child { margin-bottom: 0; }
+
+  /* Details Grid */
+  .details-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .dg-item { background: var(--mist); border-radius: 10px; padding: 16px; }
+  .dg-lbl { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--slate); margin-bottom: 5px; }
+  .dg-val { font-size: 15px; font-weight: 700; color: var(--navy); }
+
+  /* Amenities */
+  .amenities-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  .am-item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; padding: 16px 10px; background: var(--mist);
+    border-radius: 12px; text-align: center; border: 1px solid transparent; transition: all .25s;
+  }
+  .am-item:hover { border-color: var(--ocean); background: #EFF6FF; transform: translateY(-2px); }
+  .am-icon { font-size: 24px; }
+  .am-name { font-size: 11.5px; font-weight: 600; color: var(--navy); }
+
+  /* Location Map Placeholder */
+  .map-placeholder {
+    height: 280px; border-radius: 12px; overflow: hidden;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--ocean); font-size: 14px; font-weight: 500; gap: 10px;
+    border: 1px solid var(--border); position: relative;
+  }
+  .map-placeholder-icon { font-size: 44px; }
+  .map-pin {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-60%);
+    background: var(--gold); width: 36px; height: 36px; border-radius: 50% 50% 50% 0;
+    rotate: -45deg; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(232,160,32,.5);
+    animation: pinBounce 2s ease-in-out infinite;
+  }
+  @keyframes pinBounce { 0%,100%{transform:translate(-50%,-60%) rotate(-45deg)} 50%{transform:translate(-50%,-72%) rotate(-45deg)} }
+  .map-pin-inner { font-size: 16px; rotate: 45deg; }
+  .map-address { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,.95); padding: 8px 16px; border-radius: 100px; font-size: 12.5px; font-weight: 600; color: var(--navy); white-space: nowrap; box-shadow: var(--shadow); }
+
+  /* Payment Plan */
+  .payment-table { width: 100%; border-collapse: collapse; }
+  .payment-table th { background: var(--navy); color: #fff; padding: 12px 16px; font-size: 12px; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: .6px; }
+  .payment-table th:first-child { border-radius: 8px 0 0 0; }
+  .payment-table th:last-child { border-radius: 0 8px 0 0; }
+  .payment-table td { padding: 12px 16px; font-size: 13.5px; color: var(--navy); border-bottom: 1px solid var(--border); }
+  .payment-table tr:last-child td { border-bottom: none; }
+  .payment-table tr:nth-child(even) td { background: var(--mist); }
+  .pt-highlight { color: var(--ocean); font-weight: 700; }
+
+  /* Similar Properties */
+  .similar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .sim-card { background: var(--mist); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: all .3s; cursor: pointer; }
+  .sim-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .sim-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 44px; }
+  .sim-body { padding: 14px; }
+  .sim-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .sim-loc { font-size: 12px; color: var(--slate); margin-bottom: 10px; }
+  .sim-price { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--navy); }
+
+  /* RIGHT SIDEBAR */
+  .detail-right { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 20px; }
+
+  /* Contact Card */
+  .contact-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px; box-shadow: var(--shadow);
+  }
+  .cc-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 20px; }
+  .cc-agent { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .agent-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg,var(--navy),var(--ocean)); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--gold); flex-shrink: 0; }
+  .agent-info { flex: 1; }
+  .agent-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .agent-role { font-size: 12px; color: var(--slate); }
+  .agent-rating { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--gold); margin-top: 3px; }
+  .cc-form { display: flex; flex-direction: column; gap: 12px; }
+  .cc-input {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+    border-radius: 9px; font-size: 13.5px; color: var(--navy);
+    background: var(--mist); outline: none; transition: border-color .2s; font-family: 'Outfit', sans-serif;
+  }
+  .cc-input:focus { border-color: var(--ocean); background: #fff; }
+  .cc-input::placeholder { color: #A0AEC0; }
+  .cc-textarea { resize: vertical; min-height: 90px; }
+  .btn-contact-full {
+    width: 100%; padding: 13px; background: linear-gradient(135deg,var(--gold),#C97A10);
+    border: none; border-radius: 10px; color: #fff; font-size: 14.5px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(232,160,32,.4); transition: all .2s; font-family: 'Outfit', sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .btn-contact-full:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,160,32,.5); }
+  .btn-call {
+    width: 100%; padding: 12px; border: 1.5px solid var(--navy);
+    border-radius: 10px; background: transparent; color: var(--navy);
+    font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; font-family: 'Outfit', sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 8px;
+  }
+  .btn-call:hover { background: var(--navy); color: #fff; }
+
+  /* Highlights Card */
+  .highlights-card { background: linear-gradient(135deg,var(--navy),#1E3A8A); border-radius: var(--r); padding: 26px; color: #fff; }
+  .hc-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+  .hc-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+  .hc-item:last-child { margin-bottom: 0; }
+  .hc-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .hc-text { font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.55; }
+
+  /* Share Card */
+  .share-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 22px; box-shadow: var(--shadow); }
+  .sc-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .sc-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sc-btn { flex: 1; min-width: 70px; padding: 9px 10px; border-radius: 9px; border: 1.5px solid var(--border); background: var(--mist); font-size: 12.5px; font-weight: 600; color: var(--navy); cursor: pointer; text-align: center; transition: all .2s; font-family: 'Outfit', sans-serif; }
+  .sc-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  /* TABS for detail sections */
+  .tab-nav {
+    display: flex; gap: 4px; background: var(--mist); border-radius: 10px; padding: 4px; margin-bottom: 24px;
+    border: 1px solid var(--border);
+  }
+  .tab-btn {
+    flex: 1; padding: 9px 8px; border: none; border-radius: 8px; background: transparent;
+    font-size: 13px; font-weight: 500; color: var(--slate); cursor: pointer; transition: all .2s; font-family: 'Outfit', sans-serif;
+  }
+  .tab-btn.active { background: var(--white); color: var(--navy); font-weight: 700; box-shadow: var(--shadow); }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ── FOOTER ── */
+  footer { background: #080F2A; padding: 56px 48px 24px; }
+  .ft-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .ft-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .ft-desc { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.75; max-width: 280px; margin-bottom: 18px; }
+  .ft-socials { display: flex; gap: 10px; }
+  .ft-social { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.55); font-size: 14px; text-decoration: none; transition: all .2s; }
+  .ft-social:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .ft-col-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .ft-links { display: flex; flex-direction: column; gap: 9px; }
+  .ft-links a { font-size: 13px; color: rgba(255,255,255,.45); text-decoration: none; transition: color .2s; }
+  .ft-links a:hover { color: var(--gold); }
+  .ft-contact-item { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 10px; }
+  .ft-ci { font-size: 15px; flex-shrink: 0; }
+  .ft-ct { font-size: 12.5px; color: rgba(255,255,255,.45); line-height: 1.5; }
+  .ft-bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 22px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 12.5px; color: rgba(255,255,255,.3); }
+  .ft-blinks { display: flex; gap: 20px; }
+  .ft-blinks a { font-size: 12.5px; color: rgba(255,255,255,.3); text-decoration: none; }
+  .ft-blinks a:hover { color: var(--gold); }
+
+  /* Animations */
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 9999; align-items: center; justify-content: center; }
+  .lightbox.open { display: flex; }
+  .lb-inner { position: relative; max-width: 900px; width: 90%; }
+  .lb-img { width: 100%; height: 520px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; font-size: 120px; }
+  .lb-close { position: absolute; top: -14px; right: -14px; width: 36px; height: 36px; background: var(--gold); border-radius: 50%; border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+  .lb-close:hover { background: var(--red); }
+  .lb-nav { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+  .lb-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.3); cursor: pointer; transition: background .2s; }
+  .lb-dot.active { background: var(--gold); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1100px) {
+    .detail-layout { grid-template-columns: 1fr; }
+    .detail-right { position: static; }
+    nav { padding: 0 24px; }
+    .breadcrumb-wrap { padding: 14px 24px; }
+    .gallery-inner { padding: 24px 24px 0; }
+    .detail-body { padding: 36px 24px 60px; }
+    .similar-grid { grid-template-columns: repeat(3,1fr); }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    footer { padding: 48px 24px 20px; }
+  }
+
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 220px; }
+    .gallery-main { grid-row: span 1; }
+    .gallery-thumb:nth-child(3) { display: none; }
+    .qs-strip { grid-template-columns: repeat(2,1fr); }
+    .qs-item:nth-child(2) { border-right: none; }
+    .qs-item:nth-child(3) { border-top: 1px solid var(--border); }
+    .qs-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+    .details-grid { grid-template-columns: repeat(2,1fr); }
+    .amenities-grid { grid-template-columns: repeat(3,1fr); }
+    .similar-grid { grid-template-columns: repeat(2,1fr); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 18px; height: 60px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-links.mob-open {
+      display: flex; flex-direction: column; gap: 0;
+      position: fixed; top: 60px; left: 0; right: 0;
+      background: rgba(255,255,255,.98); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); z-index: 999; padding: 8px 0;
+    }
+    .nav-links.mob-open a { padding: 14px 24px; border-bottom: 1px solid var(--border); }
+    .nav-cta.mob-open {
+      display: flex; flex-direction: column;
+      position: fixed; left: 0; right: 0;
+      background: rgba(255,255,255,.98); padding: 14px 18px 18px;
+      border-bottom: 2px solid var(--border); z-index: 998;
+    }
+    .nav-cta.mob-open a { width: 100%; text-align: center; }
+    .hamburger { display: flex; }
+    .breadcrumb-wrap { padding: 12px 18px; margin-top: 60px; }
+    .gallery-inner { padding: 18px 18px 0; }
+    .gallery-grid { grid-template-columns: 1fr; grid-template-rows: 240px; height: 240px; }
+    .gallery-thumb { display: none; }
+    .gallery-main { grid-row: span 1; }
+    .prop-title-row { flex-direction: column; }
+    .prop-title-right { align-items: flex-start; }
+    .prop-price-big { text-align: left; }
+    .prop-actions { width: 100%; }
+    .btn-inquire { flex: 1; justify-content: center; }
+    .detail-body { padding: 24px 18px 52px; }
+    .qs-strip { grid-template-columns: repeat(2,1fr); }
+    .qs-item:nth-child(2) { border-right: none; }
+    .qs-item:nth-child(3) { border-top: 1px solid var(--border); }
+    .qs-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+    .details-grid { grid-template-columns: 1fr 1fr; }
+    .amenities-grid { grid-template-columns: repeat(3,1fr); }
+    .similar-grid { grid-template-columns: 1fr 1fr; }
+    .payment-table th, .payment-table td { padding: 10px 12px; font-size: 12.5px; }
+    .tab-btn { font-size: 12px; padding: 8px 6px; }
+    .ft-grid { grid-template-columns: 1fr; gap: 24px; }
+    footer { padding: 44px 18px 18px; }
+    .ft-bottom { flex-direction: column; }
+    .lb-img { height: 280px; font-size: 72px; }
+  }
+
+  @media (max-width: 480px) {
+    .amenities-grid { grid-template-columns: repeat(3,1fr); }
+    .details-grid { grid-template-columns: 1fr; }
+    .similar-grid { grid-template-columns: 1fr; }
+    .prop-price-val { font-size: 28px; }
+    .qs-val { font-size: 17px; }
+    .tab-nav { flex-wrap: wrap; }
+    .tab-btn { flex: none; width: calc(50% - 4px); }
+    .sc-btn { min-width: 60px; font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="property-search.html" class="nav-logo">
+    <div class="nav-logo-mark">SK</div>
+    <div class="nav-logo-text">
+      <strong>Real Estate</strong>
+      <span>Premium Real Estate</span>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="property-search.html">Home</a>
+    <a href="property-search.html#search-page" class="active">Search</a>
+    <a href="#">Projects</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-cta" id="navCta">
+    <a href="#" class="btn-ghost">Agent Login</a>
+    <a href="#" class="btn-gold">View Projects →</a>
+  </div>
+  <button class="hamburger" id="hamburger" type="button"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-wrap">
+  <div class="breadcrumb">
+    <a href="property-search.html">🏠 Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="property-search.html#search-page">Properties</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="#">Delhi</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Sky Residencia Delhi</span>
+  </div>
+</div>
+
+<!-- GALLERY + TITLE -->
+<div class="gallery-section">
+  <div class="gallery-inner">
+
+    <!-- Title Row -->
+    <div class="prop-title-row">
+      <div class="prop-title-left">
+        <div class="prop-badge-row">
+          <span class="pbadge pbadge-hot">🔥 Hot Deal</span>
+          <span class="pbadge pbadge-active">● Active</span>
+          <span class="pbadge pbadge-type">🏘️ Colony / Township</span>
+        </div>
+        <h1 class="prop-main-title">Sky Residencia Delhi</h1>
+        <div class="prop-location">📍 <span>Raiwind Road, Delhi, India — <a href="#location" style="color:var(--ocean);font-weight:600;text-decoration:none;">View on Map</a></span></div>
+      </div>
+      <div class="prop-title-right">
+        <div class="prop-price-big">
+          <div class="prop-price-lbl">Starting From</div>
+          <div class="prop-price-val">₹ 45 Lac</div>
+          <div class="prop-price-note">✓ EMI Available · ✓ Flexible Installments</div>
+        </div>
+        <div class="prop-actions">
+          <a href="#contact-form" class="btn-inquire">📩 Inquire Now</a>
+          <button class="btn-wish" id="wishBtn" onclick="toggleWish(this)" title="Save to wishlist">♡</button>
+          <button class="btn-share" onclick="shareAlert()">🔗 Share</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid">
+      <div class="gallery-main" onclick="openLightbox(0)">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#0D1B4B,#1E6FBF,#2a9fd6)">🏙️</div>
+        <div class="gallery-overlay"></div>
+        <div class="gallery-count">📷 View All 24 Photos</div>
+      </div>
+      <div class="gallery-thumb" onclick="openLightbox(1)">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#1756A9,#3B90F5)">🌳</div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-thumb" onclick="openLightbox(2)">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#0F766E,#14B8A6)">🏊</div>
+        <div class="gallery-overlay"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DETAIL BODY -->
+<div class="detail-body">
+  <div class="detail-layout">
+
+    <!-- LEFT COLUMN -->
+    <div class="detail-left">
+
+      <!-- Quick Stats -->
+      <div class="qs-strip fade-in">
+        <div class="qs-item">
+          <div class="qs-icon">📐</div>
+          <div class="qs-val">500 Kanal</div>
+          <div class="qs-lbl">Total Area</div>
+        </div>
+        <div class="qs-item">
+          <div class="qs-icon">🏘️</div>
+          <div class="qs-val">1,200</div>
+          <div class="qs-lbl">Total Plots</div>
+        </div>
+        <div class="qs-item">
+          <div class="qs-icon">📅</div>
+          <div class="qs-val">Jan 2024</div>
+          <div class="qs-lbl">Launch Date</div>
+        </div>
+        <div class="qs-item">
+          <div class="qs-icon">✅</div>
+          <div class="qs-val" style="color:var(--green)">Active</div>
+          <div class="qs-lbl">Status</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-nav" role="tablist">
+        <button class="tab-btn active" onclick="switchTab(this,'overview')">📋 Overview</button>
+        <button class="tab-btn" onclick="switchTab(this,'details')">🔍 Details</button>
+        <button class="tab-btn" onclick="switchTab(this,'amenities')">🌿 Amenities</button>
+        <button class="tab-btn" onclick="switchTab(this,'payment')">💳 Payment Plan</button>
+        <button class="tab-btn" onclick="switchTab(this,'location')">📍 Location</button>
+      </div>
+
+      <!-- Overview Tab -->
+      <div class="tab-pane active" id="tab-overview">
+        <div class="detail-section fade-in">
+          <div class="ds-title"><span class="ds-title-icon">📋</span> Project Overview</div>
+          <div class="overview-text">
+            <p>Sky Residencia Delhi is one of India's most prestigious residential township projects, strategically located on Raiwind Road — Delhi's most sought-after real estate corridor. Developed by The Sky Is Your Limit Group, this world-class development spans 500 Kanals of premium land with over 1,200 meticulously planned residential plots.</p>
+            <p>The project is designed to offer a complete modern lifestyle within a gated community, featuring wide carpeted roads, underground electricity, natural gas lines, and dedicated parks throughout. Every plot is ideally positioned to maximize greenery views and ventilation.</p>
+            <p>With flexible payment plans starting at just ₹45 Lac, Sky Residencia Delhi is ideal for both end-users and investors seeking high-growth opportunities in one of India's fastest-growing corridors.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details Tab -->
+      <div class="tab-pane" id="tab-details">
+        <div class="detail-section fade-in">
+          <div class="ds-title"><span class="ds-title-icon">🔍</span> Property Details</div>
+          <div class="details-grid">
+            <div class="dg-item"><div class="dg-lbl">Project Type</div><div class="dg-val">Colony / Township</div></div>
+            <div class="dg-item"><div class="dg-lbl">Total Area</div><div class="dg-val">500 Kanal</div></div>
+            <div class="dg-item"><div class="dg-lbl">Total Plots</div><div class="dg-val">1,200 Units</div></div>
+            <div class="dg-item"><div class="dg-lbl">Plot Sizes</div><div class="dg-val">3, 5, 10 Marla & 1 Kanal</div></div>
+            <div class="dg-item"><div class="dg-lbl">Launch Date</div><div class="dg-val">January 2024</div></div>
+            <div class="dg-item"><div class="dg-lbl">Possession</div><div class="dg-val">Q2 2026</div></div>
+            <div class="dg-item"><div class="dg-lbl">Status</div><div class="dg-val" style="color:var(--green)">Active ✓</div></div>
+            <div class="dg-item"><div class="dg-lbl">Location</div><div class="dg-val">Raiwind Road, Delhi</div></div>
+            <div class="dg-item"><div class="dg-lbl">Developer</div><div class="dg-val">Sky Is Your Limit Group</div></div>
+            <div class="dg-item"><div class="dg-lbl">Approval</div><div class="dg-val">NOC Approved</div></div>
+            <div class="dg-item"><div class="dg-lbl">Road Width</div><div class="dg-val">40 ft Main, 30 ft Internal</div></div>
+            <div class="dg-item"><div class="dg-lbl">Registry</div><div class="dg-val">Available</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amenities Tab -->
+      <div class="tab-pane" id="tab-amenities">
+        <div class="detail-section fade-in">
+          <div class="ds-title"><span class="ds-title-icon">🌿</span> World-Class Amenities</div>
+          <div class="amenities-grid">
+            <div class="am-item"><span class="am-icon">🔒</span><span class="am-name">Gated Security</span></div>
+            <div class="am-item"><span class="am-icon">🌳</span><span class="am-name">Parks & Gardens</span></div>
+            <div class="am-item"><span class="am-icon">🕌</span><span class="am-name">Mosque</span></div>
+            <div class="am-item"><span class="am-icon">🏫</span><span class="am-name">School Zone</span></div>
+            <div class="am-item"><span class="am-icon">🏥</span><span class="am-name">Medical Center</span></div>
+            <div class="am-item"><span class="am-icon">🛒</span><span class="am-name">Shopping Mall</span></div>
+            <div class="am-item"><span class="am-icon">💡</span><span class="am-name">Underground Electric</span></div>
+            <div class="am-item"><span class="am-icon">💧</span><span class="am-name">Water Supply</span></div>
+            <div class="am-item"><span class="am-icon">🏊</span><span class="am-name">Swimming Pool</span></div>
+            <div class="am-item"><span class="am-icon">🏃</span><span class="am-name">Jogging Track</span></div>
+            <div class="am-item"><span class="am-icon">⛽</span><span class="am-name">Natural Gas</span></div>
+            <div class="am-item"><span class="am-icon">🚗</span><span class="am-name">Wide Roads</span></div>
+            <div class="am-item"><span class="am-icon">📡</span><span class="am-name">Fibre Internet</span></div>
+            <div class="am-item"><span class="am-icon">🎠</span><span class="am-name">Kids Play Area</span></div>
+            <div class="am-item"><span class="am-icon">🏋️</span><span class="am-name">Gym & Fitness</span></div>
+            <div class="am-item"><span class="am-icon">🌙</span><span class="am-name">Street Lighting</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Plan Tab -->
+      <div class="tab-pane" id="tab-payment">
+        <div class="detail-section fade-in">
+          <div class="ds-title"><span class="ds-title-icon">💳</span> Payment Plan</div>
+          <table class="payment-table">
+            <thead>
+              <tr>
+                <th>Plot Size</th>
+                <th>Total Price</th>
+                <th>Booking</th>
+                <th>Monthly Installment</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3 Marla</td>
+                <td class="pt-highlight">₹ 45 Lac</td>
+                <td>₹ 4.5 Lac (10%)</td>
+                <td>₹ 30,000</td>
+                <td>48 Months</td>
+              </tr>
+              <tr>
+                <td>5 Marla</td>
+                <td class="pt-highlight">₹ 70 Lac</td>
+                <td>₹ 7 Lac (10%)</td>
+                <td>₹ 48,000</td>
+                <td>48 Months</td>
+              </tr>
+              <tr>
+                <td>10 Marla</td>
+                <td class="pt-highlight">₹ 1.2 Cr</td>
+                <td>₹ 12 Lac (10%)</td>
+                <td>₹ 82,000</td>
+                <td>48 Months</td>
+              </tr>
+              <tr>
+                <td>1 Kanal</td>
+                <td class="pt-highlight">₹ 2.2 Cr</td>
+                <td>₹ 22 Lac (10%)</td>
+                <td>₹ 1,50,000</td>
+                <td>48 Months</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--slate);margin-top:14px;line-height:1.6;">* Prices are subject to change. Possession charges & development charges may apply. Contact our agent for the most current pricing and availability.</p>
+        </div>
+      </div>
+
+      <!-- Location Tab -->
+      <div class="tab-pane" id="tab-location">
+        <div class="detail-section fade-in" id="location">
+          <div class="ds-title"><span class="ds-title-icon">📍</span> Location & Connectivity</div>
+          <div class="map-placeholder">
+            <div class="map-pin"><span class="map-pin-inner">📍</span></div>
+            <div class="map-address">Sky Residencia — Raiwind Road, Delhi</div>
+          </div>
+          <div class="details-grid" style="margin-top:20px">
+            <div class="dg-item"><div class="dg-lbl">Delhi Ring Road</div><div class="dg-val">5 min drive</div></div>
+            <div class="dg-item"><div class="dg-lbl">Airport</div><div class="dg-val">25 min drive</div></div>
+            <div class="dg-item"><div class="dg-lbl">Metro Station</div><div class="dg-val">3 km away</div></div>
+            <div class="dg-item"><div class="dg-lbl">City Center</div><div class="dg-val">18 km</div></div>
+            <div class="dg-item"><div class="dg-lbl">Top School</div><div class="dg-val">2 km away</div></div>
+            <div class="dg-item"><div class="dg-lbl">Hospital</div><div class="dg-val">4 km away</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Properties -->
+      <div class="detail-section fade-in">
+        <div class="ds-title"><span class="ds-title-icon">🏠</span> Similar Properties</div>
+        <div class="similar-grid">
+          <div class="sim-card">
+            <div class="sim-img" style="background:linear-gradient(135deg,#6B2D8B,#9333EA)">🏠</div>
+            <div class="sim-body">
+              <div class="sim-name">Sky Villas Delhi</div>
+              <div class="sim-loc">📍 B-17, Delhi</div>
+              <div class="sim-price">₹ 85 Lac</div>
+            </div>
+          </div>
+          <div class="sim-card">
+            <div class="sim-img" style="background:linear-gradient(135deg,#0F766E,#14B8A6)">📐</div>
+            <div class="sim-body">
+              <div class="sim-name">Sky Gardens Noida</div>
+              <div class="sim-loc">📍 Canal Road, Noida</div>
+              <div class="sim-price">₹ 28 Lac</div>
+            </div>
+          </div>
+          <div class="sim-card">
+            <div class="sim-img" style="background:linear-gradient(135deg,#B45309,#F59E0B)">🌆</div>
+            <div class="sim-body">
+              <div class="sim-name">Golden Heights Jaipur</div>
+              <div class="sim-loc">📍 Ajmer Road, Jaipur</div>
+              <div class="sim-price">₹ 35 Lac</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /detail-left -->
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="detail-right" id="contact-form">
+
+      <!-- Contact Card -->
+      <div class="contact-card fade-in">
+        <div class="cc-title">📩 Get More Information</div>
+        <div class="cc-agent">
+          <div class="agent-avatar">AK</div>
+          <div class="agent-info">
+            <div class="agent-name">Arjun Kapoor</div>
+            <div class="agent-role">Senior Property Consultant</div>
+            <div class="agent-rating">★★★★★ <span style="color:var(--slate)">4.9 (128 reviews)</span></div>
+          </div>
+        </div>
+        <div class="cc-form">
+          <input class="cc-input" type="text" placeholder="Your Full Name">
+          <input class="cc-input" type="email" placeholder="Email Address">
+          <input class="cc-input" type="tel" placeholder="Phone Number">
+          <textarea class="cc-input cc-textarea" placeholder="I'm interested in Sky Residencia Delhi. Please send me more details about available plots and payment plans."></textarea>
+          <button class="btn-contact-full">📩 Send Inquiry</button>
+          <button class="btn-call">📞 Call: +91 300 1234567</button>
+        </div>
+      </div>
+
+      <!-- Highlights Card -->
+      <div class="highlights-card fade-in">
+        <div class="hc-title">⭐ Why Choose This Project?</div>
+        <div class="hc-item"><div class="hc-dot"></div><div class="hc-text">NOC approved — 100% legal & secure investment</div></div>
+        <div class="hc-item"><div class="hc-dot"></div><div class="hc-text">4-year easy installment plan with just 10% booking</div></div>
+        <div class="hc-item"><div class="hc-dot"></div><div class="hc-text">Located on Delhi's fastest-growing corridor</div></div>
+        <div class="hc-item"><div class="hc-dot"></div><div class="hc-text">Underground utilities — no aerial wires or cables</div></div>
+        <div class="hc-item"><div class="hc-dot"></div><div class="hc-text">Possession expected Q2 2026 — on-track delivery</div></div>
+        <div class="hc-item"><div class="hc-dot"></div><div class="hc-text">30%+ capital appreciation expected in 3 years</div></div>
+      </div>
+
+      <!-- Share Card -->
+      <div class="share-card fade-in">
+        <div class="sc-title">🔗 Share This Property</div>
+        <div class="sc-btns">
+          <button class="sc-btn" onclick="shareAlert()">WhatsApp</button>
+          <button class="sc-btn" onclick="shareAlert()">Facebook</button>
+          <button class="sc-btn" onclick="shareAlert()">LinkedIn</button>
+          <button class="sc-btn" onclick="copyLink()">Copy Link</button>
+        </div>
+      </div>
+
+    </div><!-- /detail-right -->
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-logo">
+        <div class="nav-logo-mark" style="background:linear-gradient(135deg,var(--navy),var(--ocean))">SK</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;line-height:1.2">
+          The Sky Is Your Limit<br>
+          <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.4)">Premium Real Estate India</span>
+        </div>
+      </div>
+      <p class="ft-desc">India's most trusted real estate partner — connecting families with their dream properties since 2026.</p>
+      <div class="ft-socials">
+        <a href="#" class="ft-social">f</a>
+        <a href="#" class="ft-social">in</a>
+        <a href="#" class="ft-social">✕</a>
+        <a href="#" class="ft-social">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Quick Links</div>
+      <div class="ft-links">
+        <a href="#">Home</a><a href="#">All Projects</a><a href="#">Available Plots</a><a href="#">About Us</a><a href="#">Careers</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Property Types</div>
+      <div class="ft-links">
+        <a href="#">Residential Plots</a><a href="#">Commercial Plots</a><a href="#">Houses</a><a href="#">Colonies</a><a href="#">Townships</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Contact Us</div>
+      <div class="ft-contact-item"><span class="ft-ci">📍</span><span class="ft-ct">Main Boulevard, Delhi, India</span></div>
+      <div class="ft-contact-item"><span class="ft-ci">📞</span><span class="ft-ct">+91 300 1234567</span></div>
+      <div class="ft-contact-item"><span class="ft-ci">✉️</span><span class="ft-ct">info@skyisyourlimit.com</span></div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 Sky Is Your Limit Real Estate. All rights reserved.</div>
+    <div class="ft-blinks"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Sitemap</a></div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <div class="lb-img" id="lbImg" style="background:linear-gradient(135deg,#0D1B4B,#1E6FBF,#2a9fd6)">🏙️</div>
+    <div class="lb-nav">
+      <div class="lb-dot active" onclick="changeLb(0)"></div>
+      <div class="lb-dot" onclick="changeLb(1)"></div>
+      <div class="lb-dot" onclick="changeLb(2)"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  const navCta    = document.getElementById('navCta');
+  hamburger.addEventListener('click', () => {
+    const open = navLinks.classList.contains('mob-open');
+    if (open) {
+      navLinks.classList.remove('mob-open'); navCta.classList.remove('mob-open');
+      hamburger.classList.remove('open'); document.body.style.overflow = '';
+    } else {
+      navLinks.classList.add('mob-open'); hamburger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        navCta.style.top = navLinks.getBoundingClientRect().bottom + 'px';
+        navCta.classList.add('mob-open');
+      }, 10);
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('nav')) {
+      navLinks.classList.remove('mob-open'); navCta.classList.remove('mob-open');
+      hamburger.classList.remove('open'); document.body.style.overflow = '';
+    }
+  });
+
+  // Tabs
+  function switchTab(btn, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  // Wishlist
+  function toggleWish(btn) {
+    const active = btn.classList.toggle('active');
+    btn.textContent = active ? '❤️' : '♡';
+  }
+
+  // Share
+  function shareAlert() { alert('Share link copied! 🔗 https://skyisyourlimit.com/property/sky-residencia-delhi'); }
+  function copyLink()   { navigator.clipboard.writeText('https://skyisyourlimit.com/property/sky-residencia-delhi').catch(()=>{}); shareAlert(); }
+
+  // Lightbox
+  const lbImages = [
+    { bg: 'linear-gradient(135deg,#0D1B4B,#1E6FBF,#2a9fd6)', icon: '🏙️' },
+    { bg: 'linear-gradient(135deg,#1756A9,#3B90F5)', icon: '🌳' },
+    { bg: 'linear-gradient(135deg,#0F766E,#14B8A6)', icon: '🏊' }
+  ];
+  let currentLb = 0;
+  function openLightbox(idx) {
+    currentLb = idx; updateLb();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(e) {
+    if (!e || !e.target.closest('.lb-inner') || e.target.closest('.lb-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  function changeLb(idx) { currentLb = idx; updateLb(); }
+  function updateLb() {
+    const lbImg = document.getElementById('lbImg');
+    lbImg.style.background = lbImages[currentLb].bg;
+    lbImg.textContent = lbImages[currentLb].icon;
+    document.querySelectorAll('.lb-dot').forEach((d,i) => d.classList.toggle('active', i === currentLb));
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+    if (e.key === 'ArrowRight') { currentLb = (currentLb + 1) % 3; updateLb(); }
+    if (e.key === 'ArrowLeft')  { currentLb = (currentLb + 2) % 3; updateLb(); }
+  });
+
+  // Scroll animations
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 70); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

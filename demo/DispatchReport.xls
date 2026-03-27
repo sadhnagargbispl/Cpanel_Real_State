@@ -1,0 +1,32 @@
+<div>
+	<table cellspacing="0" rules="all" class="table table-bordered" border="1" id="ctl00_ContentPlaceHolder1_GvData" style="border-collapse:collapse;">
+		<tr class="bg-primary" style="background-color:#FFFFFF;">
+			<th scope="col" style="background-color:#D8A38D;">Member ID</th><th scope="col" style="background-color:#D8A38D;">Member Name</th><th scope="col" style="background-color:#D8A38D;">Request Date</th><th scope="col" style="background-color:#D8A38D;">Package Name</th><th scope="col" style="background-color:#D8A38D;">Address</th><th scope="col" style="background-color:#D8A38D;">PinCode</th><th scope="col" style="background-color:#D8A38D;">State</th><th scope="col" style="background-color:#D8A38D;">City</th><th scope="col" style="background-color:#D8A38D;">District</th><th scope="col" style="background-color:#D8A38D;">Dispatch Date</th><th scope="col" style="background-color:#D8A38D;">Dispatch Status</th>
+		</tr><tr style="height:20px;">
+			<td style="background-color:#FFFFFF;color:#000000;">
+                                                    DV588452
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    SADHNA GARG
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    27-Mar-2026 1:19PM
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    PACKAGE RS. 999/-
+                                                    
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    BHILWARA
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    311001
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    RAJASTHAN
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    BHILWARA
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    BHILWARA
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    16-Mar-2026
+                                                </td><td style="background-color:#FFFFFF;color:#000000;">
+                                                    DISPATCHED
+                                                </td>
+		</tr>
+	</table>
+</div>

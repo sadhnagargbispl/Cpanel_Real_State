@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>All Projects – Sky Is Your Limit Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:    #0B1638;
+    --deep:    #101E4A;
+    --ocean:   #1756A9;
+    --sky:     #3B90F5;
+    --gold:    #E8A020;
+    --gold-lt: #F5C96A;
+    --cream:   #FDF8F0;
+    --white:   #FFFFFF;
+    --mist:    #F1F5FB;
+    --slate:   #64748B;
+    --border:  #E2EAF5;
+    --shadow:  0 4px 32px rgba(11,22,56,.10);
+    --shadow-lg: 0 12px 56px rgba(11,22,56,.18);
+    --r: 14px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: 68px; background: rgba(255,255,255,.96); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; box-shadow: 0 2px 20px rgba(11,22,56,.06);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--ocean));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--gold);
+  }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo-text strong { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .nav-logo-text span { font-size: 10px; color: var(--slate); letter-spacing: 1.2px; text-transform: uppercase; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    font-size: 13.5px; font-weight: 500; color: var(--slate);
+    text-decoration: none; transition: color .2s; position: relative;
+  }
+  .nav-links a.active, .nav-links a:hover { color: var(--navy); }
+  .nav-links a.active::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: var(--gold); border-radius: 2px;
+  }
+  .nav-cta { display: flex; align-items: center; gap: 10px; }
+  .btn-ghost {
+    padding: 8px 20px; border: 1.5px solid var(--navy); border-radius: 8px;
+    font-size: 13px; font-weight: 600; color: var(--navy);
+    text-decoration: none; transition: all .2s; background: transparent;
+  }
+  .btn-ghost:hover { background: var(--navy); color: #fff; }
+  .btn-gold {
+    padding: 9px 22px; background: linear-gradient(135deg,var(--gold),#C97A10);
+    border-radius: 8px; font-size: 13px; font-weight: 600; color: #fff;
+    text-decoration: none; box-shadow: 0 3px 14px rgba(232,160,32,.35); transition: all .2s;
+  }
+  .btn-gold:hover { transform: translateY(-1px); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding-top: 68px;
+    background: linear-gradient(155deg, #0B1638 0%, #133380 55%, #1756A9 100%);
+    position: relative; overflow: hidden;
+  }
+  .page-hero-pattern {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 60%, rgba(232,160,32,.12) 0%, transparent 45%),
+      radial-gradient(circle at 80% 20%, rgba(59,144,245,.15) 0%, transparent 50%),
+      linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size: 100% 100%, 100% 100%, 56px 56px, 56px 56px;
+  }
+  .page-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1280px; margin: 0 auto;
+    padding: 56px 48px 64px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .page-hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,160,32,.15); border: 1px solid rgba(232,160,32,.4);
+    color: var(--gold-lt); font-size: 11px; font-weight: 600;
+    letter-spacing: 1.8px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .page-hero-badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+  .page-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px); font-weight: 700; color: #fff; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .page-hero-title em { font-style: italic; color: var(--gold); }
+  .page-hero-sub { font-size: 15px; color: rgba(255,255,255,.65); max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
+  .page-hero-stats {
+    display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .phs-item { text-align: center; }
+  .phs-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .phs-lbl { font-size: 11px; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  /* ── FILTER BAR ── */
+  .filter-section {
+    background: #fff; border-bottom: 1px solid var(--border);
+    position: sticky; top: 68px; z-index: 100;
+    box-shadow: 0 4px 20px rgba(11,22,56,.06);
+  }
+  .filter-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 16px 48px;
+    display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;
+  }
+  .fb-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 120px; }
+  .fb-group label { font-size: 10.5px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: .8px; }
+  .fb-group select, .fb-group input {
+    padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-size: 13px; font-family: 'Outfit', sans-serif;
+    color: var(--navy); background: var(--mist); outline: none; transition: border-color .2s; cursor: pointer;
+  }
+  .fb-group select:focus, .fb-group input:focus { border-color: var(--ocean); }
+  .fb-btn {
+    padding: 10px 24px; background: var(--navy); color: #fff;
+    border: none; border-radius: 9px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .2s; font-family: 'Outfit', sans-serif;
+    white-space: nowrap; align-self: flex-end;
+  }
+  .fb-btn:hover { background: var(--ocean); }
+
+  /* ── CATEGORY TABS ── */
+  .cat-tabs {
+    max-width: 1280px; margin: 0 auto;
+    padding: 32px 48px 0;
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .cat-tab {
+    padding: 9px 22px; border-radius: 100px;
+    border: 1.5px solid var(--border); background: #fff;
+    font-size: 13px; font-weight: 600; color: var(--slate);
+    cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 7px;
+    font-family: 'Outfit', sans-serif;
+  }
+  .cat-tab:hover { border-color: var(--ocean); color: var(--ocean); }
+  .cat-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .cat-tab .cat-count {
+    background: rgba(255,255,255,.2); border-radius: 100px;
+    padding: 1px 8px; font-size: 11px;
+  }
+  .cat-tab:not(.active) .cat-count { background: var(--mist); color: var(--slate); }
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    max-width: 1280px; margin: 0 auto;
+    padding: 28px 48px 80px;
+    display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start;
+  }
+
+  /* Sidebar */
+  .sidebar { position: sticky; top: 136px; }
+  .sidebar-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--r); padding: 24px; box-shadow: var(--shadow);
+    margin-bottom: 18px;
+  }
+  .sidebar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 18px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .filter-group { margin-bottom: 20px; }
+  .filter-group-title { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: var(--slate); margin-bottom: 10px; }
+  .checkbox-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; }
+  .checkbox-item input[type=checkbox] { accent-color: var(--ocean); width: 15px; height: 15px; cursor: pointer; }
+  .checkbox-item span { font-size: 13px; color: var(--navy); }
+  .checkbox-item .count { margin-left: auto; font-size: 11px; color: var(--slate); background: var(--mist); padding: 1px 7px; border-radius: 100px; }
+  .range-wrap { padding: 8px 0; }
+  .range-input { width: 100%; accent-color: var(--ocean); cursor: pointer; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--slate); margin-top: 6px; }
+  .clear-btn {
+    width: 100%; padding: 10px; border: 1.5px solid var(--border);
+    border-radius: 9px; background: transparent; color: var(--slate);
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; font-family: 'Outfit', sans-serif;
+  }
+  .clear-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* Results area */
+  .results-area {}
+  .results-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .results-count { font-size: 14px; color: var(--slate); }
+  .results-count strong { color: var(--navy); }
+  .sort-wrap { display: flex; align-items: center; gap: 10px; }
+  .sort-wrap label { font-size: 13px; color: var(--slate); font-weight: 500; }
+  .sort-wrap select {
+    padding: 8px 12px; border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 13px; background: #fff;
+    color: var(--navy); font-family: 'Outfit', sans-serif; outline: none; cursor: pointer;
+  }
+  .view-toggle { display: flex; gap: 4px; }
+  .view-btn {
+    width: 34px; height: 34px; border-radius: 7px;
+    border: 1.5px solid var(--border); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .2s; font-size: 14px; color: var(--slate);
+  }
+  .view-btn.active, .view-btn:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px;
+  }
+
+  /* ── PROJECT CARD ── */
+  .proj-card {
+    background: #fff; border-radius: var(--r); border: 1px solid var(--border);
+    overflow: hidden; box-shadow: var(--shadow);
+    transition: all .3s; cursor: pointer; display: flex; flex-direction: column;
+  }
+  .proj-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+  .proj-img { position: relative; height: 210px; overflow: hidden; }
+  .proj-img-bg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px; transition: transform .4s;
+  }
+  .proj-card:hover .proj-img-bg { transform: scale(1.08); }
+
+  .proj-badge {
+    position: absolute; top: 14px; left: 14px;
+    padding: 4px 11px; border-radius: 100px; font-size: 10.5px; font-weight: 700; letter-spacing: .4px;
+  }
+  .badge-hot  { background: #EF4444; color: #fff; }
+  .badge-new  { background: #22C55E; color: #fff; }
+  .badge-up   { background: var(--gold); color: #fff; }
+  .badge-ft   { background: var(--ocean); color: #fff; }
+  .badge-pre  { background: #8B5CF6; color: #fff; }
+  .badge-sold { background: var(--slate); color: #fff; }
+
+  .proj-save {
+    position: absolute; top: 14px; right: 14px;
+    width: 34px; height: 34px; background: rgba(255,255,255,.92);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; cursor: pointer; transition: all .2s; border: none;
+  }
+  .proj-save:hover { background: #fff; transform: scale(1.1); }
+  .proj-save.saved { color: #EF4444; }
+
+  .proj-body { padding: 20px; flex: 1; }
+  .proj-type { font-size: 11px; font-weight: 700; color: var(--ocean); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .proj-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 5px; line-height: 1.2; }
+  .proj-loc { font-size: 12px; color: var(--slate); display: flex; align-items: center; gap: 5px; margin-bottom: 14px; }
+  .proj-meta {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .pm-item { display: flex; flex-direction: column; gap: 2px; }
+  .pm-lbl { font-size: 9.5px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .6px; }
+  .pm-val { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .pm-val.green { color: #22C55E; }
+  .pm-val.amber { color: var(--gold); }
+  .pm-val.purple { color: #8B5CF6; }
+
+  .proj-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 20px; border-top: 1px solid var(--border); background: var(--mist);
+  }
+  .proj-price-lbl { font-size: 10.5px; color: var(--slate); }
+  .proj-price { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--navy); }
+  .btn-proj {
+    padding: 8px 18px; background: var(--navy); color: #fff;
+    border-radius: 8px; font-size: 12.5px; font-weight: 600;
+    text-decoration: none; transition: background .2s; white-space: nowrap;
+  }
+  .btn-proj:hover { background: var(--ocean); }
+
+  /* Featured card */
+  .proj-card.featured { grid-column: span 2; }
+  .proj-card.featured .proj-img { height: 270px; }
+  .proj-card.featured .proj-name { font-size: 24px; }
+
+  /* ── CITY SECTION DIVIDERS ── */
+  .city-divider {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 16px;
+    margin: 12px 0 4px;
+  }
+  .city-divider-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700; color: var(--navy);
+    white-space: nowrap; display: flex; align-items: center; gap: 10px;
+  }
+  .city-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .city-divider-count {
+    font-size: 11px; font-weight: 700; color: var(--ocean);
+    background: rgba(23,86,169,.08); border: 1px solid rgba(23,86,169,.2);
+    padding: 3px 12px; border-radius: 100px; white-space: nowrap;
+  }
+
+  /* ── LOAD MORE ── */
+  .load-more-wrap { text-align: center; margin-top: 48px; }
+  .btn-load-more {
+    padding: 14px 40px; border: 2px solid var(--navy); border-radius: 10px;
+    font-size: 14px; font-weight: 600; color: var(--navy);
+    background: transparent; cursor: pointer; transition: all .25s; font-family: 'Outfit', sans-serif;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-load-more:hover { background: var(--navy); color: #fff; }
+
+  /* ── FEATURED BANNER ── */
+  .featured-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--navy), #1E3A8A, var(--ocean));
+    border-radius: var(--r); padding: 32px 36px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap; position: relative; overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .featured-banner::before {
+    content: ''; position: absolute; right: -40px; top: -40px;
+    width: 200px; height: 200px; border-radius: 50%; background: rgba(232,160,32,.1);
+  }
+  .fb-text { position: relative; z-index: 1; }
+  .fb-label {
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold);
+    background: rgba(232,160,32,.15); border: 1px solid rgba(232,160,32,.3);
+    padding: 3px 12px; border-radius: 100px; margin-bottom: 10px;
+  }
+  .fb-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+  .fb-sub { font-size: 13px; color: rgba(255,255,255,.6); }
+  .fb-actions { display: flex; gap: 10px; position: relative; z-index: 1; }
+  .fb-btn-primary {
+    padding: 11px 24px; background: linear-gradient(135deg,var(--gold),#C97A10);
+    border-radius: 9px; font-size: 13px; font-weight: 700; color: #fff;
+    text-decoration: none; box-shadow: 0 4px 16px rgba(232,160,32,.4);
+  }
+  .fb-btn-outline {
+    padding: 11px 24px; border: 1.5px solid rgba(255,255,255,.35);
+    border-radius: 9px; font-size: 13px; font-weight: 600; color: #fff;
+    text-decoration: none; backdrop-filter: blur(4px);
+  }
+
+  /* ── PAGINATION ── */
+  .pagination {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-top: 52px; flex-wrap: wrap;
+  }
+  .pg-btn {
+    width: 38px; height: 38px; border-radius: 9px;
+    border: 1.5px solid var(--border); background: #fff;
+    font-size: 13px; font-weight: 600; color: var(--navy);
+    cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif;
+  }
+  .pg-btn:hover, .pg-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .pg-btn.prev-next { width: auto; padding: 0 16px; gap: 5px; font-size: 13px; }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    background: linear-gradient(135deg, var(--navy) 0%, #1E3A8A 50%, var(--ocean) 100%);
+    padding: 64px 48px;
+  }
+  .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
+  .stat-item { text-align: center; }
+  .stat-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: rgba(232,160,32,.12); border: 1px solid rgba(232,160,32,.3);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px; font-size: 22px;
+  }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .stat-lbl { font-size: 13px; color: rgba(255,255,255,.65); margin-top: 6px; }
+
+  /* ── CTA ── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--gold) 0%, #C97A10 100%);
+    padding: 72px 48px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-band::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: rgba(255,255,255,.1); }
+  .cta-band::after { content: ''; position: absolute; bottom: -70px; left: -40px; width: 240px; height: 240px; border-radius: 50%; background: rgba(255,255,255,.08); }
+  .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px,4vw,50px); font-weight: 700; color: #fff; margin-bottom: 14px; position: relative; z-index: 1; }
+  .cta-sub { font-size: 16px; color: rgba(255,255,255,.85); margin-bottom: 32px; position: relative; z-index: 1; }
+  .cta-btn {
+    display: inline-block; padding: 14px 36px; background: #fff;
+    border-radius: 10px; font-size: 15px; font-weight: 700; color: var(--gold);
+    text-decoration: none; box-shadow: 0 6px 24px rgba(0,0,0,.15);
+    transition: all .2s; position: relative; z-index: 1;
+  }
+  .cta-btn:hover { transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer { background: #080F2A; padding: 64px 48px 28px; }
+  .ft-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .ft-desc { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.75; max-width: 280px; margin-bottom: 20px; }
+  .ft-socials { display: flex; gap: 10px; }
+  .ft-social { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.55); font-size: 14px; text-decoration: none; transition: all .2s; }
+  .ft-social:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .ft-col-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 18px; }
+  .ft-links { display: flex; flex-direction: column; gap: 9px; }
+  .ft-links a { font-size: 13px; color: rgba(255,255,255,.45); text-decoration: none; transition: color .2s; }
+  .ft-links a:hover { color: var(--gold); }
+  .ft-contact-item { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 10px; }
+  .ft-contact-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .ft-contact-text { font-size: 12.5px; color: rgba(255,255,255,.45); line-height: 1.5; }
+  .ft-bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .ft-copy { font-size: 12.5px; color: rgba(255,255,255,.3); }
+  .ft-bottom-links { display: flex; gap: 20px; }
+  .ft-bottom-links a { font-size: 12.5px; color: rgba(255,255,255,.3); text-decoration: none; }
+  .ft-bottom-links a:hover { color: var(--gold); }
+
+  /* Animations */
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* Marquee */
+  .marquee-wrap { background: var(--navy); padding: 14px 0; overflow: hidden; }
+  .marquee-track { display: flex; gap: 56px; animation: marquee 26s linear infinite; white-space: nowrap; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.6); font-size: 12.5px; font-weight: 500; }
+  .marquee-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .main-content { grid-template-columns: 1fr; padding: 24px 24px 64px; }
+    .sidebar { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    nav { padding: 0 24px; }
+    .page-hero-inner { padding: 48px 24px 56px; }
+    .filter-inner { padding: 14px 24px; }
+    .cat-tabs { padding: 24px 24px 0; }
+    .stats-inner { grid-template-columns: repeat(2,1fr); }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .stats-band, .cta-band { padding: 56px 24px; }
+    footer { padding: 48px 24px 24px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 18px; height: 60px; }
+    .nav-links, .nav-cta { display: none; }
+    .page-hero { padding-top: 60px; }
+    .page-hero-inner { padding: 36px 18px 44px; }
+    .page-hero-stats { gap: 28px; }
+    .filter-inner { flex-direction: column; align-items: stretch; padding: 12px 18px; }
+    .fb-group { min-width: 100%; }
+    .cat-tabs { padding: 18px 18px 0; }
+    .main-content { padding: 18px 18px 56px; }
+    .sidebar { display: block; }
+    .sidebar-card:not(:first-child) { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .proj-card.featured { grid-column: span 1; }
+    .proj-card.featured .proj-img { height: 210px; }
+    .featured-banner { padding: 24px 20px; }
+    .stats-inner { grid-template-columns: repeat(2,1fr); gap: 18px; }
+    .ft-grid { grid-template-columns: 1fr; gap: 28px; }
+    .ft-bottom { flex-direction: column; align-items: flex-start; }
+    .city-divider { gap: 12px; }
+  }
+  @media (max-width: 480px) {
+    .page-hero-title { font-size: 32px; }
+    .page-hero-stats { gap: 20px; }
+    .phs-num { font-size: 26px; }
+    .proj-meta { grid-template-columns: repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">SK</div>
+    <div class="nav-logo-text">
+      <strong>Real Estate</strong>
+      <span>Premium Real Estate</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#">Search</a>
+    <a href="#" class="active">Projects</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">Agent Login</a>
+    <a href="#" class="btn-gold">📞 Talk to Agent →</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-pattern"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-badge"><span class="page-hero-badge-dot"></span>500+ Projects Across India</div>
+    <h1 class="page-hero-title">Our <em>Premium</em> Projects</h1>
+    <p class="page-hero-sub">Browse all our verified real estate projects — from affordable plots to premium townships across India's fastest-growing cities.</p>
+    <div class="page-hero-stats">
+      <div class="phs-item">
+        <div class="phs-num">500+</div>
+        <div class="phs-lbl">Total Projects</div>
+      </div>
+      <div class="phs-item">
+        <div class="phs-num">18</div>
+        <div class="phs-lbl">Cities</div>
+      </div>
+      <div class="phs-item">
+        <div class="phs-num">12K+</div>
+        <div class="phs-lbl">Happy Families</div>
+      </div>
+      <div class="phs-item">
+        <div class="phs-num">200+</div>
+        <div class="phs-lbl">Trusted Agents</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot"></span>Delhi Smart City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Blue World City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Kingdom Valley</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Al-Kabir Town</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Nova City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Capital Smart City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Silver City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Citi Housing</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Delhi Smart City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Blue World City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Kingdom Valley</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Al-Kabir Town</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Nova City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Capital Smart City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Silver City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Citi Housing</div>
+  </div>
+</div>
+
+<!-- STICKY FILTER BAR -->
+<div class="filter-section">
+  <div class="filter-inner">
+    <div class="fb-group">
+      <label>Location</label>
+      <input type="text" placeholder="Delhi, Jaipur, Noida…">
+    </div>
+    <div class="fb-group">
+      <label>Type</label>
+      <select>
+        <option>All Types</option>
+        <option>Plot</option>
+        <option>House</option>
+        <option>Colony</option>
+        <option>Township</option>
+        <option>Commercial</option>
+      </select>
+    </div>
+    <div class="fb-group">
+      <label>Budget</label>
+      <select>
+        <option>Any Budget</option>
+        <option>Under ₹50 Lac</option>
+        <option>₹50L – 1 Cr</option>
+        <option>₹1–3 Crore</option>
+        <option>₹3 Crore+</option>
+      </select>
+    </div>
+    <div class="fb-group">
+      <label>Size</label>
+      <select>
+        <option>Any Size</option>
+        <option>3 Marla</option>
+        <option>5 Marla</option>
+        <option>10 Marla</option>
+        <option>1 Kanal</option>
+        <option>2 Kanal+</option>
+      </select>
+    </div>
+    <div class="fb-group">
+      <label>Status</label>
+      <select>
+        <option>All Status</option>
+        <option>Active</option>
+        <option>Upcoming</option>
+        <option>Pre-Launch</option>
+        <option>Sold Out</option>
+      </select>
+    </div>
+    <button class="fb-btn">🔍 Search</button>
+  </div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="cat-tabs">
+  <button class="cat-tab active" onclick="setCat(this)">🏘️ All Projects <span class="cat-count">500+</span></button>
+  <button class="cat-tab" onclick="setCat(this)">📐 Plots <span class="cat-count">248</span></button>
+  <button class="cat-tab" onclick="setCat(this)">🏠 Houses <span class="cat-count">132</span></button>
+  <button class="cat-tab" onclick="setCat(this)">🌆 Townships <span class="cat-count">56</span></button>
+  <button class="cat-tab" onclick="setCat(this)">🏢 Commercial <span class="cat-count">44</span></button>
+  <button class="cat-tab" onclick="setCat(this)">🔥 Hot Deals <span class="cat-count">18</span></button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">🎯 Refine Search</div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Property Type</div>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Plots</span><span class="count">248</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Houses</span><span class="count">132</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Colonies</span><span class="count">56</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Townships</span><span class="count">18</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Commercial</span><span class="count">44</span></label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Budget Range</div>
+        <div class="range-wrap">
+          <input type="range" class="range-input" min="0" max="100" value="70" id="budgetRange">
+          <div class="range-labels"><span>₹10 Lac</span><span id="budgetVal">₹2.5 Cr</span></div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">City</div>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Delhi</span><span class="count">89</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Jaipur</span><span class="count">67</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Noida</span><span class="count">54</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Lucknow</span><span class="count">38</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Chandigarh</span><span class="count">29</span></label>
+        <label class="checkbox-item"><input type="checkbox"><span>Gurgaon</span><span class="count">24</span></label>
+        <label class="checkbox-item"><input type="checkbox"><span>Pune</span><span class="count">19</span></label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Plot Size</div>
+        <label class="checkbox-item"><input type="checkbox"><span>3 Marla</span><span class="count">72</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>5 Marla</span><span class="count">148</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>10 Marla</span><span class="count">96</span></label>
+        <label class="checkbox-item"><input type="checkbox"><span>1 Kanal</span><span class="count">44</span></label>
+        <label class="checkbox-item"><input type="checkbox"><span>2 Kanal+</span><span class="count">18</span></label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Status</div>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Active</span><span class="count">156</span></label>
+        <label class="checkbox-item"><input type="checkbox" checked><span>Upcoming</span><span class="count">72</span></label>
+        <label class="checkbox-item"><input type="checkbox"><span>Pre-Launch</span><span class="count">20</span></label>
+        <label class="checkbox-item"><input type="checkbox"><span>Sold Out</span><span class="count">14</span></label>
+      </div>
+
+      <button class="clear-btn">✕ Clear All Filters</button>
+    </div>
+
+    <!-- Quick Contact -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">📞 Quick Enquiry</div>
+      <p style="font-size:13px;color:var(--slate);margin-bottom:16px;line-height:1.6;">Talk to our experts and find the perfect property for your budget.</p>
+      <input type="text" placeholder="Your Name" style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'Outfit',sans-serif;outline:none;margin-bottom:10px;color:var(--navy);">
+      <input type="tel" placeholder="+91 Mobile Number" style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'Outfit',sans-serif;outline:none;margin-bottom:12px;color:var(--navy);">
+      <button style="width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),#C97A10);border:none;border-radius:9px;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">📩 Send Enquiry</button>
+    </div>
+  </aside>
+
+  <!-- RESULTS AREA -->
+  <div class="results-area">
+
+    <div class="results-bar">
+      <div class="results-count">Showing <strong>12 projects</strong> out of <strong>500+</strong> results</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div class="sort-wrap">
+          <label>Sort by:</label>
+          <select>
+            <option>Newest First</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Most Popular</option>
+            <option>Largest Area</option>
+          </select>
+        </div>
+        <div class="view-toggle">
+          <button class="view-btn active" title="Grid View">⊞</button>
+          <button class="view-btn" title="List View">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Banner -->
+    <div class="featured-banner fade-in">
+      <div class="fb-text">
+        <div class="fb-label">⭐ Editor's Choice</div>
+        <div class="fb-title">Sky Residencia Delhi — India's Hottest Project</div>
+        <div class="fb-sub">500 Kanal • 1,200 Plots • Starting ₹45 Lac • Booking Open</div>
+      </div>
+      <div class="fb-actions">
+        <a href="#" class="fb-btn-primary">🔥 Book Now</a>
+        <a href="#" class="fb-btn-outline">View Details</a>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- DELHI DIVIDER -->
+      <div class="city-divider">
+        <div class="city-divider-label">🏙️ Delhi</div>
+        <div class="city-divider-line"></div>
+        <div class="city-divider-count">89 Projects</div>
+      </div>
+
+      <!-- Card 1 — Featured, spans 2 cols -->
+      <div class="proj-card featured fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#0D1B4B,#1E6FBF,#2a9fd6)">🏙️</div>
+          <span class="proj-badge badge-hot">🔥 Hot Deal</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏘️ Colony / Township</div>
+          <div class="proj-name">Sky Residencia Delhi</div>
+          <div class="proj-loc">📍 Raiwind Road, Delhi NCR</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Total Area</div><div class="pm-val">500 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Total Plots</div><div class="pm-val">1,200</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plot Sizes</div><div class="pm-val">3–10 Marla</div></div>
+            <div class="pm-item"><div class="pm-lbl">Status</div><div class="pm-val green">● Active</div></div>
+            <div class="pm-item"><div class="pm-lbl">Possession</div><div class="pm-val">Ready</div></div>
+            <div class="pm-item"><div class="pm-lbl">Developer</div><div class="pm-val">Sky Group</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 45 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#6B2D8B,#9333EA)">🏠</div>
+          <span class="proj-badge badge-up">Upcoming</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏠 Housing Project</div>
+          <div class="proj-name">Sky Villas Delhi</div>
+          <div class="proj-loc">📍 B-17, Delhi</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">200 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Units</div><div class="pm-val">480</div></div>
+            <div class="pm-item"><div class="pm-lbl">Launch</div><div class="pm-val amber">Apr 2025</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 85 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#0f2744,#1a5276,#2e86c1)">🏡</div>
+          <span class="proj-badge badge-new">Active</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏡 Residential Colony</div>
+          <div class="proj-name">Delhi Smart Homes</div>
+          <div class="proj-loc">📍 Dwarka Expressway, Delhi</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">350 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">820</div></div>
+            <div class="pm-item"><div class="pm-lbl">Status</div><div class="pm-val green">● Active</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 55 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- NOIDA DIVIDER -->
+      <div class="city-divider">
+        <div class="city-divider-label">🌆 Noida</div>
+        <div class="city-divider-line"></div>
+        <div class="city-divider-count">54 Projects</div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#0F766E,#14B8A6)">📐</div>
+          <span class="proj-badge badge-new">Active</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">📐 Plot Scheme</div>
+          <div class="proj-name">Sky Gardens Noida</div>
+          <div class="proj-loc">📍 Canal Road, Noida</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">320 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">750</div></div>
+            <div class="pm-item"><div class="pm-lbl">Status</div><div class="pm-val green">● Active</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 28 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#1E1B4B,#4F46E5)">🏢</div>
+          <span class="proj-badge badge-pre">Pre-Launch</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏢 Commercial Plot</div>
+          <div class="proj-name">Sky Business Park</div>
+          <div class="proj-loc">📍 Sector 62, Noida</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">120 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Units</div><div class="pm-val">280</div></div>
+            <div class="pm-item"><div class="pm-lbl">Launch</div><div class="pm-val purple">Q3 2025</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 1.2 Cr</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#134e4a,#0d9488)">🏘️</div>
+          <span class="proj-badge badge-ft">Featured</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏘️ Township</div>
+          <div class="proj-name">Noida Grand Township</div>
+          <div class="proj-loc">📍 Sector 150, Noida</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">600 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">1,400</div></div>
+            <div class="pm-item"><div class="pm-lbl">Status</div><div class="pm-val green">● Active</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 38 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- JAIPUR DIVIDER -->
+      <div class="city-divider">
+        <div class="city-divider-label">🌇 Jaipur</div>
+        <div class="city-divider-line"></div>
+        <div class="city-divider-count">67 Projects</div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#B45309,#F59E0B)">🌆</div>
+          <span class="proj-badge badge-ft">Featured</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🌆 Township</div>
+          <div class="proj-name">Golden Heights Jaipur</div>
+          <div class="proj-loc">📍 Ajmer Road, Jaipur</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">800 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">2,100</div></div>
+            <div class="pm-item"><div class="pm-lbl">Status</div><div class="pm-val green">● Active</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 35 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">🏠</div>
+          <span class="proj-badge badge-up">Upcoming</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏠 Residential Project</div>
+          <div class="proj-name">Jaipur Royal Enclave</div>
+          <div class="proj-loc">📍 Sitapura, Jaipur</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">240 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Units</div><div class="pm-val">560</div></div>
+            <div class="pm-item"><div class="pm-lbl">Launch</div><div class="pm-val amber">Jun 2025</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 42 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#92400e,#d97706)">📐</div>
+          <span class="proj-badge badge-new">Active</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">📐 Plot Scheme</div>
+          <div class="proj-name">Pink City Heights</div>
+          <div class="proj-loc">📍 Mansarovar, Jaipur</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">160 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">380</div></div>
+            <div class="pm-item"><div class="pm-lbl">Size</div><div class="pm-val">5–10 Marla</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 19 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- LUCKNOW DIVIDER -->
+      <div class="city-divider">
+        <div class="city-divider-label">🏛️ Lucknow</div>
+        <div class="city-divider-line"></div>
+        <div class="city-divider-count">38 Projects</div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#065F46,#10B981)">🏡</div>
+          <span class="proj-badge badge-new">Active</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏡 Residential Plot</div>
+          <div class="proj-name">Green Valley Lucknow</div>
+          <div class="proj-loc">📍 Gomti Nagar, Lucknow</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">180 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">420</div></div>
+            <div class="pm-item"><div class="pm-lbl">Size</div><div class="pm-val">5–10 Marla</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 22 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 11 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#1e3a5f,#2980b9)">🏘️</div>
+          <span class="proj-badge badge-ft">Featured</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏘️ Township</div>
+          <div class="proj-name">Lucknow City Gardens</div>
+          <div class="proj-loc">📍 Amar Shaheed Path, Lucknow</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">420 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Plots</div><div class="pm-val">980</div></div>
+            <div class="pm-item"><div class="pm-lbl">Status</div><div class="pm-val green">● Active</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 30 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Card 12 -->
+      <div class="proj-card fade-in">
+        <div class="proj-img">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#312e81,#6366f1)">🏢</div>
+          <span class="proj-badge badge-pre">Pre-Launch</span>
+          <button class="proj-save" onclick="toggleSave(this)">♡</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-type">🏢 Commercial Hub</div>
+          <div class="proj-name">Nawab Commercial Square</div>
+          <div class="proj-loc">📍 Hazratganj, Lucknow</div>
+          <div class="proj-meta">
+            <div class="pm-item"><div class="pm-lbl">Area</div><div class="pm-val">80 Kanal</div></div>
+            <div class="pm-item"><div class="pm-lbl">Units</div><div class="pm-val">160</div></div>
+            <div class="pm-item"><div class="pm-lbl">Launch</div><div class="pm-val purple">Q4 2025</div></div>
+          </div>
+        </div>
+        <div class="proj-footer">
+          <div><div class="proj-price-lbl">Starting From</div><div class="proj-price">₹ 95 Lac</div></div>
+          <a href="#" class="btn-proj">View Details →</a>
+        </div>
+      </div>
+
+    </div><!-- /projects-grid -->
+
+    <!-- Load More -->
+    <div class="load-more-wrap">
+      <button class="btn-load-more" onclick="this.textContent='Loading…'">
+        ↓ Load More Projects
+      </button>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button class="pg-btn prev-next">← Prev</button>
+      <button class="pg-btn active">1</button>
+      <button class="pg-btn">2</button>
+      <button class="pg-btn">3</button>
+      <button class="pg-btn">4</button>
+      <span style="color:var(--slate);font-size:13px;align-self:center;">…</span>
+      <button class="pg-btn">42</button>
+      <button class="pg-btn prev-next">Next →</button>
+    </div>
+
+  </div><!-- /results-area -->
+
+</div><!-- /main-content -->
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="stat-item fade-in">
+      <div class="stat-icon">🏗️</div>
+      <div class="stat-num">500+</div>
+      <div class="stat-lbl">Projects Completed</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-icon">👨‍👩‍👧</div>
+      <div class="stat-num">12K+</div>
+      <div class="stat-lbl">Happy Families</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-icon">🏙️</div>
+      <div class="stat-num">18</div>
+      <div class="stat-lbl">Cities Covered</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-icon">🤝</div>
+      <div class="stat-num">200+</div>
+      <div class="stat-lbl">Trusted Agents</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2 class="cta-title">Ready to Find Your Dream Property?</h2>
+  <p class="cta-sub">Talk to our expert agents today — zero commission, full guidance.</p>
+  <a href="#" class="cta-btn">📞 Contact an Agent Now</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div class="nav-logo-mark">SK</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;line-height:1.2">
+          The Sky Is Your Limit<br>
+          <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.45)">Premium Real Estate India</span>
+        </div>
+      </div>
+      <p class="ft-desc">India's most trusted real estate partner — connecting families with their dream properties since 2026.</p>
+      <div class="ft-socials">
+        <a href="#" class="ft-social">f</a>
+        <a href="#" class="ft-social">in</a>
+        <a href="#" class="ft-social">✕</a>
+        <a href="#" class="ft-social">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Quick Links</div>
+      <div class="ft-links">
+        <a href="#">Home</a>
+        <a href="#">All Projects</a>
+        <a href="#">Available Plots</a>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Property Types</div>
+      <div class="ft-links">
+        <a href="#">Residential Plots</a>
+        <a href="#">Commercial Plots</a>
+        <a href="#">Houses</a>
+        <a href="#">Colonies</a>
+        <a href="#">Townships</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Contact Us</div>
+      <div class="ft-contact-item"><span class="ft-contact-icon">📍</span><span class="ft-contact-text">Main Boulevard, Delhi, India</span></div>
+      <div class="ft-contact-item"><span class="ft-contact-icon">📞</span><span class="ft-contact-text">+91 300 1234567</span></div>
+      <div class="ft-contact-item"><span class="ft-contact-icon">✉️</span><span class="ft-contact-text">info@skyisyourlimit.com</span></div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 Sky Is Your Limit Real Estate. All rights reserved.</div>
+    <div class="ft-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Category tabs
+  function setCat(el) {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Save/wishlist toggle
+  function toggleSave(btn) {
+    btn.classList.toggle('saved');
+    btn.textContent = btn.classList.contains('saved') ? '❤️' : '♡';
+  }
+
+  // Pagination
+  document.querySelectorAll('.pg-btn:not(.prev-next)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pg-btn:not(.prev-next)').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Budget range label
+  const range = document.getElementById('budgetRange');
+  const budgetVal = document.getElementById('budgetVal');
+  if (range) {
+    const vals = ['₹10 Lac','₹25 Lac','₹50 Lac','₹75 Lac','₹1 Cr','₹1.5 Cr','₹2 Cr','₹2.5 Cr','₹3 Cr','₹3 Cr+'];
+    range.addEventListener('input', () => {
+      budgetVal.textContent = vals[Math.floor(range.value / 11)] || '₹3 Cr+';
+    });
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 70);
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // View toggle
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
