@@ -20,6 +20,7 @@ public partial class Welcome : System.Web.UI.Page
     {
         try
         {
+
             if (!Page.IsPostBack)
             {
                 string strcondition = "";

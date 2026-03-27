@@ -26,87 +26,43 @@ public partial class Img : System.Web.UI.Page
             if (dt.Rows.Count > 0)
                 Image1.ImageUrl = dt.Rows[0]["Img1Path"].ToString();
         }
-        else if (string.Equals(type, "Glry", StringComparison.OrdinalIgnoreCase))
-        {
-            string sql = "select '" + Convert.ToString(Session["AdminWeb"]) + "/images/UploadImage/' + ImagePath as ImgPath from ProductGallery where PGID='" + idVal.ToString() + "'";
-            dt = obj.GetData(sql);
-            if (dt.Rows.Count > 0)
-                Image1.ImageUrl = dt.Rows[0]["ImgPath"].ToString();
-        }
-        else if (string.Equals(type, "PinRequest", StringComparison.OrdinalIgnoreCase))
-        {
-            string sql = "select Case when ImgPath='' then '' when ImgPath like'http%' then ImgPath " +
-                         " else '" + Convert.ToString(Session["CompWeb"]) + "/images/UploadImage/'+ ImgPath end as  ImagePath from TrnPinReqMain where ReqNo='" + idVal.ToString() + "'";
-            dt = obj.GetData(sql);
-            if (dt.Rows.Count > 0)
-                Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
-        }
         else if (string.Equals(type, "Payment", StringComparison.OrdinalIgnoreCase))
         {
-            if (Convert.ToString(Session["CompID"]) == "1091")
-            {
-                string sql = "select CASE WHEN ImageUpload='' THEN '' WHEN ImageUpload like 'http%' THEN ImageUpload else 'https://cpanel.solfit.in/images/UploadImage/'+ImageUpload" +
-                             " end as  ImagePath from TrnProductorderDetail where orderno = '" + idVal.ToString() + "'";
-                dt = obj.GetData(sql);
-            }
-            else if (Convert.ToString(Session["CompID"]) == "1007")
-            {
-                string sql = "select CASE WHEN ScannedFile='' THEN '' WHEN ScannedFile like 'http%' THEN ScannedFile else 'https://cpanel.vadicindia.com/images/UploadImage/'+ScannedFile" +
-                             " end as  ImagePath from WalletReq where ReqNo='" + idVal.ToString() + "'";
-                dt = obj.GetData(sql);
-            }
-            else
-            {
-                string sql = "select Case when ScannedFile='' then ''  " +
-                             " else 'images/UploadImage/'+'" + Session["compid"] + "/' + ScannedFile end as  ImagePath from WalletReq where ReqNo='" + idVal.ToString() + "'";
-                dt = obj.GetData(sql);
-            }
+            string sql = "select Case when ScannedFile='' then ''  " +
+                           " else 'images/UploadImage/'+'" + Session["compid"] + "/' + ScannedFile end as  ImagePath from WalletReq where ReqNo='" + idVal.ToString() + "'";
+            dt = obj.GetData(sql);
+            if (dt.Rows.Count > 0)
+                Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
+        }
+    
 
-            if (dt.Rows.Count > 0)
-                Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
-        }
-        else if (string.Equals(type, "walletpayment", StringComparison.OrdinalIgnoreCase))
+        else if (string.Equals(type, "front", StringComparison.OrdinalIgnoreCase))
         {
-            string sql = "select CASE WHEN ScannedFile='' THEN '' WHEN ScannedFile like 'http%' THEN ScannedFile else 'https://cpanel.solfit.in/images/UploadImage/'+ScannedFile" +
-                         " end as  ImagePath from WalletReq where ReqNo='" + idVal.ToString() + "'";
+            string sql = "select AddrProof as ImagePath from KycVerify where formno = '" + idVal.ToString() + "'";
             dt = obj.GetData(sql);
             if (dt.Rows.Count > 0)
                 Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
         }
-        else if (string.Equals(type, "booking", StringComparison.OrdinalIgnoreCase))
+        else if (string.Equals(type, "back", StringComparison.OrdinalIgnoreCase))
         {
-            string sql = "select Case when ScanneFile='' then ''  " +
-                         " else '" + Convert.ToString(Session["CompWeb"]) + "images/UploadImage/'+ ScanneFile end as  ImagePath from BookingRequest where ReqNo='" + idVal.ToString() + "'";
+            string sql = "select BackAddressProof as ImagePath from KycVerify where formno = '" + idVal.ToString() + "'";
             dt = obj.GetData(sql);
             if (dt.Rows.Count > 0)
                 Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
         }
-        else if (string.Equals(type, "Invoice", StringComparison.OrdinalIgnoreCase))
+        else if (string.Equals(type, "bank", StringComparison.OrdinalIgnoreCase))
         {
-            // Request("Reqid") in VB; handle similarly
-            int reqId = 0;
-            int.TryParse(Convert.ToString(Request["Reqid"]), out reqId);
-
-            string sql = "select Invoiceurl as  ImagePath from Invoice where Formno='" + idVal.ToString() + "' and Id='" + reqId.ToString() + "'";
+            string sql = "select BankProof as ImagePath from KycVerify where formno = '" + idVal.ToString() + "'";
             dt = obj.GetData(sql);
             if (dt.Rows.Count > 0)
                 Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
         }
-        else if (string.Equals(type, "EventF", StringComparison.OrdinalIgnoreCase))
+        else if (string.Equals(type, "pan", StringComparison.OrdinalIgnoreCase))
         {
-            DataTable Dt_EventF = new DataTable();
-            string sql = " exec Sp_EventImageShow '" + Convert.ToString(Session["CompWeb"]) + "','" + Request["ID"] + "' ";
-            Dt_EventF = SqlHelper.ExecuteDataset((string)HttpContext.Current.Session["MlmDatabase" + Convert.ToString(Session["CompID"])], CommandType.Text, sql).Tables[0];
-            if (Dt_EventF.Rows.Count > 0)
-                Image1.ImageUrl = Dt_EventF.Rows[0]["ImagePath"].ToString();
-        }
-        else if (string.Equals(type, "EventB", StringComparison.OrdinalIgnoreCase))
-        {
-            DataTable Dt_EventB = new DataTable();
-            string sql = " exec Sp_EventImageShow1 '" + Convert.ToString(Session["CompWeb"]) + "','" + Request["ID"] + "' ";
-            Dt_EventB = SqlHelper.ExecuteDataset((string)HttpContext.Current.Session["MlmDatabase" + Convert.ToString(Session["CompID"])], CommandType.Text, sql).Tables[0];
-            if (Dt_EventB.Rows.Count > 0)
-                Image1.ImageUrl = Dt_EventB.Rows[0]["ImagePath"].ToString();
+            string sql = "select PanImg as ImagePath from KycVerify where formno = '" + idVal.ToString() + "'";
+            dt = obj.GetData(sql);
+            if (dt.Rows.Count > 0)
+                Image1.ImageUrl = dt.Rows[0]["ImagePath"].ToString();
         }
         else if (type != null)
         {

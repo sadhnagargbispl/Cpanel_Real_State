@@ -47,10 +47,11 @@
                 <div class="nav-group-title">Overview</div>
 
                 <a href="Dashboard.aspx" class="ni active"><span class="ni-ic">📊</span>Dashboard</a>
-                   <div class="nav-group-title">Account</div>
-   <%--<a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>--%>
-   <a href="ProfilePage.aspx" class="ni"><span class="ni-ic">👤</span>My Profile</a>
-   <a href="Welcome.aspx" class="ni"><span class="ni-ic">👋</span>Welcome Letter</a>
+                <div class="nav-group-title">Account</div>
+                <%--<a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>--%>
+                <a href="ProfilePage.aspx" class="ni"><span class="ni-ic">👤</span>My Profile</a>
+                <a href="Welcome.aspx" class="ni"><span class="ni-ic">👋</span>Welcome Letter</a>
+                 <a href="KYC.aspx" class="ni"><span class="ni-ic">👋</span>Upload KYC</a>
                 <div class="nav-group-title">Properties</div>
                 <a href="#" class="ni"><span class="ni-ic">🏘️</span>My Projects<span class="ni-badge ">0</span></a>
                 <div class="ni" onclick="tSub('plSub',this)">
@@ -66,7 +67,8 @@
                 <div class="nav-group-title">People</div>
                 <a href="agent_customers.aspx" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge ">0</span></a>
                 <a href="agent_myagents.aspx" class="ni"><span class="ni-ic">🤝</span>My Agents<span class="ni-badge ">0</span></a>
-
+                <a href="MyDirects.aspx" class="ni"><span class="ni-ic">📋</span>My Direct Report<span class="ni-badge ">0</span></a>
+                <a href="LevelwiseDirectReport.aspx" class="ni"><span class="ni-ic">📋</span>Level Wise Direct Report<span class="ni-badge ">0</span></a>
                 <div class="nav-group-title">Our Portal</div>
                 <a href="ShoppingRedirect.aspx" class="ni"><span class="ni-ic">👥</span>Our Shopping Portal</a>
                 <div class="nav-group-title">Purchase</div>
@@ -75,10 +77,10 @@
                 <div class="nav-group-title">Finance</div>
                 <a href="#" class="ni"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">0</span></a>
                 <%-- <a href="#" class="ni"><span class="ni-ic">💳</span>Payments</a>--%>
-              <%--  <a href="#" class="ni"><span class="ni-ic">₹</span>My Commission</a>--%>
+                <%--  <a href="#" class="ni"><span class="ni-ic">₹</span>My Commission</a>--%>
                 <a href="#" class="ni"><span class="ni-ic">🧾</span>Receipts</a>
                 <a href="LevelIncomeReport.aspx" class="ni"><span class="ni-ic">🧾</span>Level Bonus Report</a>
-             
+
                 <div class="nav-group-title">Wallet</div>
                 <a href="AllWalletReport.aspx" class="ni"><span class="ni-ic">📊</span>All Wallet Report</a>
                 <a href="WalletRequest.aspx" class="ni"><span class="ni-ic">💰</span>Wallet Request</a>

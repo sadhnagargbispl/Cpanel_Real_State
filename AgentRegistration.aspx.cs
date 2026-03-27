@@ -256,6 +256,7 @@ public partial class AgentRegistration : System.Web.UI.Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        //SendToMemberMail("DV431287", "sadhnagarg.bispl@gmail.com", "SADHNA GARG", "Bright@Discount#11");
         this.CmdSave.Attributes.Add("onclick", DisableTheButton(this.Page, this.CmdSave));
         //this.BtnOtp.Attributes.Add("onclick", DisableTheButton(this.Page, this.BtnOtp));
         //this.ResendOtp.Attributes.Add("onclick", DisableTheButton(this.Page, this.ResendOtp));
@@ -1577,7 +1578,7 @@ public partial class AgentRegistration : System.Web.UI.Page
                 dsEmail = SqlHelper.ExecuteDataset(constr1, CommandType.Text, strSql); // Execute the SQL query
                 dtEmail = dsEmail.Tables[0]; // Get the first DataTable from DataSet
 
-                if (Convert.ToInt32(dtEmail.Rows[0]["Email"]) >= 1) // Check if the email already exists
+                if (Convert.ToInt32(dtEmail.Rows[0]["Email"]) >= 10000) // Check if the email already exists
                 {
                     CmdSave.Enabled = true; // Enable the save command
                     chkterms.Checked = false; // Uncheck the terms checkbox
@@ -1595,7 +1596,7 @@ public partial class AgentRegistration : System.Web.UI.Page
                 dsmob = SqlHelper.ExecuteDataset(cnn, CommandType.Text, strSql); // Execute the SQL query
                 dt1 = dsmob.Tables[0]; // Get the first table from the dataset
 
-                if (Convert.ToInt32(dt1.Rows[0]["mobileno"]) >= 1) // Check if the mobile number is already registered
+                if (Convert.ToInt32(dt1.Rows[0]["mobileno"]) >= 10000) // Check if the mobile number is already registered
                 {
                     CmdSave.Enabled = true; // Enable the save command
                     chkterms.Checked = false; // Uncheck the terms checkbox
@@ -1956,37 +1957,154 @@ public partial class AgentRegistration : System.Web.UI.Page
             System.Net.Mail.MailAddress sendFrom = new System.Net.Mail.MailAddress(Session["CompMail"].ToString());
             System.Net.Mail.MailAddress sendTo = new System.Net.Mail.MailAddress(Email);
             System.Net.Mail.MailMessage myMessage = new System.Net.Mail.MailMessage(sendFrom, sendTo);
+            strMsg = @"<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Welcome Letter</title>
+<style>
+  body{margin:0;padding:0;background:#F0F4FB;font-family:'Segoe UI',Arial,sans-serif;}
+  .wrap{max-width:620px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #E2EAF4;}
+  .hdr{background:linear-gradient(150deg,#080F30 0%,#0D1A50 50%,#1B2B6B 100%);padding:28px 32px 22px;position:relative;}
+  .hdr-logo-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .hdr-icon{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#F5A623,#E8920F);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .hdr-brand{font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
+  .hdr-portal{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;}
+  .hdr-title-block{display:flex;align-items:center;gap:16px;}
+  .hdr-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(245,166,35,.55),transparent);}
+  .hdr-title{font-size:20px;font-weight:900;color:#fff;font-family:Georgia,serif;white-space:nowrap;}
+  .greeting{padding:24px 32px 0;display:flex;align-items:baseline;flex-wrap:wrap;gap:8px;}
+  .g-label{font-size:14px;color:#8A99B3;}
+  .g-name{font-size:20px;font-weight:900;color:#1B2B6B;font-family:Georgia,serif;}
+  .g-id{font-size:12px;color:#8A99B3;background:#F0F4FB;padding:3px 10px;border-radius:20px;border:1px solid #E2EAF4;}
+  .g-date{margin-left:auto;font-size:12px;color:#8A99B3;}
+  .msg{padding:16px 32px 20px;font-size:13.5px;color:#4A5568;line-height:1.75;border-bottom:1px solid #E2EAF4;}
+  .msg strong{color:#1B2B6B;}
+  .details-wrap{padding:22px 32px;}
+  .details-title{font-size:10px;font-weight:700;color:#8A99B3;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px;}
+  table.dt{width:100%;border-collapse:collapse;}
+  table.dt tr{border-bottom:1px solid #E2EAF4;}
+  table.dt tr:last-child{border-bottom:none;}
+  .td-l{padding:13px 16px 13px 0;font-size:13px;font-weight:600;color:#4A5568;width:48%;vertical-align:middle;}
+  .td-r{padding:13px 0;font-size:13.5px;font-weight:700;color:#1B2B6B;vertical-align:middle;}
+  .pass-val{display:inline-block;background:#F0F4FB;border:1px solid #E2EAF4;border-radius:7px;padding:4px 12px;font-family:'Courier New',monospace;font-size:13px;color:#1E6FBF;letter-spacing:1.5px;}
+  .info-box{display:flex;gap:12px;align-items:flex-start;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.25);border-radius:11px;padding:13px 16px;margin:0 32px 24px;font-size:12.5px;color:#4A5568;line-height:1.65;}
+  .info-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+  .ftr{background:linear-gradient(150deg,#080F30 0%,#0D1A50 50%,#1B2B6B 100%);padding:26px 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .ftr-msg{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:340px;}
+  .ftr-msg strong{color:#F5A623;}
+  .ftr-sig{text-align:right;flex-shrink:0;}
+  .sig-line{width:130px;height:1.5px;margin:0 0 8px auto;background:linear-gradient(90deg,transparent,rgba(245,166,35,.65));}
+  .sig-name{font-family:Georgia,serif;font-size:15px;font-weight:700;color:#fff;}
+  .sig-title{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-top:2px;}
+  .login-btn{display:block;width:fit-content;margin:0 auto 8px;padding:11px 28px;background:linear-gradient(135deg,#F5A623,#E8920F);color:#fff;font-size:13px;font-weight:700;border-radius:9px;text-decoration:none;text-align:center;}
+  .login-wrap{text-align:center;padding:20px 32px 24px;}
+ .g-label{font-size:14px;color:#8A99B3;margin-right:4px;}
+</style>
+</head>
+<body>
+<div class='wrap'>
 
-            strMsg = "<table style=\"margin:0; padding:10px; font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif; line-height:23px; text-align:justify;width:100%\"> " +
-                     "<tr>" +
-                     "<td>" +
-                     "<span style=\"color: #0099CC; font-weight: bold;\"><h2>Dear " + MemberName + ",</h2></span><br />" +
-                     "Congratulations, you have successfully registered with " + Session["CompName"].ToString() + "!<br />" +
-                     "<br />" +
-                     "Your username and password are found below : <br />" +
-                     "<span style=\"color: #0099FF; font-weight: bold;\">Registration Information</span><br />" +
-                     "<strong>Login ID: " + IdNo + "</strong><br />" +
-                     "<strong>Password: " + Password + "</strong><br />" +
-                     "You may login to the Member Center at: <a href=\"" + Session["CompWeb"].ToString() + "\" target=\"_blank\" style=\"color:#0000FF; text-decoration:underline;\">" + Session["CompWeb"].ToString() + "</a><br />" +
-                     "<br />" +
-                     "<span style=\"color: #0099FF; font-weight: bold;\">Regards,</span><br />" +
-                     "<a href=\"" + Session["CompWeb"].ToString() + "\" target=\"_blank\" style=\"color:#0000FF; text-decoration:underline;\">" + Session["CompName"].ToString() + "</a><br />" +
-                     "<br />" +
-                     "<br />" +
-                     "</td>" +
-                     "</tr>" +
-                     "</table>";
+  <!-- HEADER -->
+  <div class='hdr'>
+    <div class='hdr-title-block'>
+      <div class='hdr-line'></div>
+      <div class='hdr-title'>Welcome and Congratulations!</div>
+      <div class='hdr-line'></div>
+    </div>
+  </div>
+  <!-- GREETING -->
+ <div class='greeting'>
+    <span class='g-label'>Dear</span>
+    <span class='g-name'>" + MemberName + @"</span>
+    <span class='g-date'>Date: " + DateTime.Now.ToString("dd-MMM-yyyy") + @"</span>
+  </div>
+  <!-- MESSAGE -->
+  <div class='msg'>
+    We are delighted to welcome you to the <strong>" + Session["CompName"].ToString() + @"</strong> family.
+    Your registration has been successfully completed and your account is now active.
+    Below are your account credentials — please keep them safe and confidential.
+  </div>
+
+  <!-- DETAILS TABLE -->
+  <div class='details-wrap'>
+    <div class='details-title'>Account Details</div>
+    <table class='dt'>
+     
+      <tr>
+        <td class='td-l'>🪪 Member ID</td>
+        <td class='td-r'>" + IdNo + @"</td>
+      </tr>
+      <tr>
+        <td class='td-l'>🔒 Password</td>
+        <td class='td-r'><span class='pass-val'>" + Password + @"</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- INFO BOX -->
+
+
+  <!-- LOGIN BUTTON -->
+  <div class='login-wrap'>
+    <a class='login-btn' href='" + Session["CompWeb"].ToString() + @"'>Login to Your Account →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class='ftr'>
+    <div class='ftr-msg'>
+      Thank you for joining the <strong>" + Session["CompName"].ToString() + @"</strong> family.<br>
+      We wish you great success in your journey with us.
+    </div>
+    <div class='ftr-sig'>
+      <div class='sig-line'></div>
+      <div class='sig-name'>" + Session["CompName"].ToString() + @"</div>
+      <div class='sig-title'>Authorised Signatory</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>";
+            //strMsg = "<table style=\"margin:0; padding:10px; font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif; line-height:23px; text-align:justify;width:100%\"> " +
+            //         "<tr>" +
+            //         "<td>" +
+            //         "<span style=\"color: #0099CC; font-weight: bold;\"><h2>Dear " + MemberName + ",</h2></span><br />" +
+            //         "Congratulations, you have successfully registered with " + Session["CompName"].ToString() + "!<br />" +
+            //         "<br />" +
+            //         "Your username and password are found below : <br />" +
+            //         "<span style=\"color: #0099FF; font-weight: bold;\">Registration Information</span><br />" +
+            //         "<strong>Login ID: " + IdNo + "</strong><br />" +
+            //         "<strong>Password: " + Password + "</strong><br />" +
+            //         "You may login to the Member Center at: <a href=\"" + Session["CompWeb"].ToString() + "\" target=\"_blank\" style=\"color:#0000FF; text-decoration:underline;\">" + Session["CompWeb"].ToString() + "</a><br />" +
+            //         "<br />" +
+            //         "<span style=\"color: #0099FF; font-weight: bold;\">Regards,</span><br />" +
+            //         "<a href=\"" + Session["CompWeb"].ToString() + "\" target=\"_blank\" style=\"color:#0000FF; text-decoration:underline;\">" + Session["CompName"].ToString() + "</a><br />" +
+            //         "<br />" +
+            //         "<br />" +
+            //         "</td>" +
+            //         "</tr>" +
+            //         "</table>";
 
             myMessage.Subject = "Welcome and Congratulations!";
             myMessage.Body = strMsg;
             myMessage.IsBodyHtml = true;
-
-            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(Session["MailHost"].ToString());
-            smtp.Port = 587;
-            smtp.EnableSsl = false;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new System.Net.NetworkCredential(Session["CompMail"].ToString(), Session["MailPass"].ToString());
+            SmtpClient smtp = new SmtpClient(Session["MailHost"].ToString())
+            {
+                UseDefaultCredentials = false,
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(Session["CompMail"].ToString(), Session["MailPass"].ToString())
+            };
             smtp.Send(myMessage);
+            //System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(Session["MailHost"].ToString());
+            //smtp.Port = 587;
+            //smtp.EnableSsl = false;
+            //smtp.UseDefaultCredentials = false;
+            //smtp.Credentials = new System.Net.NetworkCredential(Session["CompMail"].ToString(), Session["MailPass"].ToString());
+            //smtp.Send(myMessage);
 
             return true;
         }

@@ -59,7 +59,7 @@
                     <asp:Label ID="lblTotalAgent" runat="server" Text="0"></asp:Label>
                 </div>
 
-                <div class="kpi-label">Total Customers</div>
+                <div class="kpi-label">Total Agents</div>
             </div>
 
             <%-- <div class="kpi">

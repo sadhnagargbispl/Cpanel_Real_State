@@ -16,7 +16,7 @@
     <form id="form1" runat="server">
         <div>
             <nav>
-                <a href="#" class="nav-logo">
+                <a href="index.aspx" class="nav-logo">
                     <img src="images/logo.png" alt="The Sky Is Your Limit">
                     <div class="nav-logo-text">
                         <span><%=Session["CompName"]%></span>
