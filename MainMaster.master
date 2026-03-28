@@ -42,7 +42,8 @@
                     <asp:Panel ID="pnlUser" runat="server" Visible="false">
                         <div class="user-dropdown">
                             <button class="btn-outline" type="button">
-                                <asp:Literal ID="litUserName" runat="server"></asp:Literal> ▼
+                                <asp:Literal ID="litUserName" runat="server"></asp:Literal>
+                                ▼
                             </button>
                             <div class="dropdown-menu">
                                 <a href="Dashboard.aspx">Main Account</a>
@@ -109,11 +110,11 @@
                             <div class="footer-col-title">Contact Us</div>
                             <div class="footer-contact-item">
                                 <span class="footer-contact-icon">📍</span>
-                                <span class="footer-contact-text">Main Boulevard, Delhi, INDIA</span>
+                                <span class="footer-contact-text">Raghava towers 3rd FLOUR room no. 306 Madheenaguda Hyderabad 500049</span>
                             </div>
                             <div class="footer-contact-item">
                                 <span class="footer-contact-icon">📞</span>
-                                <span class="footer-contact-text">+91 300 1234567</span>
+                                <span class="footer-contact-text">+91 89855 80651</span>
                             </div>
                             <div class="footer-contact-item">
                                 <span class="footer-contact-icon">✉️</span>

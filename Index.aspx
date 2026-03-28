@@ -220,42 +220,48 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">City / Location</label>
-                    <input type="text" class="form-input" placeholder="e.g. Delhi, Jaipur...">
+                    <input type="text" id="txtCity" runat="server"
+                        class="form-input" placeholder="e.g. Delhi, Jaipur...">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Property Type</label>
-                        <select class="form-select">
+                        <asp:DropDownList ID="ddlProjectType" class="form-select" runat="server" />
+                        <%-- <select class="form-select">
                             <option>All Types</option>
                             <option>Plot</option>
                             <option>House</option>
                             <option>Colony</option>
                             <option>Township</option>
-                        </select>
+                        </select>--%>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Budget</label>
-                        <select class="form-select">
-                            <option>Any Budget</option>
-                            <option>Under 50 Lac</option>
-                            <option>50L – 1 Crore</option>
-                            <option>1–3 Crore</option>
-                            <option>3 Crore+</option>
+                        <select id="ddlBudget" runat="server" class="form-select">
+                            <option value="">Any Budget</option>
+                            <option value="under-50L">Under 50 Lac</option>
+                            <option value="50L-1Cr">50L – 1 Crore</option>
+                            <option value="1Cr-3Cr">1–3 Crore</option>
+                            <option value="3Cr+">3 Crore+</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Plot Size</label>
-                    <select class="form-select">
+                    <label class="form-label">Size</label>
+                    <asp:DropDownList ID="ddlCategory" class="form-select" runat="server" />
+                    <%--<select class="form-select">
                         <option>Any Size</option>
                         <option>3 Marla</option>
                         <option>5 Marla</option>
                         <option>10 Marla</option>
                         <option>1 Kanal</option>
                         <option>2 Kanal+</option>
-                    </select>
+                    </select>--%>
                 </div>
-                <button class="btn-search">🔍 Search Properties</button>
+                <button class="btn-search" runat="server" id="btnSearch"
+                    onserverclick="btnSearch_Click">
+                    🔍 Search Properties</button>
+                <%--<button class="btn-search">🔍 Search Properties</button>--%>
             </div>
         </div>
     </section>
