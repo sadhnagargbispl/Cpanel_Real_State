@@ -56,7 +56,7 @@
                             <input class="inp" id="txtemail" placeholder="Enter your Email ID" autocomplete="off">
                         </div>
                     </div>
-                    <button type="button" class="btn-login" onclick="sendOTP()">Send OTP to Email</button>
+                    <button type="button" class="btn-login" onclick="sendOTP()">Send Email</button>
                     <%--<div class="back-lnk"><a href="agent_login.aspx">← Back to Sign In</a></div>--%>
                 </div>
             </div>

@@ -25,9 +25,9 @@
                 </a>
 
                 <div class="nav-links" id="navLinks">
-                    <a href="#" class="active">Home</a>
-                    <a href="#">Projects</a>
-                    <a href="#">Plots</a>
+                    <a href="Index.aspx" class="active">Home</a>
+                    <a href="property-search.aspx">Projects</a>
+                    <a href="property-search.aspx">Plots</a>
                     <a href="#">About Us</a>
                     <a href="#">Contact</a>
                 </div>
@@ -52,7 +52,7 @@
                         </div>
                     </asp:Panel>
 
-                    <a href="#" class="btn-primary">View Projects →</a>
+                    <a href="property-search.aspx" class="btn-primary">View Projects →</a>
                 </div>
 
                 <!-- Hamburger Button -->
@@ -89,9 +89,9 @@
                         <div>
                             <div class="footer-col-title">Quick Links</div>
                             <div class="footer-links">
-                                <a href="#">Home</a>
-                                <a href="#">All Projects</a>
-                                <a href="#">Available Plots</a>
+                                <a href="Index.aspx">Home</a>
+                                <a href="property-search.aspx">All Projects</a>
+                                <a href="property-search.aspx">Available Plots</a>
                                 <a href="#">About Us</a>
                                 <a href="#">Careers</a>
                             </div>

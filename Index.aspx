@@ -212,12 +212,12 @@
             <!-- Search Card -->
             <div class="hero-card">
                 <div class="hero-card-title">🔍 Search Properties</div>
-                <div class="search-tabs">
+               <%-- <div class="search-tabs">
                     <button class="search-tab active" onclick="setTab(this)">Buy</button>
                     <button class="search-tab" onclick="setTab(this)">Plots</button>
                     <button class="search-tab" onclick="setTab(this)">Houses</button>
                     <button class="search-tab" onclick="setTab(this)">Colonies</button>
-                </div>
+                </div>--%>
                 <div class="form-group">
                     <label class="form-label">City / Location</label>
                     <input type="text" id="txtCity" runat="server"

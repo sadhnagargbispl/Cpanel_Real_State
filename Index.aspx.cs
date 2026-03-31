@@ -40,7 +40,21 @@ public partial class Index : System.Web.UI.Page
         string type = ddlProjectType.SelectedValue;
         string budget = ddlBudget.Value.Trim();
         string size = ddlCategory.SelectedValue;
-
+        // ✅ Server-side validation (at least one field required)
+        if (string.IsNullOrEmpty(city) &&
+        (string.IsNullOrEmpty(type) || type == "0") &&
+        string.IsNullOrEmpty(budget) &&
+        (string.IsNullOrEmpty(size) || size == "0"))
+        {
+            ScriptManager.RegisterStartupScript(
+                this,
+                this.GetType(),
+                "alert",
+                "alert('Please select at least one search filter.');",
+                true
+            );
+            return;
+        }
         // Inner query string banao
         string innerQuery = string.Format(
             "location={0}&type={1}&budget={2}&size={3}",
