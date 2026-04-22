@@ -52,7 +52,7 @@
                 <%--<a href="#" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">0</span></a>--%>
                 <a href="ProfilePage.aspx" class="ni"><span class="ni-ic">👤</span>My Profile</a>
                 <a href="Welcome.aspx" class="ni"><span class="ni-ic">👋</span>Welcome Letter</a>
-                 <a href="KYC.aspx" class="ni"><span class="ni-ic">👋</span>Upload KYC</a>
+                <a href="KYC.aspx" class="ni"><span class="ni-ic">👋</span>Upload KYC</a>
                 <div class="nav-group-title">Properties</div>
                 <a href="#" class="ni"><span class="ni-ic">🏘️</span>My Projects<span class="ni-badge ">0</span></a>
                 <div class="ni" onclick="tSub('plSub',this)">
@@ -63,7 +63,7 @@
                     <a href="#" class="sub-ni">• Add Plot</a>
                     <a href="#" class="sub-ni">• Availability</a>
                 </div>
-                <a href="#" class="ni"><span class="ni-ic">🏠</span>Booked Properties</a>
+                <a href="BookingReport.aspx" class="ni"><span class="ni-ic">🏠</span>Booked Properties</a>
 
                 <div class="nav-group-title">People</div>
                 <a href="agent_customers.aspx" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge ">0</span></a>
@@ -76,16 +76,18 @@
                 <a href="IDactivation.aspx" class="ni"><span class="ni-ic">📦</span>Package Purchase</a>
                 <a href="IdActivationReport.aspx" class="ni"><span class="ni-ic">📊</span>Package Purchase Report</a>
                 <div class="nav-group-title">Finance</div>
-                <a href="#" class="ni"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">0</span></a>
-                <%-- <a href="#" class="ni"><span class="ni-ic">💳</span>Payments</a>--%>
-                <%--  <a href="#" class="ni"><span class="ni-ic">₹</span>My Commission</a>--%>
-                <a href="#" class="ni"><span class="ni-ic">🧾</span>Receipts</a>
+                <a href="Booking.aspx" class="ni"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">0</span></a>
+                <a href="agent_receipts.aspx" class="ni"><span class="ni-ic">🧾</span>Receipts</a>
                 <a href="LevelIncomeReport.aspx" class="ni"><span class="ni-ic">🧾</span>Level Bonus Report</a>
 
                 <div class="nav-group-title">Wallet</div>
-                <a href="AllWalletReport.aspx" class="ni"><span class="ni-ic">📊</span>All Wallet Report</a>
+                <a href="AllWalletReport.aspx" class="ni"><span class="ni-ic">📊</span>Wallet Balance Report</a>
                 <a href="WalletRequest.aspx" class="ni"><span class="ni-ic">💰</span>Wallet Request</a>
                 <a href="WalletRequestReport.aspx" class="ni"><span class="ni-ic">📋</span>Wallet Request Detail</a>
+                <div class="nav-group-title">Support</div>
+
+                <a href="Complain.aspx" class="ni"><span class="ni-ic">📊</span>Raise Ticket</a>
+                <a href="ComplainSolution.aspx" class="ni"><span class="ni-ic">📊</span>Ticket Status</a>
             </nav>
             <div class="sb-bottom">
                 <a href="Index.aspx">🌐 Back To Main</a>

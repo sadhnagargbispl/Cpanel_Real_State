@@ -199,7 +199,7 @@ public class ProjectModel
 
     public ProjectModel()
     {
-        DeveloperName     = "Adarsh Realtors";
+        DeveloperName     = "";
         PublishMode       = "draft";
         IsOnlineBooking   = true;
         IsShowOnWebsite   = true;
@@ -213,20 +213,115 @@ public class ProjectModel
     }
 }
 
+
 // ── PROJECT BLOCK ────────────────────────────
+
+//public class ProjectBlockModel
+//{
+//    public int    BlockID        { get; set; }
+//    public int    ProjectID      { get; set; }
+//    public string BlockName      { get; set; }
+//    public int?   NumberOfFloors { get; set; }
+//    public int?   UnitsPerFloor  { get; set; }
+//    public int    TotalUnits     { get { return (NumberOfFloors ?? 0) * (UnitsPerFloor ?? 0); } }
+//    public string BlockCategory  { get; set; }
+//    public int    SortOrder      { get; set; }
+//    public bool   IsActive       { get; set; }
+//}
+public class BhkTypeModel
+{
+    public int TypeID { get; set; }
+    public int UnitCount { get; set; }
+    // JS se 'count' key aati hai — dono alias support
+    public int count { get { return UnitCount; } set { UnitCount = value; } }
+}
 
 public class ProjectBlockModel
 {
-    public int    BlockID        { get; set; }
-    public int    ProjectID      { get; set; }
-    public string BlockName      { get; set; }
-    public int?   NumberOfFloors { get; set; }
-    public int?   UnitsPerFloor  { get; set; }
-    public int    TotalUnits     { get { return (NumberOfFloors ?? 0) * (UnitsPerFloor ?? 0); } }
-    public string BlockCategory  { get; set; }
-    public int    SortOrder      { get; set; }
-    public bool   IsActive       { get; set; }
+    public int BlockID { get; set; }
+    public int ProjectID { get; set; }
+    public string BlockName { get; set; }
+    public int? NumberOfFloors { get; set; }
+    public int? UnitsPerFloor { get; set; }
+    public int TotalUnits { get { return (NumberOfFloors ?? 0) * (UnitsPerFloor ?? 0); } }
+    public string BlockCategory { get; set; }
+    public int SortOrder { get; set; }
+    public bool IsActive { get; set; }
+
+    // ← NEW
+    public List<BhkTypeModel> BhkTypes { get; set; }
+
+    public ProjectBlockModel()
+    {
+        BhkTypes = new List<BhkTypeModel>();
+        IsActive = true;
+        SortOrder = 0;
+    }
+
+    public int AssignedUnits
+    {
+        get
+        {
+            if (BhkTypes == null) return 0;
+            int s = 0;
+            foreach (var t in BhkTypes) s += t.UnitCount;
+            return s;
+        }
+    }
+
+    public bool IsFullyAssigned
+    {
+        get { return TotalUnits > 0 && AssignedUnits == TotalUnits; }
+    }
 }
+
+//public class BhkTypeModel
+//{
+//    public int TypeID { get; set; }   // 1=1BHK, 2=2BHK, 3=3BHK, 4=4BHK, 5=Penthouse, 6=Studio
+//    public int UnitCount { get; set; }   // Kitni units is type ki hain is block mein
+//    public int Count { get { return UnitCount; } set { UnitCount = value; } } // JS 'count' alias
+//}
+
+//public class ProjectBlockModel
+//{
+//    public int BlockID { get; set; }
+//    public int ProjectID { get; set; }
+//    public string BlockName { get; set; }
+//    public int? NumberOfFloors { get; set; }
+//    public int? UnitsPerFloor { get; set; }
+//    public int TotalUnits { get { return (NumberOfFloors ?? 0) * (UnitsPerFloor ?? 0); } }
+//    public string BlockCategory { get; set; }
+//    public int SortOrder { get; set; }
+//    public bool IsActive { get; set; }
+
+//    // ← NEW: BHK distribution list
+//    public List<BhkTypeModel> BhkTypes { get; set; }
+
+//    public ProjectBlockModel()
+//    {
+//        BhkTypes = new List<BhkTypeModel>();
+//        IsActive = true;
+//        SortOrder = 0;
+//    }
+
+//    // Convenience: total assigned units (validation ke liye)
+//    public int AssignedUnits
+//    {
+//        get
+//        {
+//            if (BhkTypes == null) return 0;
+//            int sum = 0;
+//            foreach (var t in BhkTypes) sum += t.UnitCount;
+//            return sum;
+//        }
+//    }
+
+//    // True jab sab units assign ho gayi hain
+//    public bool IsFullyAssigned
+//    {
+//        get { return TotalUnits > 0 && AssignedUnits == TotalUnits; }
+//    }
+//}
 
 // ── UNIT TYPE ROW ────────────────────────────
 

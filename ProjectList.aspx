@@ -5,392 +5,1091 @@
 <head runat="server">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects - Adarsh Realtors</title>
+    <title><%= Session["Title"] %></title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-    <link href="css/Project.css" rel="stylesheet" />
-    <style>
-        /* ══ BASE OVERRIDES ══════════════════════════ */
-        * { box-sizing: border-box; }
 
-        body {
-            background: #F4F6FA;
-            font-family: 'Outfit', sans-serif;
+    <style>
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
-            color: #1E293B;
+            padding: 0;
         }
 
-        /* ══ HEADER ══════════════════════════════════ */
+        :root {
+            --brand: #F97316;
+            --brand-dark: #C2581A;
+            --brand-light: #FEF3EB;
+            --navy: #0F172A;
+            --navy-2: #1E293B;
+            --navy-3: #334155;
+            --slate: #64748B;
+            --slate-2: #94A3B8;
+            --slate-3: #CBD5E1;
+            --slate-4: #E2E8F0;
+            --slate-5: #F1F5F9;
+            --slate-6: #F8FAFC;
+            --white: #FFFFFF;
+            --green: #16A34A;
+            --green-bg: #DCFCE7;
+            --blue: #2563EB;
+            --blue-bg: #DBEAFE;
+            --amber: #D97706;
+            --amber-bg: #FEF3C7;
+            --red: #DC2626;
+            --red-bg: #FEE2E2;
+            --radius-sm: 6px;
+            --radius: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+            --shadow: 0 4px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.04);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+            --font: 'Outfit', sans-serif;
+            --sidebar-w: 0px;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font);
+            background: var(--slate-6);
+            color: var(--navy);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: var(--font);
+            cursor: pointer;
+        }
+
+        input, select {
+            font-family: var(--font);
+        }
+
+        /* ═══════════════════════════════════════════
+           TOP HEADER  — matches Project.css / dark navy
+        ═══════════════════════════════════════════ */
         .top-header {
-            background: #1E293B;
-            padding: 0 24px;
-            height: 56px;
+            background: #1A1F2E;
+            padding: 0 20px;
+            height: 58px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 200;
+            gap: 12px;
         }
-        .header-brand { display: flex; align-items: center; gap: 10px; }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
         .logo-box {
-            width: 34px; height: 34px; border-radius: 8px;
-            background: #F97316; display: flex; align-items: center;
-            justify-content: center; font-weight: 800; color: #fff; font-size: .9rem;
+            width: 32px;
+            height: 32px;
+            background: var(--brand);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            font-size: .95rem;
+            flex-shrink: 0;
         }
-        .brand-text  { font-size: .88rem; font-weight: 700; color: #fff; }
-        .brand-sub   { font-size: .62rem; color: #94A3B8; }
-        .breadcrumb  { font-size: .75rem; color: #94A3B8; }
-        .breadcrumb .current { color: #fff; font-weight: 600; }
-        .breadcrumb .sep { margin: 0 6px; }
 
-        /* ══ PAGE WRAP ═══════════════════════════════ */
+        .brand-text {
+            color: #fff;
+            font-size: .95rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-sub {
+            color: rgba(255,255,255,.4);
+            font-size: .62rem;
+            letter-spacing: .1em;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .75rem;
+            color: rgba(255,255,255,.45);
+            overflow: hidden;
+        }
+
+            .breadcrumb span {
+                white-space: nowrap;
+            }
+
+            .breadcrumb .sep {
+                font-size: .7rem;
+            }
+
+            .breadcrumb .current {
+                color: #FF7A35;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 640px) {
+            .top-header {
+                padding: 0 14px;
+            }
+
+            .brand-sub {
+                display: none;
+            }
+
+            .breadcrumb {
+                display: none;
+            }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--brand);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background .15s, transform .1s;
+        }
+
+            .btn-primary:hover {
+                background: var(--brand-dark);
+            }
+
+            .btn-primary:active {
+                transform: scale(.98);
+            }
+
+        /* ═══════════════════════════════════════════
+           PAGE WRAPPER
+        ═══════════════════════════════════════════ */
         .pl-wrap {
-            max-width: 1280px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 24px 20px 40px;
+            padding: 28px 24px 60px;
         }
 
-        /* ══ PAGE TITLE ROW ══════════════════════════ */
+        /* ═══════════════════════════════════════════
+           TITLE ROW
+        ═══════════════════════════════════════════ */
         .pl-title-row {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            gap: 16px;
             flex-wrap: wrap;
-            gap: 12px;
         }
-        .pl-title    { font-size: 1.4rem; font-weight: 800; color: #1E293B; line-height: 1; }
-        .pl-subtitle { font-size: .75rem; color: #94A3B8; margin-top: 4px; }
-        .pl-actions  { display: flex; align-items: center; gap: 8px; }
 
-        /* View Toggle */
-        .view-toggle {
-            display: flex;
-            background: #E2E8F0;
-            border-radius: 8px;
-            padding: 3px;
-            gap: 2px;
+        .pl-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -.4px;
         }
-        .vt-btn {
-            width: 30px; height: 28px; border: none; background: transparent;
-            border-radius: 6px; cursor: pointer; color: #94A3B8;
-            display: flex; align-items: center; justify-content: center;
-            font-size: .75rem; transition: all .15s;
-        }
-        .vt-btn.active { background: #fff; color: #F97316; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
 
-        /* ══ STATS ROW ═══════════════════════════════ */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
+        .pl-subtitle {
+            font-size: 13px;
+            color: var(--slate);
+            margin-top: 3px;
         }
-        .stat-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid #E2E8F0;
-        }
-        .stat-icon {
-            width: 42px; height: 42px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: .95rem; flex-shrink: 0;
-        }
-        .si-o { background: #FFF7ED; color: #F97316; }
-        .si-g { background: #F0FDF4; color: #16A34A; }
-        .si-b { background: #EFF6FF; color: #2563EB; }
-        .si-y { background: #FEFCE8; color: #CA8A04; }
-        .stat-val { font-size: 1.6rem; font-weight: 800; color: #1E293B; line-height: 1; }
-        .stat-lbl { font-size: .67rem; color: #94A3B8; margin-top: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: .3px; }
 
-        /* ══ FILTER BAR ══════════════════════════════ */
-        .filter-bar {
-            background: #fff;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
+        .pl-actions {
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
-        }
-        .search-box {
-            position: relative;
-            flex: 1;
-            min-width: 220px;
-        }
-        .search-box i {
-            position: absolute; left: 11px; top: 50%;
-            transform: translateY(-50%); color: #CBD5E1; font-size: .78rem;
-        }
-        .search-box input {
-            width: 100%; padding: 9px 12px 9px 32px;
-            border: 1px solid #E2E8F0; border-radius: 8px;
-            font-size: .8rem; font-family: 'Outfit', sans-serif;
-            color: #1E293B; background: #F8FAFC; outline: none;
-            transition: border-color .15s;
-        }
-        .search-box input:focus { border-color: #F97316; background: #fff; }
-        .filter-select {
-            padding: 9px 12px; border: 1px solid #E2E8F0;
-            border-radius: 8px; font-size: .78rem;
-            font-family: 'Outfit', sans-serif; color: #1E293B;
-            background: #F8FAFC; outline: none; cursor: pointer;
-            min-width: 130px; transition: border-color .15s;
-        }
-        .filter-select:focus { border-color: #F97316; }
-        .filter-clear {
-            padding: 8px 14px; border: 1px solid #E2E8F0; border-radius: 8px;
-            background: #fff; font-size: .75rem; font-family: 'Outfit', sans-serif;
-            cursor: pointer; color: #64748B; display: flex; align-items: center;
-            gap: 5px; white-space: nowrap; transition: all .15s;
-        }
-        .filter-clear:hover { border-color: #F97316; color: #F97316; }
-        .result-count { font-size: .75rem; color: #94A3B8; white-space: nowrap; margin-left: auto; }
-        .result-count strong { color: #F97316; }
-
-        /* ══ CARD GRID ═══════════════════════════════ */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
         }
 
-        /* ══ PROJECT CARD ════════════════════════════ */
-        .proj-card {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #E2E8F0;
-            overflow: hidden;
-            transition: box-shadow .2s, transform .15s;
+        .view-toggle {
             display: flex;
-            flex-direction: column;
-        }
-        .proj-card:hover {
-            box-shadow: 0 10px 40px rgba(0,0,0,.09);
-            transform: translateY(-2px);
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--slate-5);
         }
 
-        /* Cover */
-        .pc-cover {
-            height: 150px;
-            background: #F1F5F9;
-            position: relative;
-            overflow: hidden;
+        .vt-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 13px;
+            color: var(--slate);
+            font-size: 14px;
+            transition: background .15s, color .15s;
+        }
+
+            .vt-btn.active {
+                background: var(--white);
+                color: var(--brand);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .vt-btn:hover:not(.active) {
+                background: var(--slate-4);
+            }
+
+        /* ═══════════════════════════════════════════
+           STATS ROW
+        ═══════════════════════════════════════════ */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: box-shadow .2s;
+        }
+
+            .stat-card:hover {
+                box-shadow: var(--shadow);
+            }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
             flex-shrink: 0;
         }
-        .pc-cover img {
-            width: 100%; height: 100%;
-            object-fit: cover; display: block;
+
+        .si-o {
+            background: var(--brand-light);
+            color: var(--brand);
         }
+
+        .si-g {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+
+        .si-b {
+            background: var(--blue-bg);
+            color: var(--blue);
+        }
+
+        .si-y {
+            background: var(--amber-bg);
+            color: var(--amber);
+        }
+
+        .stat-val {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+            letter-spacing: -.5px;
+        }
+
+        .stat-lbl {
+            font-size: 12px;
+            color: var(--slate);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════
+           FILTER BAR
+        ═══════════════════════════════════════════ */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+            .search-box i {
+                color: var(--slate-2);
+                font-size: 14px;
+            }
+
+            .search-box input {
+                border: none;
+                outline: none;
+                font-size: 14px;
+                color: var(--navy);
+                background: transparent;
+                width: 100%;
+            }
+
+                .search-box input::placeholder {
+                    color: var(--slate-2);
+                }
+
+        .filter-sep {
+            width: 1px;
+            height: 24px;
+            background: var(--slate-4);
+        }
+
+        .filter-select {
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--navy);
+            background: var(--slate-5);
+            outline: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: border-color .15s;
+        }
+
+            .filter-select:hover, .filter-select:focus {
+                border-color: var(--brand);
+            }
+
+        .filter-clear {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--slate);
+            background: transparent;
+            transition: all .15s;
+        }
+
+            .filter-clear:hover {
+                border-color: var(--red);
+                color: var(--red);
+                background: var(--red-bg);
+            }
+
+        .result-count {
+            font-size: 13px;
+            color: var(--slate);
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+            .result-count strong {
+                color: var(--navy);
+                font-weight: 700;
+            }
+
+        /* ═══════════════════════════════════════════
+           CARDS GRID
+        ═══════════════════════════════════════════ */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        /* ── Card ── */
+        .proj-card {
+            background: var(--white);
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow .2s, transform .2s, border-color .2s;
+        }
+
+            .proj-card:hover {
+                box-shadow: var(--shadow-lg);
+                transform: translateY(-3px);
+                border-color: var(--slate-3);
+            }
+
+        /* ── Cover wrapper (no overflow hidden — lets logo badge overflow) ── */
+        .pc-cover-wrap {
+            position: relative; /* logo is absolute to this */
+        }
+
+        /* ── Cover ── */
+        .pc-cover {
+            height: 170px;
+            background: var(--navy-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .pc-cover img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform .4s ease;
+            }
+
+        .proj-card:hover .pc-cover img {
+            transform: scale(1.05);
+        }
+
         .pc-cover-placeholder {
-            width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            color: #CBD5E1; gap: 6px; font-size: .72rem;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--navy-3);
+            background: linear-gradient(135deg, var(--navy-2) 0%, var(--navy-3) 100%);
         }
-        .pc-cover-placeholder i { font-size: 2rem; }
 
-        /* Status badge on cover */
+            .pc-cover-placeholder i {
+                font-size: 32px;
+                opacity: .3;
+            }
+
+            .pc-cover-placeholder span {
+                font-size: 11px;
+                opacity: .4;
+                font-weight: 500;
+            }
+
+        .pc-cover-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 35%, rgba(0,0,0,.6) 100%);
+            pointer-events: none;
+        }
+
+        /* Status badge */
         .pc-status {
-            position: absolute; top: 10px; left: 10px;
-            padding: 4px 10px; border-radius: 20px;
-            font-size: .6rem; font-weight: 700;
-            letter-spacing: .4px; text-transform: uppercase;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
-        .ps-active   { background: #DCFCE7; color: #166534; }
-        .ps-draft    { background: #FEF3C7; color: #92400E; }
-        .ps-upcoming { background: #DBEAFE; color: #1E40AF; }
-        .ps-inactive { background: #F1F5F9; color: #475569; }
 
-        /* Logo on cover */
+            .pc-status::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: currentColor;
+            }
+
+        .ps-active {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+
+        .ps-draft {
+            background: var(--slate-4);
+            color: var(--slate);
+        }
+
+        .ps-upcoming {
+            background: var(--blue-bg);
+            color: var(--blue);
+        }
+
+        .ps-inactive {
+            background: var(--slate-4);
+            color: var(--slate);
+        }
+
+        /* Photo count */
+        .pc-photo-count {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,.50);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            border-radius: 20px;
+            padding: 4px 9px;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Price pill */
+        .pc-price-cover {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: var(--brand);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* Logo / Initials badge — straddles cover bottom edge */
         .pc-logo {
-            position: absolute; bottom: -16px; right: 14px;
-            width: 38px; height: 38px; border-radius: 8px;
-            border: 2px solid #fff; background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,.12);
-            object-fit: contain; padding: 3px;
+            position: absolute;
+            bottom: -18px;
+            right: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2.5px solid var(--white);
+            background: var(--white);
+            box-shadow: var(--shadow);
+            object-fit: contain;
+            padding: 4px;
+            z-index: 10;
         }
 
-        /* Body */
-        .pc-body { padding: 20px 16px 14px; flex: 1; }
+        .pc-logo-initials {
+            position: absolute;
+            bottom: -18px;
+            right: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2.5px solid var(--white);
+            background: var(--brand);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+
+        /* ── Body ── */
+        .pc-body {
+            padding: 26px 16px 14px;
+            flex: 1;
+        }
+
         .pc-code {
-            font-size: .6rem; font-weight: 700; color: #F97316;
-            letter-spacing: .5px; text-transform: uppercase; margin-bottom: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--brand);
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
         }
+
         .pc-name {
-            font-size: .95rem; font-weight: 700; color: #1E293B;
-            margin-bottom: 5px; line-height: 1.3;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.25;
+            margin-bottom: 5px;
         }
+
         .pc-loc {
-            font-size: .72rem; color: #94A3B8;
-            display: flex; align-items: center; gap: 4px;
+            font-size: 12px;
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            gap: 5px;
             margin-bottom: 14px;
         }
-        .pc-loc i { color: #F97316; font-size: .62rem; }
 
-        /* Meta grid */
-        .pc-meta {
+            .pc-loc i {
+                font-size: 11px;
+                color: var(--brand);
+            }
+
+        /* Overview grid */
+        .pc-overview {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             padding: 12px;
-            background: #F8FAFC;
-            border-radius: 8px;
+            background: var(--slate-6);
+            border-radius: var(--radius);
+            border: 1px solid var(--slate-4);
+            margin-bottom: 12px;
         }
-        .pm-lbl { font-size: .59rem; color: #94A3B8; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; }
-        .pm-val { font-size: .78rem; font-weight: 700; color: #1E293B; margin-top: 2px; }
 
-        /* Footer */
+        .pco-lbl {
+            font-size: 10px;
+            color: var(--slate-2);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .pco-val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-top: 3px;
+        }
+
+            .pco-val.green {
+                color: var(--green);
+            }
+
+            .pco-val.blue {
+                color: var(--blue);
+            }
+
+            .pco-val.orange {
+                color: var(--brand);
+            }
+
+        /* Spec pills */
+        .pc-specs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .spec-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--slate-5);
+            border: 1px solid var(--slate-4);
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate);
+        }
+
+            .spec-pill i {
+                font-size: 10px;
+                color: var(--slate-2);
+            }
+
+        /* ── Footer ── */
         .pc-footer {
-            padding: 10px 16px;
-            border-top: 1px solid #F1F5F9;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 12px 16px;
+            border-top: 1px solid var(--slate-4);
+            background: var(--slate-6);
         }
-        .pc-tags { font-size: .67rem; color: #94A3B8; display: flex; align-items: center; gap: 6px; }
-        .pc-tags i { color: #F97316; }
-        .pc-btns { display: flex; gap: 5px; }
+
+        .pc-tags {
+            font-size: 12px;
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+            .pc-tags i {
+                font-size: 11px;
+            }
+
+        .pc-btns {
+            display: flex;
+            gap: 6px;
+        }
+
         .pc-btn {
-            width: 30px; height: 30px; border-radius: 7px;
-            border: 1px solid #E2E8F0; background: #fff;
-            cursor: pointer; display: flex; align-items: center;
-            justify-content: center; font-size: .7rem; color: #64748B;
-            transition: all .12s; text-decoration: none;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--slate-4);
+            background: var(--white);
+            color: var(--slate);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            transition: all .15s;
+            cursor: pointer;
         }
-        .pc-btn:hover       { border-color: #F97316; color: #F97316; background: #FFF7ED; }
-        .pc-btn.del:hover   { border-color: #EF4444; color: #EF4444; background: #FEF2F2; }
 
-        /* ══ TABLE VIEW ══════════════════════════════ */
-        .tbl-wrap { display: none; background: #fff; border-radius: 14px; border: 1px solid #E2E8F0; overflow: hidden; }
-        .proj-tbl { width: 100%; border-collapse: collapse; }
-        .proj-tbl th {
-            background: #F8FAFC; padding: 11px 14px;
-            font-size: .65rem; font-weight: 700; color: #94A3B8;
-            text-align: left; text-transform: uppercase; letter-spacing: .4px;
-            border-bottom: 1px solid #E2E8F0; white-space: nowrap;
-        }
-        .proj-tbl td {
-            padding: 12px 14px; font-size: .78rem; color: #1E293B;
-            border-bottom: 1px solid #F1F5F9; vertical-align: middle;
-        }
-        .proj-tbl tr:last-child td { border-bottom: none; }
-        .proj-tbl tr:hover td { background: #FAFBFC; }
-        .tbl-name { font-weight: 700; font-size: .82rem; }
-        .tbl-code { font-size: .62rem; color: #F97316; font-weight: 700; margin-top: 1px; }
+            .pc-btn:hover {
+                background: var(--slate-5);
+                color: var(--navy);
+                border-color: var(--slate-3);
+            }
 
-        /* ══ STATUS PILLS ════════════════════════════ */
+            .pc-btn.del {
+                border-color: #FECACA;
+                background: #FFF5F5;
+                color: var(--red);
+            }
+
+                .pc-btn.del:hover {
+                    background: var(--red);
+                    color: #fff;
+                    border-color: var(--red);
+                }
+
+        /* ═══════════════════════════════════════════
+           TABLE VIEW
+        ═══════════════════════════════════════════ */
+        .tbl-wrap {
+            background: var(--white);
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            display: none;
+        }
+
+        .proj-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+            .proj-tbl thead {
+                background: var(--slate-5);
+            }
+
+            .proj-tbl th {
+                padding: 13px 16px;
+                text-align: left;
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--slate);
+                text-transform: uppercase;
+                letter-spacing: .5px;
+                border-bottom: 1px solid var(--slate-4);
+            }
+
+            .proj-tbl td {
+                padding: 14px 16px;
+                color: var(--navy-2);
+                border-bottom: 1px solid var(--slate-5);
+                vertical-align: middle;
+            }
+
+            .proj-tbl tr:last-child td {
+                border-bottom: none;
+            }
+
+            .proj-tbl tr:hover td {
+                background: var(--slate-6);
+            }
+
+        .tbl-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--navy);
+        }
+
+        .tbl-code {
+            font-size: 11px;
+            color: var(--slate);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
         .spill {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 3px 9px; border-radius: 20px;
-            font-size: .62rem; font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            padding: 4px 10px;
+            border-radius: 20px;
         }
-        .spill-active   { background: #DCFCE7; color: #166534; }
-        .spill-draft    { background: #FEF3C7; color: #92400E; }
-        .spill-upcoming { background: #DBEAFE; color: #1E40AF; }
-        .spill-inactive { background: #F1F5F9; color: #475569; }
 
-        /* ══ EMPTY STATE ════════════════════════════ */
+            .spill::before {
+                content: '';
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: currentColor;
+            }
+
+        .spill-active {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+
+        .spill-draft {
+            background: var(--slate-4);
+            color: var(--slate);
+        }
+
+        .spill-upcoming {
+            background: var(--blue-bg);
+            color: var(--blue);
+        }
+
+        .spill-inactive {
+            background: var(--slate-4);
+            color: var(--slate);
+        }
+
+        /* ═══════════════════════════════════════════
+           EMPTY STATE
+        ═══════════════════════════════════════════ */
         .empty-box {
-            text-align: center; padding: 64px 20px;
-            background: #fff; border-radius: 14px; border: 1px solid #E2E8F0;
+            text-align: center;
+            padding: 64px 24px;
+            background: var(--white);
+            border: 1px solid var(--slate-4);
+            border-radius: var(--radius-xl);
         }
-        .empty-box i { font-size: 3rem; color: #E2E8F0; display: block; margin-bottom: 14px; }
-        .empty-title { font-size: 1rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
-        .empty-sub   { font-size: .78rem; color: #94A3B8; margin-bottom: 20px; }
 
-        /* ══ DELETE MODAL ════════════════════════════ */
+            .empty-box i {
+                font-size: 48px;
+                color: var(--slate-3);
+                margin-bottom: 16px;
+                display: block;
+            }
+
+        .empty-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .empty-sub {
+            font-size: 14px;
+            color: var(--slate);
+            margin-bottom: 20px;
+        }
+
+        /* ═══════════════════════════════════════════
+           DELETE MODAL
+        ═══════════════════════════════════════════ */
         .modal-bg {
-            display: none; position: fixed; inset: 0; z-index: 9999;
-            background: rgba(0,0,0,.45); backdrop-filter: blur(3px);
-            align-items: center; justify-content: center;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(15,23,42,.55);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
         }
-        .modal-bg.open { display: flex; }
+
+            .modal-bg.open {
+                display: flex;
+            }
+
         .modal-box {
-            background: #fff; border-radius: 16px; padding: 28px 24px 20px;
-            max-width: 380px; width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,.2); animation: popIn .22s ease;
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 36px 32px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            animation: popIn .2s ease;
         }
-        .modal-ico {
-            width: 50px; height: 50px; border-radius: 50%;
-            background: #FEF2F2; display: flex; align-items: center;
-            justify-content: center; margin: 0 auto 14px;
-            font-size: 1.2rem; color: #EF4444;
-        }
-        .modal-title { font-size: .95rem; font-weight: 800; color: #1E293B; text-align: center; margin-bottom: 6px; }
-        .modal-msg   { font-size: .75rem; color: #64748B; text-align: center; margin-bottom: 20px; line-height: 1.5; }
-        .modal-btns  { display: flex; gap: 10px; justify-content: center; }
-        .btn-cancel {
-            padding: 9px 22px; border: 1px solid #E2E8F0; border-radius: 8px;
-            background: #fff; font-size: .78rem; font-family: 'Outfit', sans-serif;
-            cursor: pointer; color: #64748B; font-weight: 600; transition: all .12s;
-        }
-        .btn-cancel:hover { border-color: #CBD5E1; background: #F8FAFC; }
-        .btn-delete {
-            padding: 9px 22px; border: none; border-radius: 8px;
-            background: #EF4444; font-size: .78rem; font-family: 'Outfit', sans-serif;
-            cursor: pointer; color: #fff; font-weight: 600; transition: background .12s;
-        }
-        .btn-delete:hover { background: #DC2626; }
-
-        /* ══ TOAST ═══════════════════════════════════ */
-        .toast {
-            position: fixed; bottom: 24px; right: 24px; z-index: 99999;
-            background: #1E293B; color: #fff; padding: 12px 18px;
-            border-radius: 10px; font-size: .8rem; font-family: 'Outfit', sans-serif;
-            display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,.2); font-weight: 500;
-            opacity: 0; transform: translateY(12px);
-            transition: opacity .25s, transform .25s; pointer-events: none;
-        }
-        .toast.show { opacity: 1; transform: translateY(0); }
-
-        /* ══ BTN ══════════════════════════════════════ */
-        .btn-primary {
-            background: #F97316; color: #fff; border: none;
-            padding: 9px 18px; border-radius: 9px; font-size: .78rem;
-            font-family: 'Outfit', sans-serif; font-weight: 700; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 6px;
-            text-decoration: none; transition: background .12s;
-        }
-        .btn-primary:hover { background: #EA6C0A; }
 
         @keyframes popIn {
-            0%   { transform: scale(.85); opacity: 0; }
-            100% { transform: scale(1);   opacity: 1; }
+            from {
+                transform: scale(.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
-        /* ══ RESPONSIVE ══════════════════════════════ */
-        @media (max-width: 768px) {
-            .stats-row { grid-template-columns: 1fr 1fr; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .filter-bar { gap: 8px; }
-            .search-box { min-width: 100%; }
-            .filter-select { min-width: unset; flex: 1; }
-            .pl-title-row { flex-direction: column; align-items: flex-start; }
+        .modal-ico {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--red-bg);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin: 0 auto 16px;
         }
-        @media (max-width: 480px) {
-            .stats-row { grid-template-columns: 1fr 1fr; }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .modal-msg {
+            font-size: 14px;
+            color: var(--slate);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 11px;
+            border-radius: var(--radius);
+            border: 1px solid var(--slate-4);
+            background: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate);
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+            .btn-cancel:hover {
+                background: var(--slate-5);
+            }
+
+        .btn-delete {
+            flex: 1;
+            padding: 11px;
+            border-radius: var(--radius);
+            border: none;
+            background: var(--red);
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+            .btn-delete:hover {
+                background: #B91C1C;
+            }
+
+        /* ═══════════════════════════════════════════
+           TOAST
+        ═══════════════════════════════════════════ */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--navy);
+            color: #fff;
+            padding: 13px 18px;
+            border-radius: var(--radius-lg);
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+            pointer-events: none;
+        }
+
+            .toast.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════ */
+        @media (max-width: 900px) {
+            .stats-row {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 0 16px;
+            }
+
+            .pl-wrap {
+                padding: 20px 14px 40px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .pl-title {
+                font-size: 22px;
+            }
+
+            .filter-bar {
+                padding: 10px 12px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <form id="form1" runat="server">
 
-        <%-- TOP HEADER --%>
+        <%-- ══ TOP HEADER ══ --%>
         <div class="top-header">
             <div class="header-brand">
-                <div class="logo-box">A</div>
+                <div class="logo-box"><%= Session["CompName"].ToString().Substring(0,1).ToUpper() %></div>
                 <div>
-                    <div class="brand-text">Adarsh Realtors</div>
-                    <div class="brand-sub">Management Portal</div>
+                    <div class="brand-text"><%= Session["CompName"] %></div>
+                    <div class="brand-sub">MANAGEMENT PORTAL</div>
                 </div>
             </div>
             <div class="breadcrumb">
@@ -398,14 +1097,19 @@
                 <span class="sep">&rsaquo;</span>
                 <span class="current">Projects</span>
             </div>
-            <a href="ProjectCreate.aspx" class="btn-primary">
-                <i class="fa-solid fa-plus"></i> Add New Project
+            <div class="header-actions">
+                <a href="ProjectCreate.aspx" class="btn-primary">
+                    <i class="fa-solid fa-plus"></i>Add New Project
             </a>
+                <a href="Home.aspx" class="btn-primary">
+                    Back To Dashboard
+</a>
+            </div>
         </div>
 
         <div class="pl-wrap">
 
-            <%-- TITLE ROW --%>
+            <%-- ══ TITLE ROW ══ --%>
             <div class="pl-title-row">
                 <div>
                     <div class="pl-title">All Projects</div>
@@ -421,37 +1125,50 @@
                         </button>
                     </div>
                     <a href="ProjectCreate.aspx" class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> New Project
-                    </a>
+                        <i class="fa-solid fa-plus"></i>New Project
+                </a>
                 </div>
             </div>
 
-            <%-- STATS --%>
+            <%-- ══ STATS ROW ══ --%>
             <div class="stats-row">
                 <div class="stat-card">
                     <div class="stat-icon si-o"><i class="fa-solid fa-building"></i></div>
-                    <div><div class="stat-val" id="sTotal">0</div><div class="stat-lbl">Total Projects</div></div>
+                    <div>
+                        <div class="stat-val" id="sTotal">0</div>
+                        <div class="stat-lbl">Total Projects</div>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon si-g"><i class="fa-solid fa-rocket"></i></div>
-                    <div><div class="stat-val" id="sActive">0</div><div class="stat-lbl">Live / Active</div></div>
+                    <div>
+                        <div class="stat-val" id="sActive">0</div>
+                        <div class="stat-lbl">Live / Active</div>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon si-b"><i class="fa-solid fa-calendar-check"></i></div>
-                    <div><div class="stat-val" id="sUpcoming">0</div><div class="stat-lbl">Upcoming</div></div>
+                    <div>
+                        <div class="stat-val" id="sUpcoming">0</div>
+                        <div class="stat-lbl">Upcoming</div>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon si-y"><i class="fa-solid fa-file-pen"></i></div>
-                    <div><div class="stat-val" id="sDraft">0</div><div class="stat-lbl">Drafts</div></div>
+                    <div>
+                        <div class="stat-val" id="sDraft">0</div>
+                        <div class="stat-lbl">Drafts</div>
+                    </div>
                 </div>
             </div>
 
-            <%-- FILTER BAR --%>
+            <%-- ══ FILTER BAR ══ --%>
             <div class="filter-bar">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search by name, code, city..." oninput="filterProjects()" />
+                    <input type="text" id="searchInput" placeholder="Search by name, code, city, RERA..." oninput="filterProjects()" />
                 </div>
+                <div class="filter-sep"></div>
                 <select class="filter-select" id="filterStatus" onchange="filterProjects()">
                     <option value="">All Status</option>
                     <option value="active">Live / Active</option>
@@ -467,23 +1184,26 @@
                     <option value="Plotted">Plotted</option>
                 </select>
                 <button type="button" class="filter-clear" onclick="clearFilters()">
-                    <i class="fa-solid fa-xmark"></i> Clear
+                    <i class="fa-solid fa-xmark"></i>Clear
+           
                 </button>
                 <div class="result-count">Showing <strong id="showCount">0</strong> projects</div>
             </div>
 
-            <%-- GRID VIEW --%>
+            <%-- ══ GRID VIEW ══ --%>
             <div id="viewGrid">
                 <div class="cards-grid" id="cardsGrid"></div>
-                <div class="empty-box" id="emptyGrid" style="display:none">
+                <div class="empty-box" id="emptyGrid" style="display: none">
                     <i class="fa-solid fa-building-circle-xmark"></i>
                     <div class="empty-title">No projects found</div>
                     <div class="empty-sub">Try changing filters or add a new project</div>
-                    <a href="ProjectCreate.aspx" class="btn-primary"><i class="fa-solid fa-plus"></i> Add New Project</a>
+                    <a href="ProjectCreate.aspx" class="btn-primary" style="display: inline-flex">
+                        <i class="fa-solid fa-plus"></i>Add New Project
+                </a>
                 </div>
             </div>
 
-            <%-- TABLE VIEW --%>
+            <%-- ══ TABLE VIEW ══ --%>
             <div class="tbl-wrap" id="viewTable">
                 <table class="proj-tbl">
                     <thead>
@@ -501,7 +1221,7 @@
                     </thead>
                     <tbody id="tblBody"></tbody>
                 </table>
-                <div class="empty-box" id="emptyTable" style="display:none;border:none;border-radius:0">
+                <div class="empty-box" id="emptyTable" style="display: none; border: none; border-radius: 0">
                     <i class="fa-solid fa-building-circle-xmark"></i>
                     <div class="empty-title">No projects found</div>
                     <div class="empty-sub">Try changing filters</div>
@@ -509,8 +1229,9 @@
             </div>
 
         </div>
+        <%-- /pl-wrap --%>
 
-        <%-- DELETE MODAL --%>
+        <%-- ══ DELETE MODAL ══ --%>
         <div class="modal-bg" id="delModal">
             <div class="modal-box">
                 <div class="modal-ico"><i class="fa-solid fa-trash"></i></div>
@@ -526,24 +1247,24 @@
 
         <asp:HiddenField ID="hdnDeleteID" runat="server" />
 
-        <%-- TOAST --%>
+        <%-- ══ TOAST ══ --%>
         <div class="toast" id="toast">
-            <i id="toastIco" class="fa-solid fa-check"></i>
+            <i id="toastIco" class="fa-solid fa-circle-check"></i>
             <span id="toastMsg">Done</span>
         </div>
 
         <script>
-            var allProjects    = [];
-            var filteredList   = [];
-            var currentView    = 'grid';
+            var allProjects = [];
+            var filteredList = [];
+            var currentView = 'grid';
 
-            // ── Helpers ──────────────────────────────
+            /* ── helpers ── */
             function statusInfo(mode) {
                 var m = (mode || 'draft').toLowerCase();
-                if (m === 'active')   return { cls: 'ps-active',   spill: 'spill-active',   lbl: 'LIVE',     dot: 'fa-circle-dot' };
-                if (m === 'upcoming') return { cls: 'ps-upcoming', spill: 'spill-upcoming', lbl: 'UPCOMING', dot: 'fa-calendar-check' };
-                if (m === 'inactive') return { cls: 'ps-inactive', spill: 'spill-inactive', lbl: 'INACTIVE', dot: 'fa-circle-pause' };
-                return                         { cls: 'ps-draft',   spill: 'spill-draft',   lbl: 'DRAFT',    dot: 'fa-file-pen' };
+                if (m === 'active') return { cls: 'ps-active', spill: 'spill-active', lbl: 'LIVE' };
+                if (m === 'upcoming') return { cls: 'ps-upcoming', spill: 'spill-upcoming', lbl: 'UPCOMING' };
+                if (m === 'inactive') return { cls: 'ps-inactive', spill: 'spill-inactive', lbl: 'INACTIVE' };
+                return { cls: 'ps-draft', spill: 'spill-draft', lbl: 'DRAFT' };
             }
 
             function fmtNum(n) {
@@ -555,106 +1276,150 @@
                 if (!d || d === '') return '-';
                 try {
                     var dt = new Date(d);
-                    if (isNaN(dt)) return '-';
+                    if (isNaN(dt)) return d;
                     return dt.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-                } catch(e) { return '-'; }
+                } catch (e) { return d; }
             }
 
             function esc(s) {
-                // Escape for use in HTML attribute values
-                return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+                return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
 
-            // ── Render Card ───────────────────────────
+            /* ── make card ── */
             function makeCard(p) {
-                var si  = statusInfo(p.PublishMode);
-                var bsp = p.BSPRatePerSqFt ? 'Rs ' + fmtNum(p.BSPRatePerSqFt) + '/sqft' : '-';
-                var loc = [p.City, p.StateName].filter(function(x){ return x && x.trim(); }).join(', ') || '-';
+                var si = statusInfo(p.PublishMode);
+                var loc = [p.City, p.StateName].filter(function (x) { return x && x.trim(); }).join(', ') || '-';
 
-                // Cover image — use createElement to avoid onerror escaping issues
-                var cover = p.CoverImagePath
-                    ? '<img src="' + esc(p.CoverImagePath) + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display=\'none\';this.parentNode.querySelector(\'.pc-cover-placeholder\').style.display=\'flex\'">' +
-                      '<div class="pc-cover-placeholder" style="display:none"><i class="fa-solid fa-image"></i><span>No Image</span></div>'
+                /* Cover */
+                var coverInner = p.CoverImagePath
+                    ? '<img src="' + esc(p.CoverImagePath) + '" alt=""' +
+                    ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+                    '<div class="pc-cover-placeholder" style="display:none"><i class="fa-solid fa-image"></i><span>No Image</span></div>'
                     : '<div class="pc-cover-placeholder"><i class="fa-solid fa-image"></i><span>No Image</span></div>';
 
-                var logo = p.ProjectLogoBadge
-                    ? '<img class="pc-logo" src="' + esc(p.ProjectLogoBadge) + '" alt="" onerror="this.style.display=\'none\'">'
+                /* Price pill */
+                var pricePill = p.BSPRatePerSqFt
+                    ? '<div class="pc-price-cover">Rs ' + fmtNum(p.BSPRatePerSqFt) + '/sqft</div>'
+                    : '<div class="pc-price-cover">Price on Request</div>';
+
+                /* Photo badge */
+                var photoBadge = (p.PhotoCount && p.PhotoCount > 0)
+                    ? '<div class="pc-photo-count"><i class="fa-regular fa-images"></i> ' + p.PhotoCount + '</div>'
                     : '';
 
-                var safeName = esc(p.ProjectName || 'Unnamed Project');
-                var nameForJs = (p.ProjectName || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+                /* Logo / initials */
+                var logoEl;
+                if (p.ProjectLogoBadge) {
+                    var fbInitials = ((p.ProjectName || 'P').replace(/[^A-Za-z ]/g, '').trim()
+                        .split(' ').filter(function (w) { return w; })
+                        .slice(0, 2).map(function (w) { return w[0].toUpperCase(); }).join('')) || 'P';
+                    logoEl = '<img class="pc-logo" src="' + esc(p.ProjectLogoBadge) + '" alt=""' +
+                        ' onerror="this.outerHTML=\'<div class=&quot;pc-logo-initials&quot;>' + esc(fbInitials) + '</div>\'">';
+                } else {
+                    var initials = ((p.ProjectName || 'P').replace(/[^A-Za-z ]/g, '').trim()
+                        .split(' ').filter(function (w) { return w; })
+                        .slice(0, 2).map(function (w) { return w[0].toUpperCase(); }).join('')) || 'P';
+                    logoEl = '<div class="pc-logo-initials">' + esc(initials) + '</div>';
+                }
+
+                /* Possession */
+                var possVal = p.PossessionDate ? fmtDate(p.PossessionDate) : (p.PossessionStatus || '-');
+                var possCls = (possVal === 'Ready' || possVal === 'Ready To Move') ? 'green' : 'blue';
+
+                /* Spec pills */
+                var specs = [];
+                if (p.Bedrooms > 0) specs.push('<div class="spec-pill"><i class="fa-solid fa-bed"></i>' + p.Bedrooms + ' BHK</div>');
+                if (p.ProjectType) specs.push('<div class="spec-pill"><i class="fa-solid fa-tag"></i>' + esc(p.ProjectType) + '</div>');
+                if (p.Parking > 0) specs.push('<div class="spec-pill"><i class="fa-solid fa-square-parking"></i>' + p.Parking + ' Parking</div>');
+                if (!specs.length && p.ProjectType) specs.push('<div class="spec-pill"><i class="fa-solid fa-building"></i>' + esc(p.ProjectType) + '</div>');
+
+                var nameForJs = (p.ProjectName || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
                 return [
                     '<div class="proj-card">',
-                        '<div class="pc-cover">',
-                            cover,
-                            '<span class="pc-status ' + si.cls + '">' + si.lbl + '</span>',
-                            logo,
-                        '</div>',
-                        '<div class="pc-body">',
-                            '<div class="pc-code">' + esc(p.ProjectCode || '') + '</div>',
-                            '<div class="pc-name">' + safeName + '</div>',
-                            '<div class="pc-loc"><i class="fa-solid fa-location-dot"></i>' + esc(loc) + '</div>',
-                            '<div class="pc-meta">',
-                                '<div><div class="pm-lbl">Total Units</div><div class="pm-val">' + fmtNum(p.TotalUnits) + '</div></div>',
-                                '<div><div class="pm-lbl">BSP Rate</div><div class="pm-val">' + esc(bsp) + '</div></div>',
-                                '<div><div class="pm-lbl">Possession</div><div class="pm-val">' + esc(fmtDate(p.PossessionDate)) + '</div></div>',
-                                '<div><div class="pm-lbl">Branch</div><div class="pm-val">' + esc(p.BranchName || '-') + '</div></div>',
-                            '</div>',
-                        '</div>',
-                        '<div class="pc-footer">',
-                            '<div class="pc-tags">',
-                                '<i class="fa-solid fa-star"></i>' + (p.AmenityCount || 0) + ' amenities',
-                                '&nbsp;|&nbsp;',
-                                '<i class="fa-regular fa-file"></i>' + (p.DocumentCount || 0) + ' docs',
-                            '</div>',
-                            '<div class="pc-btns">',
-                                '<a href="ProjectCreate.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="Edit"><i class="fa-solid fa-pen"></i></a>',
-                                '<a href="ProjectDetail.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="View"><i class="fa-solid fa-eye"></i></a>',
-                                '<button type="button" class="pc-btn del" title="Delete" onclick="openDelModal(' + p.ProjectID + ',\'' + nameForJs + '\')"><i class="fa-solid fa-trash"></i></button>',
-                            '</div>',
-                        '</div>',
+                    '<div class="pc-cover-wrap">',   /* wrapper — no overflow:hidden */
+                    '<div class="pc-cover">',
+                    coverInner,
+                    '<div class="pc-cover-gradient"></div>',
+                    '<span class="pc-status ' + si.cls + '">' + si.lbl + '</span>',
+                    photoBadge,
+                    pricePill,
+                    '</div>',
+                    logoEl,                       /* logo sits OUTSIDE pc-cover */
+                    '</div>',
+                    '<div class="pc-body">',
+                    '<div class="pc-code">' + esc(p.ProjectCode || '') + '</div>',
+                    '<div class="pc-name">' + esc(p.ProjectName || 'Unnamed Project') + '</div>',
+                    '<div class="pc-loc"><i class="fa-solid fa-location-dot"></i>' + esc(loc) + '</div>',
+                    '<div class="pc-overview">',
+                    '<div><div class="pco-lbl">Total Units</div><div class="pco-val">' + fmtNum(p.TotalUnits) + '</div></div>',
+                    '<div><div class="pco-lbl">Area</div><div class="pco-val">' +
+                    (p.MinArea ? fmtNum(p.MinArea) + '&ndash;' + fmtNum(p.MaxArea) + ' sq.ft' : '-') +
+                    '</div></div>',
+                    '<div><div class="pco-lbl">Possession</div><div class="pco-val ' + possCls + '">' + esc(possVal) + '</div></div>',
+                    '<div><div class="pco-lbl">Branch</div><div class="pco-val">' + esc(p.BranchName || '-') + '</div></div>',
+                    '</div>',
+                    specs.length ? '<div class="pc-specs">' + specs.join('') + '</div>' : '',
+                    '</div>',
+                    '<div class="pc-footer">',
+                    '<div class="pc-tags">',
+                    '<i class="fa-solid fa-star"></i> ' + (p.AmenityCount || 0) + ' amenities',
+                    '&nbsp;&bull;&nbsp;',
+                    '<i class="fa-regular fa-file"></i> ' + (p.DocumentCount || 0) + ' docs',
+                    '</div>',
+                    '<div class="pc-btns">',
+                    '<a href="ProjectCreate.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="Edit"><i class="fa-solid fa-pen"></i></a>',
+                    '<a href="ProjectDetail.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="View"><i class="fa-solid fa-eye"></i></a>',
+                    '<button type="button" class="pc-btn del" title="Delete" onclick="openDelModal(' + p.ProjectID + ',\'' + nameForJs + '\')"><i class="fa-solid fa-trash"></i></button>',
+                    '</div>',
+                    '</div>',
                     '</div>'
                 ].join('');
             }
 
-            // ── Render Table Row ──────────────────────
+            /* ── make table row ── */
             function makeRow(p, i) {
-                var si  = statusInfo(p.PublishMode);
+                var si = statusInfo(p.PublishMode);
                 var bsp = p.BSPRatePerSqFt ? 'Rs ' + fmtNum(p.BSPRatePerSqFt) : '-';
-                var loc = [p.City, p.StateName].filter(function(x){ return x && x.trim(); }).join(', ') || '-';
-                var nameForJs = (p.ProjectName || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+                var loc = [p.City, p.StateName].filter(function (x) { return x && x.trim(); }).join(', ') || '-';
+                var nameForJs = (p.ProjectName || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
                 return [
                     '<tr>',
-                    '<td style="color:#94A3B8;font-size:.7rem">' + (i + 1) + '</td>',
-                    '<td><div class="tbl-name">' + esc(p.ProjectName||'-') + '</div><div class="tbl-code">' + esc(p.ProjectCode||'') + '</div></td>',
-                    '<td>' + esc(p.ProjectType||'-') + '</td>',
+                    '<td style="color:var(--slate-2);font-size:.75rem;font-weight:600">' + (i + 1) + '</td>',
+                    '<td><div class="tbl-name">' + esc(p.ProjectName || '-') + '</div><div class="tbl-code">' + esc(p.ProjectCode || '') + '</div></td>',
+                    '<td>' + esc(p.ProjectType || '-') + '</td>',
                     '<td>' + esc(loc) + '</td>',
                     '<td>' + fmtNum(p.TotalUnits) + '</td>',
-                    '<td>' + esc(bsp) + '</td>',
+                    '<td style="font-weight:600">' + esc(bsp) + '</td>',
                     '<td>' + esc(fmtDate(p.PossessionDate)) + '</td>',
                     '<td><span class="spill ' + si.spill + '">' + si.lbl + '</span></td>',
-                    '<td><div style="display:flex;gap:5px">',
-                        '<a href="ProjectCreate.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="Edit"><i class="fa-solid fa-pen"></i></a>',
-                        '<a href="ProjectDetail.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="View"><i class="fa-solid fa-eye"></i></a>',
-                        '<button type="button" class="pc-btn del" title="Delete" onclick="openDelModal(' + p.ProjectID + ',\'' + nameForJs + '\')"><i class="fa-solid fa-trash"></i></button>',
+                    '<td><div style="display:flex;gap:6px">',
+                    '<a href="ProjectCreate.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="Edit"><i class="fa-solid fa-pen"></i></a>',
+                    '<a href="ProjectDetail.aspx?pid=' + p.ProjectID + '" class="pc-btn" title="View"><i class="fa-solid fa-eye"></i></a>',
+                    '<button type="button" class="pc-btn del" title="Delete" onclick="openDelModal(' + p.ProjectID + ',\'' + nameForJs + '\')"><i class="fa-solid fa-trash"></i></button>',
                     '</div></td>',
                     '</tr>'
                 ].join('');
             }
 
-            // ── Filter ────────────────────────────────
+            /* ── filter ── */
             function filterProjects() {
-                var q      = (document.getElementById('searchInput').value   || '').toLowerCase().trim();
-                var status = (document.getElementById('filterStatus').value  || '').toLowerCase();
-                var type   = (document.getElementById('filterType').value    || '').toLowerCase();
+                var q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+                var status = (document.getElementById('filterStatus').value || '').toLowerCase();
+                var type = (document.getElementById('filterType').value || '').toLowerCase();
 
-                filteredList = allProjects.filter(function(p) {
+                filteredList = allProjects.filter(function (p) {
                     var ms = !q || [p.ProjectName, p.ProjectCode, p.City, p.RERANumber]
-                        .some(function(f){ return f && f.toLowerCase().indexOf(q) >= 0; });
-                    var mv = !status || (p.PublishMode || '').toLowerCase() === status;
-                    var mt = !type   || (p.ProjectType || '').toLowerCase().indexOf(type) >= 0;
+                        .some(function (f) { return f && f.toLowerCase().indexOf(q) >= 0; });
+
+                    // status filter — 'draft' matches both 'draft' and blank/null
+                    var pm = (p.PublishMode || '').toLowerCase();
+                    var mv = !status
+                        || pm === status
+                        || (status === 'draft' && (pm === '' || pm === 'draft'));
+
+                    var mt = !type || (p.ProjectType || '').toLowerCase().indexOf(type) >= 0;
                     return ms && mv && mt;
                 });
 
@@ -662,13 +1427,13 @@
             }
 
             function clearFilters() {
-                document.getElementById('searchInput').value  = '';
+                document.getElementById('searchInput').value = '';
                 document.getElementById('filterStatus').value = '';
-                document.getElementById('filterType').value   = '';
+                document.getElementById('filterType').value = '';
                 filterProjects();
             }
 
-            // ── Render ────────────────────────────────
+            /* ── render ── */
             function render() {
                 document.getElementById('showCount').textContent = filteredList.length;
                 if (currentView === 'grid') renderGrid();
@@ -676,10 +1441,10 @@
             }
 
             function renderGrid() {
-                var grid  = document.getElementById('cardsGrid');
+                var grid = document.getElementById('cardsGrid');
                 var empty = document.getElementById('emptyGrid');
                 if (filteredList.length === 0) {
-                    grid.innerHTML  = '';
+                    grid.innerHTML = '';
                     empty.style.display = 'block';
                 } else {
                     empty.style.display = 'none';
@@ -699,26 +1464,26 @@
                 }
             }
 
-            // ── View toggle ───────────────────────────
+            /* ── view toggle ── */
             function switchView(v) {
                 currentView = v;
-                document.getElementById('viewGrid').style.display  = v === 'grid'  ? 'block' : 'none';
+                document.getElementById('viewGrid').style.display = v === 'grid' ? 'block' : 'none';
                 document.getElementById('viewTable').style.display = v === 'table' ? 'block' : 'none';
-                document.getElementById('btnGrid').classList.toggle('active',  v === 'grid');
+                document.getElementById('btnGrid').classList.toggle('active', v === 'grid');
                 document.getElementById('btnTable').classList.toggle('active', v === 'table');
                 render();
             }
 
-            // ── Stats ─────────────────────────────────
+            /* ── stats ── */
             function updateStats() {
-                var a = allProjects, n = a.length;
-                document.getElementById('sTotal').textContent    = n;
-                document.getElementById('sActive').textContent   = a.filter(function(p){ return (p.PublishMode||'').toLowerCase() === 'active';   }).length;
-                document.getElementById('sUpcoming').textContent = a.filter(function(p){ return (p.PublishMode||'').toLowerCase() === 'upcoming'; }).length;
-                document.getElementById('sDraft').textContent    = a.filter(function(p){ var m = (p.PublishMode||'').toLowerCase(); return m === 'draft' || m === ''; }).length;
+                var a = allProjects;
+                document.getElementById('sTotal').textContent = a.length;
+                document.getElementById('sActive').textContent = a.filter(function (p) { return (p.PublishMode || '').toLowerCase() === 'active'; }).length;
+                document.getElementById('sUpcoming').textContent = a.filter(function (p) { return (p.PublishMode || '').toLowerCase() === 'upcoming'; }).length;
+                document.getElementById('sDraft').textContent = a.filter(function (p) { var m = (p.PublishMode || '').toLowerCase(); return m === 'draft' || m === ''; }).length;
             }
 
-            // ── Delete modal ──────────────────────────
+            /* ── delete modal ── */
             function openDelModal(id, name) {
                 document.getElementById('delMsg').textContent =
                     '"' + name + '" permanently delete ho jaayega. Kya aap sure hain?';
@@ -730,30 +1495,30 @@
                 document.getElementById('<%= hdnDeleteID.ClientID %>').value = '';
             }
 
-            // ── Toast ─────────────────────────────────
+            /* ── toast ── */
             function showToast(msg, type) {
                 var t = document.getElementById('toast');
                 var i = document.getElementById('toastIco');
                 document.getElementById('toastMsg').textContent = msg;
-                t.style.background = '#1E293B';
-                i.className = 'fa-solid fa-check';
-                if (type === 'success') { t.style.background = '#16A34A'; i.className = 'fa-solid fa-circle-check'; }
-                if (type === 'error')   { t.style.background = '#DC2626'; i.className = 'fa-solid fa-circle-xmark'; }
-                if (type === 'info')    { t.style.background = '#2563EB'; i.className = 'fa-solid fa-floppy-disk';  }
+                t.style.background = 'var(--navy)';
+                i.className = 'fa-solid fa-circle-check';
+                if (type === 'success') { t.style.background = 'var(--green)'; i.className = 'fa-solid fa-circle-check'; }
+                if (type === 'error') { t.style.background = 'var(--red)'; i.className = 'fa-solid fa-circle-xmark'; }
+                if (type === 'info') { t.style.background = 'var(--blue)'; i.className = 'fa-solid fa-floppy-disk'; }
                 t.classList.add('show');
-                setTimeout(function(){ t.classList.remove('show'); }, 3500);
+                setTimeout(function () { t.classList.remove('show'); }, 3500);
             }
 
-            // ── Init ──────────────────────────────────
+            /* ── init (called from code-behind JSON inject) ── */
             function initProjects(data) {
-                allProjects  = data || [];
+                allProjects = data || [];
                 filteredList = allProjects.slice();
                 updateStats();
-                renderGrid();
+                render();   // uses render() so showCount also updates
             }
-        </script>
+    </script>
 
-        <%-- DATA INJECT — script ke baad --%>
+        <%-- Data inject — litProjectsJSON outputs: <script>initProjects([...]);</script> --%>
         <asp:Literal ID="litProjectsJSON" runat="server" />
 
     </form>

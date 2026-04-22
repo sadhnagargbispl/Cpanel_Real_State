@@ -20,7 +20,10 @@ public partial class MyDirects : System.Web.UI.Page
     string isoEnd;
 
     private int PageSize = 10;
-
+    public int RowOffset
+    {
+        get { return (PageIndex - 1) * PageSize; }
+    }
     public int PageIndex
     {
         get

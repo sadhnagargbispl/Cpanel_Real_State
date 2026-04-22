@@ -8,22 +8,20 @@
     <div class="pc">
 
         <!-- Page Header -->
-      <!-- Page Header -->
-<div class="page-header">
-    <div class="ph-left">
-        <div class="ph-title">All Wallet Report</div>
-        <div class="ph-sub">View deposit, used and balance summary by wallet type</div>
-    </div>
-    <div class="ph-actions" style="display:flex; align-items:center; gap:10px;">
-        <asp:DropDownList ID="Rbtnwallet" CssClass="fs" TabIndex="2" runat="server"
-            style="min-width:180px; padding:9px 14px;">
-        </asp:DropDownList>
-        <asp:Button ID="BtnSubmit" runat="server" Text="🔍 Search" TabIndex="3"
-            CssClass="btn btn-primary"
-            style="padding:9px 20px; white-space:nowrap;"
-            OnClick="BtnSubmit_Click" />
-    </div>
-</div>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="ph-left">
+                <div class="ph-title">Wallet Balance Report</div>
+                <div class="ph-sub">View deposit, used and balance summary by wallet type</div>
+            </div>
+            <div class="ph-actions">
+                <asp:DropDownList ID="Rbtnwallet" CssClass="fi" TabIndex="2" runat="server" Style="width: 240px; padding: 9px 14px;">
+                </asp:DropDownList>
+                <asp:Button ID="BtnSubmit" runat="server" Text="🔍 Search" TabIndex="3"
+                    CssClass="btn btn-primary"
+                    OnClick="BtnSubmit_Click" />
+            </div>
+        </div>
 
         <!-- KPI Summary Cards -->
         <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 22px;">

@@ -28,3 +28,9 @@ Invalid column name 'Roi'.
 http://localhost:54761/LevelIncomeReport.aspx:  23-Mar-2026 03:40:19:010 
 Thread was being aborted.
 --------------------------------------------------------
+http://localhost:54761/IdActivationReport.aspx:  13-Apr-2026 11:44:05:690 
+Thread was being aborted.
+--------------------------------------------------------
+http://localhost:54761/WalletRequestReport.aspx:  13-Apr-2026 12:49:22:678 
+Thread was being aborted.
+--------------------------------------------------------

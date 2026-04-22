@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 // App_Code folder - No namespace
 
@@ -246,53 +247,119 @@ public class ProjectDAL
     // ══════════════════════════════════════════════
     //  SAVE BLOCKS
     // ══════════════════════════════════════════════
-    public void SaveBlocks(int projectID, List<ProjectBlockModel> blocks, string changedBy)
-    {
-        using (var con = DBHelper.GetConnection())
-        {
-            con.Open();
-            using (var tran = con.BeginTransaction())
-            {
-                try
-                {
-                    using (var del = new SqlCommand(
-                        "DELETE FROM dbo.ProjectBlocks WHERE ProjectID=@PID", con, tran))
-                    {
-                        del.Parameters.AddWithValue("@PID", projectID);
-                        del.ExecuteNonQuery();
-                    }
+    // ProjectDAL.cs — SaveBlocks method
+    // TVP (Table-Valued Parameter) use kar raha hai — OPENJSON nahi chahiye
+    // System.Data already import hoga
 
-                    int sort = 0;
-                    foreach (var b in blocks)
-                    {
-                        using (var ins = new SqlCommand(@"
-                            INSERT INTO dbo.ProjectBlocks
-                                (ProjectID, BlockName, NumberOfFloors, UnitsPerFloor, BlockCategory, SortOrder)
-                            VALUES (@PID, @Name, @Floors, @UPF, @Cat, @Sort)", con, tran))
-                        {
-                            ins.Parameters.AddWithValue("@PID",   projectID);
-                            ins.Parameters.AddWithValue("@Name",  b.BlockName);
-                            ins.Parameters.AddWithValue("@Floors",(object)b.NumberOfFloors ?? DBNull.Value);
-                            ins.Parameters.AddWithValue("@UPF",   (object)b.UnitsPerFloor  ?? DBNull.Value);
-                            ins.Parameters.AddWithValue("@Cat",   (object)b.BlockCategory  ?? DBNull.Value);
-                            ins.Parameters.AddWithValue("@Sort",  sort++);
-                            ins.ExecuteNonQuery();
-                        }
-                    }
-                    tran.Commit();
-                }
-                catch
+    public void SaveBlocks(int projectID, List<ProjectBlockModel> blocks, string createdBy)
+    {
+        if (blocks == null || blocks.Count == 0) return;
+
+        // Pehle purane blocks delete karo
+        using (var conn = DBHelper.GetConnection())
+        {
+            conn.Open();
+            using (var cmd = new SqlCommand(
+                "DELETE FROM Project_Blocks WHERE ProjectID = @pid", conn))
+            {
+                cmd.Parameters.AddWithValue("@pid", projectID);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        foreach (var block in blocks)
+        {
+            // BHK types → DataTable (TVP ke liye)
+            var bhkTable = new DataTable();
+            bhkTable.Columns.Add("TypeID", typeof(int));
+            bhkTable.Columns.Add("UnitCount", typeof(int));
+
+            if (block.BhkTypes != null)
+            {
+                foreach (var t in block.BhkTypes)
+                    if (t.UnitCount > 0)
+                        bhkTable.Rows.Add(t.TypeID, t.UnitCount);
+            }
+
+            using (var conn = DBHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand("sp_SaveBlockWithBHK", conn))
                 {
-                    tran.Rollback();
-                    throw;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ProjectID", projectID);
+                    cmd.Parameters.AddWithValue("@BlockName", block.BlockName ?? "Block");
+                    cmd.Parameters.AddWithValue("@Floors", block.NumberOfFloors ?? 0);
+                    cmd.Parameters.AddWithValue("@UPF", block.UnitsPerFloor ?? 0);
+                    cmd.Parameters.AddWithValue("@Category", block.BlockCategory ?? "Standard");
+                    cmd.Parameters.AddWithValue("@CreatedBy", createdBy ?? "system");
+
+                    var tvp = cmd.Parameters.AddWithValue("@BHKTypes", bhkTable);
+                    tvp.SqlDbType = SqlDbType.Structured;
+                    tvp.TypeName = "dbo.BHKTypeTableType";
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
     }
 
-    // ══════════════════════════════════════════════
-    //  SAVE UNIT TYPES
-    // ══════════════════════════════════════════════
+    // GetBlocksByProjectID — DAL mein add karo (BhkTypes ke saath)
+    public List<ProjectBlockModel> GetBlocksByProjectID(int projectID)
+    {
+        var blocks = new List<ProjectBlockModel>();
+        var dict = new Dictionary<int, ProjectBlockModel>();
+
+        string sql = @"
+        SELECT  b.BlockID, b.BlockName, b.NumberOfFloors, b.UnitsPerFloor,
+                b.BlockCategory, b.SortOrder,
+                h.UnitTypeID AS TypeID, h.UnitCount
+        FROM    Project_Blocks b
+        LEFT JOIN Project_Block_BHKTypes h ON h.BlockID = b.BlockID
+        WHERE   b.ProjectID = @pid AND b.IsActive = 1
+        ORDER BY b.SortOrder, b.BlockID, h.UnitTypeID";
+
+        using (var conn = DBHelper.GetConnection())
+        using (var cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@pid", projectID);
+            conn.Open();
+            using (var rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    int blockID = Convert.ToInt32(rdr["BlockID"]);
+                    if (!dict.ContainsKey(blockID))
+                    {
+                        var b = new ProjectBlockModel
+                        {
+                            BlockID = blockID,
+                            ProjectID = projectID,
+                            BlockName = rdr["BlockName"].ToString(),
+                            NumberOfFloors = rdr["NumberOfFloors"] == DBNull.Value ? (int?)null : Convert.ToInt32(rdr["NumberOfFloors"]),
+                            UnitsPerFloor = rdr["UnitsPerFloor"] == DBNull.Value ? (int?)null : Convert.ToInt32(rdr["UnitsPerFloor"]),
+                            BlockCategory = rdr["BlockCategory"].ToString(),
+                            SortOrder = Convert.ToInt32(rdr["SortOrder"]),
+                            BhkTypes = new List<BhkTypeModel>()
+                        };
+                        dict[blockID] = b;
+                        blocks.Add(b);
+                    }
+
+                    // BHK row add karo (LEFT JOIN se null aa sakta hai)
+                    if (rdr["TypeID"] != DBNull.Value)
+                    {
+                        dict[blockID].BhkTypes.Add(new BhkTypeModel
+                        {
+                            TypeID = Convert.ToInt32(rdr["TypeID"]),
+                            UnitCount = Convert.ToInt32(rdr["UnitCount"])
+                        });
+                    }
+                }
+            }
+        }
+        return blocks;
+    }
     public void SaveUnitTypes(int projectID, List<ProjectUnitTypeModel> units, string changedBy)
     {
         using (var con = DBHelper.GetConnection())

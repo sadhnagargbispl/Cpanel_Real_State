@@ -1,0 +1,344 @@
+/* =========================================================
+   agent_realestate.css  –  Real Estate Page Styles
+   Matches structure used in agent_customers.css / AllWalletReport
+   ========================================================= */
+
+/* ── Page Container ──────────────────────────────────── */
+.pc {
+    padding: 24px 28px;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ── Page Header ─────────────────────────────────────── */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.ph-left {}
+
+.ph-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.3px;
+}
+
+.ph-sub {
+    font-size: 13px;
+    color: #888;
+    margin-top: 3px;
+}
+
+.ph-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.ph-actions .fi {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.ph-actions .fi:focus {
+    border-color: #4e6af3;
+}
+
+/* ── KPI Grid ────────────────────────────────────────── */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+@media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 520px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+}
+
+.kpi {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: box-shadow 0.2s;
+}
+
+.kpi:hover {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+}
+
+.kpi-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.kpi-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.ki-green  { background: #eaf9f1; }
+.ki-blue   { background: #e8f0ff; }
+.ki-amber  { background: #fff8e6; }
+.ki-red    { background: #fff0f0; }
+
+.kpi-trend {
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+.trend-up  { background: #eaf9f1; color: #1a8c4e; }
+.trend-dn  { background: #fff0f0; color: #c0392b; }
+.trend-neu { background: #e8f0ff; color: #2563eb; }
+
+.kpi-val {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.2;
+}
+
+.kpi-label {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* ── Message Label ───────────────────────────────────── */
+.msg-label {
+    display: block;
+    padding: 10px 16px;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #856404;
+    margin-bottom: 16px;
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.card-subtitle {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 2px;
+}
+
+.card-actions {}
+
+.search-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 7px 13px;
+    font-size: 13px;
+    width: 220px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.search-box:focus { border-color: #4e6af3; }
+
+/* ── Table ───────────────────────────────────────────── */
+.tbl-wrap {
+    overflow-x: auto;
+    padding: 0 6px 6px;
+}
+
+.tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    color: #333;
+}
+
+.tbl thead tr {
+    background: #f8f9fb;
+    border-bottom: 2px solid #eee;
+}
+
+.tbl thead th {
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    white-space: nowrap;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.tbl tbody tr {
+    border-bottom: 1px solid #f3f3f3;
+    transition: background 0.15s;
+}
+
+.tbl tbody tr:hover { background: #fafbff; }
+
+.tbl tbody td {
+    padding: 11px 14px;
+    vertical-align: middle;
+}
+
+/* ── Badges ──────────────────────────────────────────── */
+.badge-type {
+    background: #eef2ff;
+    color: #3730a3;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.badge-status {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 11px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.badge-available { background: #eaf9f1; color: #1a8c4e; }
+.badge-sold      { background: #fff0f0; color: #c0392b; }
+.badge-rented    { background: #fff8e6; color: #92660a; }
+.badge-pending   { background: #f3f3f3; color: #666;    }
+
+/* ── Action Button ───────────────────────────────────── */
+.btn-action {
+    background: #4e6af3;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+}
+
+.btn-action:hover {
+    background: #3a54d8;
+    transform: translateY(-1px);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn {
+    border: none;
+    padding: 9px 20px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    outline: none;
+}
+
+.btn-primary {
+    background: #4e6af3;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #3a54d8;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: #fff;
+    border: 1px solid #4e6af3;
+    color: #4e6af3;
+}
+
+.btn-outline:hover {
+    background: #eef2ff;
+    transform: translateY(-1px);
+}
+
+/* ── Empty State ─────────────────────────────────────── */
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* ── GridView Pager ──────────────────────────────────── */
+.tbl tr[id$="pager"] td {
+    padding: 12px 14px;
+    text-align: center;
+}
+
+.tbl tr[id$="pager"] a,
+.tbl tr[id$="pager"] span {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 0 2px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e6af3;
+    text-decoration: none;
+    border: 1px solid #dde3ff;
+    transition: background 0.15s;
+}
+
+.tbl tr[id$="pager"] a:hover { background: #eef2ff; }
+
+.tbl tr[id$="pager"] span {
+    background: #4e6af3;
+    color: #fff;
+    border-color: #4e6af3;
+}

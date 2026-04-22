@@ -40,8 +40,14 @@
                                 <div class="fg" id="DiMemberId" runat="server">
                                     <label class="fl">
                                         Member Id <span style="color: Red; font-weight: bold; font-size: 1.4em">*</span></label>
-                                    <asp:TextBox ID="txtMemberId" runat="server" CssClass="fi validate[required]" OnTextChanged="txtMemberId_TextChanged"
-                                        AutoPostBack="true" onkeypress="return blockSpace(event)"></asp:TextBox>
+                                    <asp:TextBox ID="txtMemberId" runat="server" CssClass="fi validate[required]"
+                                        OnTextChanged="txtMemberId_TextChanged"
+                                        AutoPostBack="true"
+                                        onkeypress="return blockSpace(event)"
+                                        autocomplete="off">
+                                    </asp:TextBox>
+                                    <%--          <asp:TextBox ID="txtMemberId" runat="server" CssClass="fi validate[required]" OnTextChanged="txtMemberId_TextChanged"
+                                        AutoPostBack="true" onkeypress="return blockSpace(event)"></asp:TextBox>--%>
                                     <asp:Label ID="lblFormno" runat="server" Visible="false"></asp:Label>
                                     <script>
                                         function blockSpace(e) {
@@ -112,7 +118,11 @@
                                         Transaction Password :<span style="color: Red; font-weight: bold; font-size: 1.4em">*</span>
                                     </label>
                                     <asp:TextBox ID="TxtTransPass" CssClass="fi" runat="server"
-                                        TextMode="Password"></asp:TextBox>
+                                        TextMode="Password"
+                                        autocomplete="new-password">
+                                    </asp:TextBox>
+                                    <%-- <asp:TextBox ID="TxtTransPass" CssClass="fi" runat="server"
+                                        TextMode="Password"></asp:TextBox>--%>
                                 </div>
                                 <div class="fg" id="divotp" visible="false" runat="server">
                                     <label class="fl">

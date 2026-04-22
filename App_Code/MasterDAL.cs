@@ -75,7 +75,7 @@ public class MasterDAL
         var list = new List<StateModel>();
         using (var con = DBHelper.GetConnection())
         using (var cmd = new SqlCommand(
-            "SELECT StateID, StateName FROM dbo.MstStates ORDER BY StateName", con))
+            "select StateCode as StateID,StateName  as StateName from  M_StateDivMaster where activestatus = 'Y' AND rowstatus = 'Y'", con))
         {
             con.Open();
             using (var dr = cmd.ExecuteReader())
@@ -95,7 +95,7 @@ public class MasterDAL
         var list = new List<BranchModel>();
         using (var con = DBHelper.GetConnection())
         using (var cmd = new SqlCommand(
-            "SELECT BranchID, BranchName, BranchCity FROM dbo.MstBranches WHERE IsActive=1 ORDER BY BranchName", con))
+            "select DistrictCode as BranchID,DistrictName as BranchName,'' as BranchCity from M_DistrictMaster as a,M_StateDivMaster as b where a.statecode = b.statecode AND a.activestatus = 'Y' AND a.rowstatus = 'Y' AND b.activestatus = 'Y' AND b.rowstatus = 'Y'", con))
         {
             con.Open();
             using (var dr = cmd.ExecuteReader())

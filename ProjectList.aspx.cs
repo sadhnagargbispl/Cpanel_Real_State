@@ -18,18 +18,24 @@ public partial class ProjectList : System.Web.UI.Page
     // ─────────────────────────────────────────────
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["Status"] != null)
         {
-            LoadProjects();
-
-            // ── Toast message agar ProjectCreate se redirect hua ho ──
-            if (Request.QueryString["msg"] != null)
+            if (!IsPostBack)
             {
-                string msg  = Request.QueryString["msg"];
-                string type = Request.QueryString["type"] ?? "success";
-                ShowToast(Server.HtmlDecode(msg), type);
+                LoadProjects();
+
+                // ── Toast message agar ProjectCreate se redirect hua ho ──
+                if (Request.QueryString["msg"] != null)
+                {
+                    string msg = Request.QueryString["msg"];
+                    string type = Request.QueryString["type"] ?? "success";
+                    ShowToast(Server.HtmlDecode(msg), type);
+                }
             }
         }
+        else
+            Response.Redirect("logout.aspx");
+      
     }
 
     // ─────────────────────────────────────────────

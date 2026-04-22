@@ -13,7 +13,8 @@
             </div>
             <div class="ph-actions">
                 <a href="agent_customers.aspx" class="btn btn-outline btn-sm">+ Add Customer</a>
-                <button class="btn btn-primary btn-sm" onclick="#">+ New Booking</button>
+                <a href="booking.aspx" class="btn btn-primary btn-sm">+ New Booking</a>
+                <%--<button class="btn btn-primary btn-sm" onclick="#">+ New Booking</button>--%>
             </div>
         </div>
 
@@ -22,7 +23,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-blue">📋</div>
-                    <span class="kpi-trend trend-up">↑ 0%</span>
+                  <%--  <span class="kpi-trend trend-up">↑ 0%</span>--%>
                 </div>
                 <div class="kpi-val">0</div>
                 <div class="kpi-label">Total Bookings</div>
@@ -30,7 +31,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-gold ki-lg">₹</div>
-                    <span class="kpi-trend trend-up">↑ 0%</span>
+                   <%-- <span class="kpi-trend trend-up">↑ 0%</span>--%>
                 </div>
                 <div class="kpi-val">
                     INR
@@ -41,7 +42,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-green">👥</div>
-                    <span class="kpi-trend trend-up">↑</span>
+                   <%-- <span class="kpi-trend trend-up">↑</span>--%>
                 </div>
                 <div class="kpi-val">
                     <asp:Label ID="lblCustomers" runat="server" Text="0"></asp:Label>
@@ -51,7 +52,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-purple">💎</div>
-                    <span class="kpi-trend trend-up">↑ 0%</span>
+                    <%--<span class="kpi-trend trend-up">↑ 0%</span>--%>
                 </div>
                 <div class="kpi-val">
                     INR
@@ -65,7 +66,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-red">🏠</div>
-                    <span class="kpi-trend trend-up">0</span>
+                    <%--<span class="kpi-trend trend-up">0</span>--%>
                 </div>
                 <div class="kpi-val">0</div>
                 <div class="kpi-label">Plots (Total)</div>
@@ -73,7 +74,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-green">✅</div>
-                    <span class="kpi-trend trend-neu">0</span>
+                   <%-- <span class="kpi-trend trend-neu">0</span>--%>
                 </div>
                 <div class="kpi-val">0</div>
                 <div class="kpi-label">Available Plots</div>
@@ -81,7 +82,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-ocean">🤝</div>
-                    <span class="kpi-trend trend-up">↑</span>
+                   <%-- <span class="kpi-trend trend-up">↑</span>--%>
                 </div>
                 <div class="kpi-val">
                     <asp:Label ID="lblSubAgents" runat="server" Text="0"></asp:Label>
@@ -91,7 +92,7 @@
             <div class="kpi">
                 <div class="kpi-top">
                     <div class="kpi-icon ki-red">⚠️</div>
-                    <span class="kpi-trend trend-dn">0</span>
+                  <%--  <span class="kpi-trend trend-dn">0</span>--%>
                 </div>
                 <div class="kpi-val">0</div>
                 <div class="kpi-label">Overdue Payments</div>

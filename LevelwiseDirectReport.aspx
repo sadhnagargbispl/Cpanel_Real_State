@@ -300,7 +300,7 @@
                             <ItemTemplate>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="lblRowNumber" Text='<%# Container.ItemIndex + 1 %>' runat="server" />
+                                        <asp:Label ID="lblRowNumber" Text='<%# RowOffset + Container.ItemIndex + 1 %>' runat="server" />
                                     </td>
                                     <td>
                                         <%#Eval("Level")%>

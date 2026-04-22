@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>New Booking — Agent Portal</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+:root{
+  --navy:#1B2B6B;--nd:#0D1B4B;--ocean:#1E6FBF;--gold:#F5A623;--gd:#E8920F;
+  --purple:#6B2D8B;--green:#22C55E;--red:#EF4444;--orange:#F97316;
+  --sw:264px;--th:66px;
+  --bg:#F0F4FB;--white:#FFFFFF;--border:#E2EAF4;
+  --text:#0F1E3C;--mid:#4A5568;--muted:#8A99B3;
+  --sh:0 2px 16px rgba(27,43,107,0.07);--sh-md:0 8px 32px rgba(27,43,107,0.12);--sh-lg:0 20px 60px rgba(27,43,107,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:15px;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+button,input,select,textarea{font-family:'DM Sans',sans-serif;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sw);min-height:100vh;position:fixed;top:0;left:0;z-index:300;
+  background:linear-gradient(180deg,#09133A 0%,#111E52 45%,#162266 100%);
+  display:flex;flex-direction:column;overflow:hidden;
+  transition:transform .32s cubic-bezier(.4,0,.2,1);
+  box-shadow:4px 0 24px rgba(9,19,58,.35);
+}
+.sb-top{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:11px;flex-shrink:0;}
+.sb-logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gd));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(245,166,35,.35);}
+.sb-brand{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:#fff;line-height:1.2;}
+.sb-tagline{font-size:9px;color:rgba(255,255,255,.38);letter-spacing:.9px;text-transform:uppercase;margin-top:1px;}
+.sb-agent{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:11px;flex-shrink:0;}
+.sb-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gd));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.15);}
+.sb-aname{font-size:13px;font-weight:600;color:#fff;line-height:1.2;}
+.sb-arole{font-size:10px;color:rgba(255,255,255,.4);margin-top:1px;}
+.sb-status{margin-left:auto;display:flex;align-items:center;gap:4px;font-size:9.5px;color:#22C55E;font-weight:600;}
+.sb-status-dot{width:6px;height:6px;background:#22C55E;border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0;scrollbar-width:none;}
+.sb-nav::-webkit-scrollbar{display:none;}
+.nav-group-title{padding:10px 18px 3px;font-size:8.5px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1.3px;}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 18px;font-size:13px;font-weight:500;color:rgba(255,255,255,.58);cursor:pointer;position:relative;transition:all .18s;border:none;background:none;width:100%;text-align:left;}
+a.ni{text-decoration:none;}
+.ni:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9);}
+.ni.active{background:rgba(245,166,35,.13);color:#fff;font-weight:600;}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:60%;width:3px;background:var(--gold);border-radius:0 3px 3px 0;}
+.ni-ic{font-size:17px;width:22px;text-align:center;flex-shrink:0;}
+.ni-badge{margin-left:auto;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700;background:var(--gold);color:#fff;}
+.ni-badge.red{background:var(--red);}
+.ni-badge.green{background:var(--green);}
+.ni-arrow{margin-left:auto;font-size:10px;transition:transform .2s;color:rgba(255,255,255,.35);}
+.ni.sub-open .ni-arrow{transform:rotate(90deg);}
+.sub-items{display:none;}
+.sub-items.open{display:block;}
+.sub-ni{display:flex;align-items:center;gap:8px;padding:8px 18px 8px 50px;font-size:12px;color:rgba(255,255,255,.42);cursor:pointer;transition:all .18s;text-decoration:none;}
+.sub-ni:hover{color:#fff;background:rgba(255,255,255,.04);}
+.sub-ni.active{color:var(--gold);}
+.sb-bottom{padding:14px 18px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0;}
+.sb-bottom a{display:flex;align-items:center;gap:9px;padding:8px 6px;font-size:12.5px;color:rgba(255,255,255,.38);transition:color .2s;border-radius:8px;}
+.sb-bottom a:hover{color:#fff;background:rgba(255,255,255,.05);}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin .32s cubic-bezier(.4,0,.2,1);}
+
+/* ── TOPBAR ── */
+.topbar{height:var(--th);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:200;box-shadow:var(--sh);flex-shrink:0;}
+.tb-l{display:flex;align-items:center;gap:14px;}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--mid);font-size:19px;transition:background .2s;}
+.menu-toggle:hover{background:var(--bg);}
+.topbar-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);}
+.tb-r{display:flex;align-items:center;gap:10px;}
+.tb-search{display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:8px 14px;min-width:210px;}
+.tb-search input{border:none;background:none;outline:none;font-size:13px;color:var(--text);width:100%;}
+.tb-search input::placeholder{color:var(--muted);}
+.tb-icon-btn{width:38px;height:38px;border-radius:10px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:16px;color:var(--mid);transition:all .2s;flex-shrink:0;}
+.tb-icon-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.badge-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;background:var(--red);border-radius:50%;border:2px solid var(--white);}
+.tb-user{display:flex;align-items:center;gap:9px;padding:6px 12px;border-radius:10px;cursor:pointer;border:1.5px solid var(--border);background:var(--white);transition:all .2s;}
+.tb-user:hover{border-color:var(--ocean);box-shadow:0 2px 12px rgba(30,111,191,.1);}
+.tb-uav{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--ocean));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+.tb-uname{font-size:13px;font-weight:600;color:var(--text);}
+.tb-urole{font-size:10.5px;color:var(--muted);}
+
+/* ── PAGE ── */
+.pc{padding:24px;flex:1;}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:26px;gap:14px;flex-wrap:wrap;}
+.ph-left .ph-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);}
+.ph-left .ph-sub{font-size:12.5px;color:var(--muted);margin-top:3px;}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-bottom:8px;}
+.breadcrumb a{color:var(--ocean);font-weight:500;}
+.breadcrumb a:hover{text-decoration:underline;}
+.breadcrumb span{color:var(--muted);}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:16px;border:1px solid var(--border);box-shadow:var(--sh);}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);}
+.card-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);}
+.card-subtitle{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.section-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.si-blue{background:rgba(30,111,191,.1);}
+.si-gold{background:rgba(245,166,35,.1);}
+.si-green{background:rgba(34,197,94,.1);}
+.si-purple{background:rgba(107,45,139,.1);}
+
+/* ── FORM ── */
+.form-body{padding:22px;}
+.form-section{margin-bottom:28px;}
+.form-section:last-child{margin-bottom:0;}
+.fs-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.fs-heading-text{font-size:14px;font-weight:700;color:var(--navy);}
+.fs-heading-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.fg{margin-bottom:16px;}
+.fl{display:block;font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+.fl .req{color:var(--red);}
+.fi,.fs-el,.fta{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13.5px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;background:var(--white);}
+.fi:focus,.fs-el:focus,.fta:focus{border-color:var(--ocean);box-shadow:0 0 0 3px rgba(30,111,191,.1);}
+.fi.readonly{background:var(--bg);color:var(--mid);cursor:default;}
+.fta{resize:vertical;min-height:90px;}
+.fi-prefix{position:relative;}
+.fi-prefix .prefix-label{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);font-weight:600;pointer-events:none;}
+.fi-prefix .fi{padding-left:50px;}
+.fi-hint{font-size:11px;color:var(--muted);margin-top:5px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+
+/* ── PRICE DISPLAY ── */
+.price-display{background:linear-gradient(135deg,rgba(27,43,107,.04),rgba(30,111,191,.06));border:1.5px solid rgba(30,111,191,.15);border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:14px;}
+.pd-icon{font-size:22px;}
+.pd-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.pd-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--navy);margin-top:2px;}
+.pd-val.empty{font-size:15px;color:var(--muted);font-weight:400;font-family:'DM Sans',sans-serif;}
+
+/* ── SUMMARY BOX ── */
+.summary-box{background:linear-gradient(135deg,#09133A,#1B2B6B);border-radius:14px;padding:22px;color:#fff;margin-bottom:20px;}
+.sb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:16px;color:#fff;}
+.sb-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;}
+.sb-row:last-child{border-bottom:none;}
+.sb-row-label{color:rgba(255,255,255,.55);}
+.sb-row-val{font-weight:600;color:#fff;}
+.sb-row-val.gold{color:var(--gold);}
+.sb-total{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);}
+.sb-total-label{font-size:13px;color:rgba(255,255,255,.7);}
+.sb-total-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--gold);}
+
+/* ── PLAN CARDS ── */
+.plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.plan-card{border:2px solid var(--border);border-radius:12px;padding:14px 12px;cursor:pointer;transition:all .2s;text-align:center;background:var(--white);}
+.plan-card:hover{border-color:var(--ocean);background:rgba(30,111,191,.03);}
+.plan-card.selected{border-color:var(--gold);background:rgba(245,166,35,.06);box-shadow:0 0 0 3px rgba(245,166,35,.12);}
+.plan-card .plan-icon{font-size:22px;margin-bottom:8px;}
+.plan-card .plan-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.plan-card .plan-desc{font-size:10px;color:var(--muted);}
+
+/* ── PAYMENT MODE ── */
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.mode-card{border:2px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;background:var(--white);}
+.mode-card:hover{border-color:var(--ocean);}
+.mode-card.selected{border-color:var(--ocean);background:rgba(30,111,191,.05);}
+.mode-icon{font-size:20px;flex-shrink:0;}
+.mode-name{font-size:12.5px;font-weight:600;color:var(--navy);}
+.mode-desc{font-size:10.5px;color:var(--muted);}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gd));color:#fff;box-shadow:0 4px 14px rgba(245,166,35,.32);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(245,166,35,.44);}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-navy:hover{background:var(--ocean);}
+.btn-outline{background:var(--white);border:1.5px solid var(--border);color:var(--mid);}
+.btn-outline:hover{border-color:var(--ocean);color:var(--ocean);}
+.btn-lg{padding:14px 28px;font-size:15px;}
+
+/* ── SUCCESS ── */
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(9,19,58,.6);z-index:900;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.success-overlay.show{display:flex;}
+.success-box{background:#fff;border-radius:22px;padding:40px;max-width:440px;width:90%;text-align:center;animation:sIn .3s ease;}
+@keyframes sIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:none}}
+.success-icon{width:80px;height:80px;background:linear-gradient(135deg,#DCFCE7,#BBF7D0);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 18px;}
+.success-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.success-sub{font-size:13.5px;color:var(--muted);margin-bottom:24px;line-height:1.6;}
+.success-id{background:var(--bg);border-radius:10px;padding:12px 18px;margin-bottom:22px;font-size:13px;color:var(--navy);}
+.success-id strong{font-family:'Playfair Display',serif;font-size:18px;display:block;color:var(--gold);}
+
+/* ── OVERLAY ── */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:290;}
+.sb-overlay.show{display:block;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.plan-grid{grid-template-columns:repeat(2,1fr);}.g3{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .menu-toggle{display:flex;}
+  .tb-search{display:none;}
+  .mode-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .g2,.g3{grid-template-columns:1fr;}
+  .plan-grid{grid-template-columns:1fr 1fr;}
+  .mode-grid{grid-template-columns:1fr;}
+  .pc{padding:14px;}
+  .topbar{padding:0 14px;}
+  .layout-grid{grid-template-columns:1fr !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="sb-overlay" id="sbOv" onclick="cSB()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sb">
+  <div class="sb-top">
+    <div class="sb-logo">🏙️</div>
+    <div>
+      <div class="sb-brand">Sky Is Your Limit</div>
+      <div class="sb-tagline">Agent Portal</div>
+    </div>
+  </div>
+  <div class="sb-agent">
+    <div class="sb-av">AR</div>
+    <div>
+      <div class="sb-aname">Ahmed Raza</div>
+      <div class="sb-arole">Senior Agent</div>
+    </div>
+    <div class="sb-status"><span class="sb-status-dot"></span>Online</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-group-title">Overview</div>
+    <a href="agent_dashboard.html" class="ni"><span class="ni-ic">📊</span>Dashboard</a>
+    <div class="nav-group-title">Properties</div>
+    <a href="agent_projects.html" class="ni"><span class="ni-ic">🏘️</span>My Projects<span class="ni-badge">6</span></a>
+    <div class="ni" onclick="tSub('plSub',this)"><span class="ni-ic">📐</span>Plot Management<span class="ni-arrow">›</span></div>
+    <div class="sub-items" id="plSub">
+      <a href="agent_plots.html" class="sub-ni">• All Plots</a>
+      <a href="agent_plots.html" class="sub-ni">• Add Plot</a>
+      <a href="agent_plots.html" class="sub-ni">• Availability</a>
+    </div>
+    <a href="agent_booked.html" class="ni"><span class="ni-ic">🏠</span>Booked Properties</a>
+    <div class="nav-group-title">People</div>
+    <a href="agent_customers.html" class="ni"><span class="ni-ic">👥</span>My Customers<span class="ni-badge">24</span></a>
+    <a href="agent_myagents.html" class="ni"><span class="ni-ic">🤝</span>My Agents<span class="ni-badge">5</span></a>
+    <div class="nav-group-title">Finance</div>
+    <a href="agent_bookings.html" class="ni active"><span class="ni-ic">📋</span>Bookings<span class="ni-badge red">8</span></a>
+    <a href="agent_payments.html" class="ni"><span class="ni-ic">💳</span>Payments</a>
+    <a href="agent_commission.html" class="ni"><span class="ni-ic">💰</span>My Commission</a>
+    <a href="agent_receipts.html" class="ni"><span class="ni-ic">🧾</span>Receipts</a>
+    <div class="nav-group-title">Account</div>
+    <a href="agent_notifications.html" class="ni"><span class="ni-ic">🔔</span>Notifications<span class="ni-badge red">3</span></a>
+    <a href="agent_profile.html" class="ni"><span class="ni-ic">👤</span>My Profile</a>
+  </nav>
+  <div class="sb-bottom">
+    <a href="#">🌐 View Website</a>
+    <a href="agent_login.html">🚪 Sign Out</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="tb-l">
+      <button class="menu-toggle" onclick="oSB()">☰</button>
+      <div class="topbar-title">New Booking</div>
+    </div>
+    <div class="tb-r">
+      <div class="tb-search"><span style="color:var(--muted)">🔍</span><input placeholder="Search customers, plots…"></div>
+      <div class="tb-icon-btn">🔔<div class="badge-dot"></div></div>
+      <div class="tb-icon-btn">📬</div>
+      <div class="tb-user">
+        <div class="tb-uav">AR</div>
+        <div>
+          <div class="tb-uname">Ahmed Raza</div>
+          <div class="tb-urole">Senior Agent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pc">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="ph-left">
+        <div class="breadcrumb">
+          <a href="agent_bookings.html">📋 Bookings</a>
+          <span>›</span>
+          <span>Create New Booking</span>
+        </div>
+        <div class="ph-title">Create New Booking</div>
+        <div class="ph-sub">Fill in all details to register a new property booking</div>
+      </div>
+      <div>
+        <a href="agent_bookings.html" class="btn btn-outline">← Back to Bookings</a>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="layout-grid" style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;">
+
+      <!-- LEFT: FORM -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Section 1: Customer & Property -->
+        <div class="card">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="section-icon si-blue">👤</div>
+              <div>
+                <div class="card-title">Customer & Property</div>
+                <div class="card-subtitle">Select customer and property details</div>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:700;background:#DBEAFE;color:#1D4ED8;padding:4px 10px;border-radius:20px;">Step 1 of 3</span>
+          </div>
+          <div class="form-body">
+            <div class="g2">
+              <div class="fg">
+                <label class="fl">Customer <span class="req">*</span></label>
+                <select class="fs-el" id="custSel" onchange="updateSummary()">
+                  <option value="">— Select Customer —</option>
+                  <option value="Ahmad Raza">Ahmad Raza</option>
+                  <option value="Sara Malik">Sara Malik</option>
+                  <option value="Usman Tariq">Usman Tariq</option>
+                  <option value="Faiza Noor">Faiza Noor</option>
+                  <option value="Bilal Ahmed">Bilal Ahmed</option>
+                  <option value="Khalid Hassan">Khalid Hassan</option>
+                  <option value="Zara Khan">Zara Khan</option>
+                  <option value="Hamza Siddiqui">Hamza Siddiqui</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label class="fl">Customer Phone</label>
+                <input type="tel" class="fi" placeholder="+92 3xx xxxxxxx" id="custPhone">
+              </div>
+            </div>
+            <div class="g2">
+              <div class="fg">
+                <label class="fl">Project <span class="req">*</span></label>
+                <select class="fs-el" id="projSel" onchange="loadPlots()">
+                  <option value="">— Select Project —</option>
+                  <option value="Sky Residencia">Sky Residencia</option>
+                  <option value="Sky Gardens">Sky Gardens</option>
+                  <option value="Nova Heights">Nova Heights</option>
+                  <option value="Sky Villas">Sky Villas</option>
+                  <option value="Green Valley">Green Valley</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label class="fl">Plot / Unit <span class="req">*</span></label>
+                <select class="fs-el" id="plotSel" onchange="selectPlot()" disabled>
+                  <option value="">— Select Project First —</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Price Display -->
+            <div class="price-display" id="priceDisplay">
+              <div class="pd-icon">🏷️</div>
+              <div>
+                <div class="pd-label">Plot Price</div>
+                <div class="pd-val empty" id="priceVal">Select project and plot to see price</div>
+              </div>
+            </div>
+
+            <div class="fg" style="margin-top:16px;">
+              <label class="fl">Plot / Property Size</label>
+              <input type="text" class="fi readonly" id="plotSize" value="" placeholder="— Auto-filled on plot selection —" readonly>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Booking Details -->
+        <div class="card">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="section-icon si-gold">📋</div>
+              <div>
+                <div class="card-title">Booking Details</div>
+                <div class="card-subtitle">Set booking date and payment terms</div>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:4px 10px;border-radius:20px;">Step 2 of 3</span>
+          </div>
+          <div class="form-body">
+            <div class="g2">
+              <div class="fg">
+                <label class="fl">Booking Date <span class="req">*</span></label>
+                <input type="date" class="fi" id="bookDate" onchange="updateSummary()">
+              </div>
+              <div class="fg">
+                <label class="fl">Expected Possession Date</label>
+                <input type="date" class="fi" id="possDate">
+              </div>
+            </div>
+
+            <!-- Installment Plan -->
+            <div class="fg">
+              <label class="fl">Installment Plan <span class="req">*</span></label>
+              <div class="plan-grid">
+                <div class="plan-card selected" onclick="selectPlan(this,'Full Payment','No installments')" data-plan="Full Payment">
+                  <div class="plan-icon">💵</div>
+                  <div class="plan-name">Full Payment</div>
+                  <div class="plan-desc">No installments</div>
+                </div>
+                <div class="plan-card" onclick="selectPlan(this,'3 Year Plan','36 monthly installments')" data-plan="3 Year Plan">
+                  <div class="plan-icon">📅</div>
+                  <div class="plan-name">3 Year Plan</div>
+                  <div class="plan-desc">36 installments</div>
+                </div>
+                <div class="plan-card" onclick="selectPlan(this,'5 Year Plan','60 monthly installments')" data-plan="5 Year Plan">
+                  <div class="plan-icon">🗓️</div>
+                  <div class="plan-name">5 Year Plan</div>
+                  <div class="plan-desc">60 installments</div>
+                </div>
+                <div class="plan-card" onclick="selectPlan(this,'10 Year Plan','120 monthly installments')" data-plan="10 Year Plan">
+                  <div class="plan-icon">📆</div>
+                  <div class="plan-name">10 Year Plan</div>
+                  <div class="plan-desc">120 installments</div>
+                </div>
+              </div>
+              <input type="hidden" id="selPlan" value="Full Payment">
+            </div>
+
+            <!-- Payment Mode -->
+            <div class="fg">
+              <label class="fl">Payment Mode <span class="req">*</span></label>
+              <div class="mode-grid">
+                <div class="mode-card selected" onclick="selectMode(this,'Cash')">
+                  <div class="mode-icon">💵</div>
+                  <div><div class="mode-name">Cash</div><div class="mode-desc">Physical cash payment</div></div>
+                </div>
+                <div class="mode-card" onclick="selectMode(this,'Bank Transfer')">
+                  <div class="mode-icon">🏦</div>
+                  <div><div class="mode-name">Bank Transfer</div><div class="mode-desc">IBFT / Wire Transfer</div></div>
+                </div>
+                <div class="mode-card" onclick="selectMode(this,'Cheque')">
+                  <div class="mode-icon">📝</div>
+                  <div><div class="mode-name">Cheque</div><div class="mode-desc">Cheque payment</div></div>
+                </div>
+              </div>
+              <input type="hidden" id="selMode" value="Cash">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 3: Payment -->
+        <div class="card">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="section-icon si-green">💳</div>
+              <div>
+                <div class="card-title">Payment Information</div>
+                <div class="card-subtitle">Enter down payment and remaining amount</div>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:700;background:#DCFCE7;color:#166534;padding:4px 10px;border-radius:20px;">Step 3 of 3</span>
+          </div>
+          <div class="form-body">
+            <div class="g2">
+              <div class="fg">
+                <label class="fl">Down Payment <span class="req">*</span></label>
+                <div class="fi-prefix">
+                  <span class="prefix-label">INR</span>
+                  <input type="number" class="fi" id="downPayment" placeholder="0" oninput="calcRemaining()">
+                </div>
+                <div class="fi-hint" id="dpHint">Enter down payment amount in INR</div>
+              </div>
+              <div class="fg">
+                <label class="fl">Monthly Installment</label>
+                <div class="fi-prefix">
+                  <span class="prefix-label">INR</span>
+                  <input type="text" class="fi readonly" id="monthlyInst" value="—" readonly>
+                </div>
+                <div class="fi-hint">Auto-calculated based on plan</div>
+              </div>
+            </div>
+            <div class="g2">
+              <div class="fg">
+                <label class="fl">Remaining Amount</label>
+                <div class="fi-prefix">
+                  <span class="prefix-label">INR</span>
+                  <input type="text" class="fi readonly" id="remaining" value="—" readonly>
+                </div>
+              </div>
+              <div class="fg">
+                <label class="fl">Transaction / Cheque Ref #</label>
+                <input type="text" class="fi" id="txRef" placeholder="Optional reference number">
+              </div>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Additional Notes</label>
+              <textarea class="fta" id="notes" placeholder="Any special conditions, remarks, or instructions regarding this booking…"></textarea>
+            </div>
+
+            <!-- Upload Docs -->
+            <div class="fg">
+              <label class="fl">Attach Documents</label>
+              <div style="border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s;" onmouseenter="this.style.borderColor='var(--ocean)'" onmouseleave="this.style.borderColor='var(--border)'" onclick="document.getElementById('docInput').click()">
+                <div style="font-size:28px;margin-bottom:8px;">📎</div>
+                <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:3px;">Click to upload documents</div>
+                <div style="font-size:11.5px;color:var(--muted);">CNIC, Payment Slip, Cheque Scan — PDF, JPG, PNG (max 5MB each)</div>
+                <input type="file" id="docInput" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="showFiles(this)">
+              </div>
+              <div id="fileList" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div style="display:flex;gap:12px;justify-content:flex-end;padding-bottom:20px;">
+          <a href="agent_bookings.html" class="btn btn-outline">✕ Cancel</a>
+          <button class="btn btn-navy" onclick="saveDraft()">📄 Save as Draft</button>
+          <button class="btn btn-primary btn-lg" onclick="submitBooking()">✓ Create Booking & Generate Receipt</button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: SUMMARY -->
+      <div style="position:sticky;top:calc(var(--th) + 24px);">
+
+        <!-- Booking Summary -->
+        <div class="summary-box">
+          <div class="sb-title">📋 Booking Summary</div>
+          <div class="sb-row"><span class="sb-row-label">Customer</span><span class="sb-row-val" id="sum-customer">—</span></div>
+          <div class="sb-row"><span class="sb-row-label">Project</span><span class="sb-row-val" id="sum-project">—</span></div>
+          <div class="sb-row"><span class="sb-row-label">Plot / Unit</span><span class="sb-row-val" id="sum-plot">—</span></div>
+          <div class="sb-row"><span class="sb-row-label">Plot Size</span><span class="sb-row-val" id="sum-size">—</span></div>
+          <div class="sb-row"><span class="sb-row-label">Booking Date</span><span class="sb-row-val" id="sum-date">—</span></div>
+          <div class="sb-row"><span class="sb-row-label">Payment Mode</span><span class="sb-row-val" id="sum-mode">Cash</span></div>
+          <div class="sb-row"><span class="sb-row-label">Installment Plan</span><span class="sb-row-val" id="sum-plan">Full Payment</span></div>
+          <div class="sb-total">
+            <div>
+              <div class="sb-total-label">Total Plot Price</div>
+              <div class="sb-total-val" id="sum-price">INR —</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="sb-total-label">Down Payment</div>
+              <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;" id="sum-down">INR —</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Commission Preview -->
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header">
+            <div class="card-title">💰 Commission Preview</div>
+          </div>
+          <div style="padding:16px 18px;">
+            <div class="stat-row">
+              <span style="font-size:12.5px;color:var(--mid);">Commission Rate</span>
+              <span style="font-size:13px;font-weight:700;color:var(--navy);" id="commRate">2%</span>
+            </div>
+            <div class="stat-row">
+              <span style="font-size:12.5px;color:var(--mid);">Estimated Commission</span>
+              <span style="font-size:13px;font-weight:700;color:var(--green);" id="commAmt">INR —</span>
+            </div>
+            <div class="stat-row">
+              <span style="font-size:12.5px;color:var(--mid);">Status</span>
+              <span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:3px 9px;border-radius:20px;">Pending</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checklist -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">✅ Booking Checklist</div></div>
+          <div style="padding:14px 18px;">
+            <div class="stat-row" id="chk-customer">
+              <span style="font-size:12.5px;color:var(--mid);">Customer selected</span>
+              <span style="font-size:16px;" id="chki-customer">⬜</span>
+            </div>
+            <div class="stat-row" id="chk-project">
+              <span style="font-size:12.5px;color:var(--mid);">Project selected</span>
+              <span style="font-size:16px;" id="chki-project">⬜</span>
+            </div>
+            <div class="stat-row" id="chk-plot">
+              <span style="font-size:12.5px;color:var(--mid);">Plot selected</span>
+              <span style="font-size:16px;" id="chki-plot">⬜</span>
+            </div>
+            <div class="stat-row" id="chk-date">
+              <span style="font-size:12.5px;color:var(--mid);">Booking date set</span>
+              <span style="font-size:16px;" id="chki-date">⬜</span>
+            </div>
+            <div class="stat-row" id="chk-payment">
+              <span style="font-size:12.5px;color:var(--mid);">Down payment entered</span>
+              <span style="font-size:16px;" id="chki-payment">⬜</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Booking Created!</div>
+    <div class="success-sub">The booking has been successfully registered and a receipt has been generated for the customer.</div>
+    <div class="success-id">
+      Booking ID
+      <strong id="newBookId">#BK-0090</strong>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="window.location.href='agent_receipts.html'">🧾 View & Print Receipt</button>
+      <button class="btn btn-navy" style="width:100%;justify-content:center;" onclick="window.location.href='agent_bookings.html'">← Back to Bookings</button>
+      <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="resetForm()">+ Create Another Booking</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SIDEBAR ──
+function oSB(){document.getElementById('sb').classList.add('open');document.getElementById('sbOv').classList.add('show');document.body.style.overflow='hidden';}
+function cSB(){document.getElementById('sb').classList.remove('open');document.getElementById('sbOv').classList.remove('show');document.body.style.overflow='';}
+function tSub(id,el){const s=document.getElementById(id);s.classList.toggle('open');if(el)el.classList.toggle('sub-open');}
+
+// ── PLOT DATA ──
+const plotData = {
+  'Sky Residencia':{
+    'A-101':{price:4500000,size:'5 Marla'},
+    'A-102':{price:9600000,size:'8 Marla'},
+    'B-201':{price:20200000,size:'10 Marla'},
+    'C-105':{price:6800000,size:'5 Marla'},
+    'D-301':{price:14500000,size:'1 Kanal'},
+  },
+  'Sky Gardens':{
+    'C-301':{price:2560000,size:'3 Marla'},
+    'C-302':{price:2700000,size:'3 Marla'},
+    'G-12':{price:3800000,size:'5 Marla'},
+  },
+  'Nova Heights':{
+    'N-101':{price:6200000,size:'5 Marla'},
+    'B-201':{price:18500000,size:'10 Marla'},
+    'T-501':{price:9800000,size:'8 Marla'},
+  },
+  'Sky Villas':{
+    'V-12':{price:8500000,size:'1 Kanal'},
+    'V-08':{price:7200000,size:'10 Marla'},
+  },
+  'Green Valley':{
+    'G-05':{price:3500000,size:'3 Marla'},
+    'G-09':{price:5100000,size:'5 Marla'},
+  }
+};
+
+let currentPrice = 0;
+let selectedPlan = 'Full Payment';
+let selectedMode = 'Cash';
+
+function loadPlots(){
+  const proj = document.getElementById('projSel').value;
+  const ps = document.getElementById('plotSel');
+  ps.innerHTML = '<option value="">— Select Plot —</option>';
+  if(proj && plotData[proj]){
+    Object.keys(plotData[proj]).forEach(k=>{
+      const d = plotData[proj][k];
+      ps.innerHTML += `<option value="${k}">${k} — ${d.size} (INR ${fmtPrice(d.price)})</option>`;
+    });
+    ps.disabled = false;
+  } else {
+    ps.disabled = true;
+    ps.innerHTML = '<option value="">— Select Project First —</option>';
+  }
+  document.getElementById('priceVal').textContent = 'Select a plot to see price';
+  document.getElementById('priceVal').className = 'pd-val empty';
+  document.getElementById('plotSize').value = '';
+  currentPrice = 0;
+  calcRemaining();
+  updateSummary();
+}
+
+function selectPlot(){
+  const proj = document.getElementById('projSel').value;
+  const plot = document.getElementById('plotSel').value;
+  if(proj && plot && plotData[proj] && plotData[proj][plot]){
+    const d = plotData[proj][plot];
+    currentPrice = d.price;
+    document.getElementById('priceVal').textContent = 'INR ' + fmtPrice(d.price);
+    document.getElementById('priceVal').className = 'pd-val';
+    document.getElementById('plotSize').value = d.size;
+  } else {
+    currentPrice = 0;
+    document.getElementById('priceVal').textContent = 'Select project and plot to see price';
+    document.getElementById('priceVal').className = 'pd-val empty';
+    document.getElementById('plotSize').value = '';
+  }
+  calcRemaining();
+  updateSummary();
+}
+
+function fmtPrice(n){
+  if(n >= 10000000) return (n/10000000).toFixed(2) + ' Cr';
+  if(n >= 100000) return (n/100000).toFixed(1) + ' Lac';
+  return n.toLocaleString();
+}
+
+function calcRemaining(){
+  const dp = parseFloat(document.getElementById('downPayment').value) || 0;
+  const rem = currentPrice - dp;
+  document.getElementById('remaining').value = rem > 0 ? fmtPrice(rem) : rem < 0 ? '⚠ Exceeds price' : '0';
+
+  // monthly installment
+  const months = {'Full Payment':0,'3 Year Plan':36,'5 Year Plan':60,'10 Year Plan':120}[selectedPlan] || 0;
+  if(months > 0 && rem > 0){
+    document.getElementById('monthlyInst').value = fmtPrice(Math.ceil(rem/months));
+  } else {
+    document.getElementById('monthlyInst').value = months === 0 ? 'N/A' : '—';
+  }
+
+  // commission
+  const comm = Math.round(currentPrice * 0.02);
+  document.getElementById('commAmt').textContent = currentPrice > 0 ? 'INR ' + fmtPrice(comm) : 'INR —';
+
+  // dp hint
+  if(currentPrice > 0){
+    const pct = dp > 0 ? ((dp/currentPrice)*100).toFixed(1) : 0;
+    document.getElementById('dpHint').textContent = pct > 0 ? `${pct}% of total plot price` : 'Enter down payment amount in INR';
+  }
+
+  updateSummary();
+  updateChecklist();
+}
+
+function selectPlan(el, plan, desc){
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPlan = plan;
+  document.getElementById('selPlan').value = plan;
+  document.getElementById('sum-plan').textContent = plan;
+  calcRemaining();
+}
+
+function selectMode(el, mode){
+  document.querySelectorAll('.mode-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMode = mode;
+  document.getElementById('selMode').value = mode;
+  document.getElementById('sum-mode').textContent = mode;
+}
+
+function updateSummary(){
+  const cust = document.getElementById('custSel').value;
+  const proj = document.getElementById('projSel').value;
+  const plot = document.getElementById('plotSel').value;
+  const date = document.getElementById('bookDate').value;
+  const dp = parseFloat(document.getElementById('downPayment').value) || 0;
+
+  document.getElementById('sum-customer').textContent = cust || '—';
+  document.getElementById('sum-project').textContent = proj || '—';
+  document.getElementById('sum-plot').textContent = plot || '—';
+  document.getElementById('sum-size').textContent = document.getElementById('plotSize').value || '—';
+  document.getElementById('sum-date').textContent = date ? new Date(date).toLocaleDateString('en-PK',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+  document.getElementById('sum-price').textContent = currentPrice > 0 ? 'INR ' + fmtPrice(currentPrice) : 'INR —';
+  document.getElementById('sum-down').textContent = dp > 0 ? 'INR ' + fmtPrice(dp) : 'INR —';
+}
+
+function updateChecklist(){
+  const checks = {
+    customer: !!document.getElementById('custSel').value,
+    project: !!document.getElementById('projSel').value,
+    plot: !!document.getElementById('plotSel').value,
+    date: !!document.getElementById('bookDate').value,
+    payment: (parseFloat(document.getElementById('downPayment').value)||0) > 0
+  };
+  Object.keys(checks).forEach(k=>{
+    document.getElementById(`chki-${k}`).textContent = checks[k] ? '✅' : '⬜';
+  });
+}
+
+document.getElementById('downPayment').addEventListener('input', calcRemaining);
+document.getElementById('custSel').addEventListener('change', ()=>{updateSummary();updateChecklist();});
+document.getElementById('bookDate').addEventListener('change', ()=>{updateSummary();updateChecklist();});
+document.getElementById('projSel').addEventListener('change', ()=>{updateChecklist();});
+document.getElementById('plotSel').addEventListener('change', ()=>{updateChecklist();});
+
+function showFiles(inp){
+  const list = document.getElementById('fileList');
+  list.innerHTML = '';
+  Array.from(inp.files).forEach(f=>{
+    const tag = document.createElement('div');
+    tag.style.cssText = 'background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--navy);display:flex;align-items:center;gap:6px;';
+    tag.innerHTML = `📄 ${f.name} <span style="color:var(--muted);font-size:10px;">(${(f.size/1024).toFixed(0)}KB)</span>`;
+    list.appendChild(tag);
+  });
+}
+
+function saveDraft(){
+  alert('📄 Booking saved as draft. You can complete it later from the Bookings section.');
+}
+
+function submitBooking(){
+  const cust = document.getElementById('custSel').value;
+  const proj = document.getElementById('projSel').value;
+  const plot = document.getElementById('plotSel').value;
+  const date = document.getElementById('bookDate').value;
+  const dp = parseFloat(document.getElementById('downPayment').value)||0;
+
+  if(!cust){alert('⚠️ Please select a customer.');return;}
+  if(!proj){alert('⚠️ Please select a project.');return;}
+  if(!plot){alert('⚠️ Please select a plot.');return;}
+  if(!date){alert('⚠️ Please set a booking date.');return;}
+  if(dp <= 0){alert('⚠️ Please enter a down payment amount.');return;}
+  if(dp > currentPrice){alert('⚠️ Down payment cannot exceed the plot price.');return;}
+
+  // Show success
+  const bookId = '#BK-' + (Math.floor(Math.random()*9000)+1000);
+  document.getElementById('newBookId').textContent = bookId;
+  document.getElementById('successOverlay').classList.add('show');
+}
+
+function resetForm(){
+  document.getElementById('successOverlay').classList.remove('show');
+  document.getElementById('custSel').value = '';
+  document.getElementById('projSel').value = '';
+  document.getElementById('plotSel').innerHTML = '<option value="">— Select Project First —</option>';
+  document.getElementById('plotSel').disabled = true;
+  document.getElementById('plotSize').value = '';
+  document.getElementById('bookDate').value = '';
+  document.getElementById('possDate').value = '';
+  document.getElementById('downPayment').value = '';
+  document.getElementById('txRef').value = '';
+  document.getElementById('notes').value = '';
+  document.getElementById('priceVal').textContent = 'Select project and plot to see price';
+  document.getElementById('priceVal').className = 'pd-val empty';
+  currentPrice = 0;
+  updateSummary();
+  updateChecklist();
+}
+
+// Set today's date as default
+document.getElementById('bookDate').value = new Date().toISOString().split('T')[0];
+updateChecklist();
+
+// stat-row helper for sidebar
+function stat(l,v){return `<div class="stat-row"><span>${l}</span><span>${v}</span></div>`;}
+</script>
+
+<style>
+.stat-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);}
+.stat-row:last-child{border-bottom:none;}
+</style>
+</body>
+</html>
